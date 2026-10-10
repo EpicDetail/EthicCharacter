@@ -20,6 +20,9 @@ import org.bukkit.entity.TextDisplay;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -150,7 +153,7 @@ public final class Board implements Listener {
         this.plugin = plugin;
         this.layout = layout;
         this.pages = pages;
-        this.sc = Math.max(0.4, Math.min(1.0, plugin.getConfig().getDouble("board.scale", 0.7)));
+        this.sc = Math.max(0.4, Math.min(1.0, plugin.getConfig().getDouble("board.scale", 0.6)));
     }
 
     public Layout layout() {
@@ -701,6 +704,29 @@ public final class Board implements Listener {
         if (event.getDamager() instanceof Player p && isOpen(p)) {
             event.setCancelled(true);
             click(p);
+        }
+    }
+
+    // Klicks auf die Tafel duerfen nie Bloecke dahinter abbauen oder setzen
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onBlockDamage(BlockDamageEvent event) {
+        if (isOpen(event.getPlayer())) {
+            event.setInstaBreak(false);
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onBlockBreak(BlockBreakEvent event) {
+        if (isOpen(event.getPlayer())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onBlockPlace(BlockPlaceEvent event) {
+        if (isOpen(event.getPlayer())) {
+            event.setCancelled(true);
         }
     }
 
