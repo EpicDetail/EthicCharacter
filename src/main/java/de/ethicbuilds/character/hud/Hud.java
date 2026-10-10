@@ -216,15 +216,30 @@ public final class Hud implements Listener {
         Gain gain = gains.get(id);
         long delta = gain != null && System.currentTimeMillis() < gain.until ? gain.sum : 0;
         // Floodgate-UUIDs beginnen mit Nullen: Bedrock kennt unsere Schrift nicht und bekommt eine Textzeile
+        Vitals vitals = vitals(player);
         if (id.getMostSignificantBits() == 0L) {
-            player.sendActionBar(Component.text("Level " + level + "  ·  " + CoinFormat.number(balance)
+            player.sendActionBar(Component.text("❤ " + CoinFormat.number(vitals.lp()) + " / " + CoinFormat.number(vitals.lpMax())
+                    + "  ·  Hunger " + Math.round(vitals.food() * 100 / 20.0) + " %"
+                    + "  ·  Level " + level + "  ·  " + CoinFormat.number(balance)
                     + (delta != 0 ? "  (" + (delta > 0 ? "+" : "") + CoinFormat.number(delta) + ")" : "")).color(GOLD));
             return;
         }
-        player.sendActionBar(render(balance, level, progress, max, delta));
+        player.sendActionBar(render(balance, level, progress, max, delta, vitals));
     }
 
-    private Component render(long balance, int level, double progress, boolean max, long delta) {
+    private Vitals vitals(Player player) {
+        AttributeInstance maxAttribute = player.getAttribute(Attribute.MAX_HEALTH);
+        double maxHealth = maxAttribute != null ? maxAttribute.getValue() : 20.0;
+        long flashEnd = flashUntil.getOrDefault(player.getUniqueId(), 0L);
+        // ein Wechsel pro Sekunde, das Takt-Raster (10 Ticks) trifft ihn sicher
+        boolean blinkOn = (System.currentTimeMillis() / 1000) % 2 == 0;
+        return new Vitals(Math.round(player.getHealth() * LP_PER_HP), Math.round(maxHealth * LP_PER_HP),
+                Math.round(player.getAbsorptionAmount() * LP_PER_HP), player.getFoodLevel(),
+                player.hasPotionEffect(PotionEffectType.POISON), player.hasPotionEffect(PotionEffectType.WITHER),
+                System.currentTimeMillis() < flashEnd, blinkOn);
+    }
+
+    private Component render(long balance, int level, double progress, boolean max, long delta, Vitals vitals) {
         Row row = new Row();
         if (delta != 0) {
             String text = (delta > 0 ? "+" : "-") + CoinFormat.number(Math.abs(delta));
@@ -253,8 +268,91 @@ public final class Hud implements Listener {
             row.goTo(layout.trackX);
             row.put(layout.fill.get(Math.min(steps, layout.fill.size()) - 1), max ? GOLD : ORANGE);
         }
+        // Zweite Ebene: zurueckspringen, die Glyphen liegen durch ihr ascent hoeher (Oberkante 51)
+        life(row, vitals);
+        food(row, vitals);
         row.goTo(layout.rowWidth);
         return row.build();
+    }
+
+    private static TextColor mix(TextColor color, double toWhite) {
+        int r = (int) Math.round(color.red() + (255 - color.red()) * toWhite);
+        int g = (int) Math.round(color.green() + (255 - color.green()) * toWhite);
+        int b = (int) Math.round(color.blue() + (255 - color.blue()) * toWhite);
+        return TextColor.color(r, g, b);
+    }
+
+    /** Leben links: Plakette mit Zahl, Spur, rote Fuellung (Gift, Wither, Blinken, Absorption, Ueberfuellung). */
+    private void life(Row row, Vitals v) {
+        long lpMax = Math.max(1, v.lpMax());
+        long lp = Math.max(0, v.lp());
+        boolean over = lp > lpMax;
+        int steps = layout.lifeFill.size();
+
+        row.goTo(layout.lifePlateX);
+        row.put(layout.lifePlate, WHITE);
+        String number = CoinFormat.number(lp);
+        boolean smallDigits = layout.width(number, layout.lifeBig) > LIFE_DIGITS_MAX_WIDTH;
+        Map<Character, Glyph> digits = smallDigits ? layout.lifeSmall : layout.lifeBig;
+        row.goTo(layout.lifePlateX + Math.max(1, (layout.lifePlateWidth - layout.width(number, digits)) / 2));
+        row.text(number, digits, LIFE_TEXT);
+
+        row.goTo(layout.lifeTrackX);
+        row.put(layout.lifeTrack, WHITE);
+
+        TextColor base = v.wither() ? WITHER : v.poison() ? POISON : RED;
+        TextColor fill = v.flash() ? mix(base, FLASH_MIX) : base;
+        int redSteps = over ? steps : stepsFor(lp, lpMax, steps);
+        int goldSteps = 0;
+        if (v.absorption() > 0 && redSteps < steps) {
+            goldSteps = Math.min(steps, stepsFor(lp + v.absorption(), lpMax, steps));
+        }
+        if (goldSteps > redSteps) {
+            // Gold darunter, das Rot liegt mit gerader rechter Kante davor
+            row.goTo(layout.lifeTrackX);
+            row.put(layout.lifeFill.get(goldSteps - 1), ABSORPTION);
+        }
+        if (redSteps > 0) {
+            row.goTo(layout.lifeTrackX);
+            row.put((goldSteps > redSteps ? layout.lifeFillSquare : layout.lifeFill).get(redSteps - 1), fill);
+        }
+        if (over) {
+            int extra = stepsFor(Math.min(lp - lpMax, lpMax), lpMax, steps);
+            row.goTo(layout.lifeTrackX);
+            row.put(layout.lifeOver.get(Math.max(1, extra) - 1), v.flash() ? mix(LIFE_OVER, FLASH_MIX) : LIFE_OVER);
+        }
+        // Rand: Schaden weiss, Absorption gold, Ueberfuellung hellrot, Wither dunkel
+        TextColor rim = v.flash() ? WHITE : v.absorption() > 0 ? ABSORPTION : over ? LIFE_OVER : v.wither() ? WITHER_RIM : null;
+        if (rim != null) {
+            row.goTo(layout.lifeTrackX);
+            row.put(layout.lifeRim, rim);
+        }
+    }
+
+    /** Hunger rechts, gespiegelt: Spur, Fuellung von rechts nach links, Plakette mit Besteck (unter 20 % orange, blinkend). */
+    private void food(Row row, Vitals v) {
+        int steps = layout.foodFill.size();
+        boolean low = v.food() / 20.0 < HUNGER_LOW;
+        TextColor color = low ? (v.blinkOn() ? ORANGE : HUNGER_DIM) : GREEN;
+        row.goTo(layout.foodTrackX);
+        row.put(layout.foodTrack, WHITE);
+        int count = stepsFor(v.food(), 20, steps);
+        if (count > 0) {
+            row.goTo(layout.foodTrackX + layout.foodTrackWidth - layout.foodStep * count);
+            row.put(layout.foodFill.get(count - 1), color);
+        }
+        row.goTo(layout.foodPlateX);
+        row.put(layout.foodPlate, WHITE);
+        row.goTo(layout.foodPlateX + (layout.foodPlateWidth - layout.foodIcon.width()) / 2);
+        row.put(layout.foodIcon, low ? ORANGE : GREEN);
+    }
+
+    /** Anzahl Fuellstufen: gerundet, bei Rest mindestens 1, hoechstens alle. */
+    private static int stepsFor(long value, long max, int steps) {
+        if (value <= 0) {
+            return 0;
+        }
+        return (int) Math.max(1, Math.min(steps, Math.round((double) value / max * steps)));
     }
 
     // Zahl mit Tausenderpunkt, bei sehr grossen Zahlen als 12.3M oder 456K, damit sie in die Plakette passt
@@ -301,8 +399,12 @@ public final class Hud implements Listener {
         }
 
         void text(String text, boolean large, TextColor color) {
+            text(text, large ? layout.big : layout.small, color);
+        }
+
+        void text(String text, Map<Character, Glyph> table, TextColor color) {
             for (char c : text.toCharArray()) {
-                Glyph g = (large ? layout.big : layout.small).get(c);
+                Glyph g = table.get(c);
                 if (g != null) {
                     put(g, color);
                 }
