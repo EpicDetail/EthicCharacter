@@ -140,6 +140,8 @@ public final class Board implements Listener {
     private final Layout layout;
     private final Pages pages;
     private final TextMetrics metrics = new TextMetrics();
+    // Wie gross die Tafel wirkt (1 = volle Groesse laut Layout), config board.scale
+    private final double sc;
     private final Map<UUID, Session> sessions = new ConcurrentHashMap<>();
     // Waehrend wir selbst spawnen, darf kein anderes Plugin (z. B. WorldGuard) es verhindern
     private boolean ownSpawn;
@@ -148,6 +150,7 @@ public final class Board implements Listener {
         this.plugin = plugin;
         this.layout = layout;
         this.pages = pages;
+        this.sc = Math.max(0.4, Math.min(1.0, plugin.getConfig().getDouble("board.scale", 0.7)));
     }
 
     public Layout layout() {
@@ -228,8 +231,8 @@ public final class Board implements Listener {
             boolean free = true;
             for (double d = 0.8; d <= depth && free; d += 0.4) {
                 double k = d / D_BOARD;
-                for (double r : new double[]{-layout.width(page) / 2 + 0.2, 0, layout.width(page) / 2 - 0.2}) {
-                    for (double h : new double[]{0.5, middle, layout.height(page) - 0.15}) {
+                for (double r : new double[]{(-layout.width(page) / 2 + 0.2) * sc, 0, (layout.width(page) / 2 - 0.2) * sc}) {
+                    for (double h : new double[]{middle - (middle - 0.5) * sc, middle, middle + (layout.height(page) - 0.15 - middle) * sc}) {
                         if (location(s, r * k, s.eye + (h - s.eye) * k, d).getBlock().isSolid()) {
                             free = false;
                         }
@@ -377,7 +380,7 @@ public final class Board implements Listener {
     }
 
     private TextDisplay spawn(Session s, Location at, Component text, double scale, int lineWidth) {
-        float k = (float) (layer(s, D_TEXT) / s.depth);
+        float k = (float) (layer(s, D_TEXT) / s.depth * sc);
         TextDisplay display;
         ownSpawn = true;
         try {
@@ -402,7 +405,7 @@ public final class Board implements Listener {
 
     /** Gegenstand als flaches Symbol auf der Tafel, size = Kantenlaenge in Bloecken. */
     public ItemDisplay item(Session s, double x, double y, double size, ItemStack stack) {
-        float k = (float) (layer(s, D_TEXT) / s.depth);
+        float k = (float) (layer(s, D_TEXT) / s.depth * sc);
         ItemDisplay display;
         ownSpawn = true;
         try {
@@ -519,7 +522,7 @@ public final class Board implements Listener {
      * Eine Kachel als Schrift-Glyphe auf einem Text-Display: wird unbeleuchtet gezeichnet, also in exakten Farben.
      */
     private TextDisplay glyph(Session s, double x, double y, double depth, Tile t, double width, double height, TextColor tint) {
-        float k = (float) (layer(s, depth) / s.depth);
+        float k = (float) (layer(s, depth) / s.depth * sc);
         float sx = (float) (width / (t.widthPx() * PX)), sy = (float) (height / (t.heightPx() * PX));
         // Der Text wird nach seiner Laufweite zentriert, die Textur beginnt aber links: um den Unterschied schieben
         double shift = t.middle() * PX * sx;
@@ -561,7 +564,7 @@ public final class Board implements Listener {
         double depth = layer(s, nominal);
         double k = depth / s.depth;
         double middle = BOTTOM + layout.height(s.page) / 2;
-        return location(s, x * k, s.eye + (middle + y - s.eye) * k, depth);
+        return location(s, x * k * sc, s.eye + (middle + y * sc - s.eye) * k, depth);
     }
 
     private Location location(Session s, double right, double height, double depth) {
@@ -627,8 +630,8 @@ public final class Board implements Listener {
         Vector hit = eye.toVector().add(direction.multiply(t)).subtract(s.feet.toVector());
         // Auf die Tafelkoordinaten (Ebene in 4 Bloecken Tiefe) umrechnen
         double scale = D_BOARD / s.depth;
-        double r = hit.dot(s.right) * scale;
-        double y = (hit.getY() - s.eye) * scale + s.eye - (BOTTOM + layout.height(s.page) / 2);
+        double r = hit.dot(s.right) * scale / sc;
+        double y = ((hit.getY() - s.eye) * scale + s.eye - (BOTTOM + layout.height(s.page) / 2)) / sc;
         Part result = null;
         for (Part part : s.parts.values()) {
             Element e = part.element;

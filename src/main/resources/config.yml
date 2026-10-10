@@ -6,3 +6,7 @@ hud:
 welcome:
   enabled: true
   delay-seconds: 4
+
+# Tafel: wie gross sie wirkt (1 = volle Groesse laut Layout, kleiner = braucht weniger Platz, Text wird kleiner)
+board:
+  scale: 0.7
