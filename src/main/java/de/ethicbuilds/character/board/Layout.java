@@ -39,7 +39,18 @@ public final class Layout {
 
     public record Element(String id, String type, double x, double y, double width, double height, String text, String font,
                           int px, TextColor color, String state, String action, String tag, String visibleFor,
-                          Map<String, String> images, List<Slice> slices, String fill) {
+                          Map<String, String> images, List<Slice> slices, String fill, Map<String, String> extra) {
+
+        /** Ein Klickbereich ohne eigene Grafik, den eine Seite zur Laufzeit anlegt. */
+        public static Element region(String id, double x, double y, double width, double height, String action) {
+            return new Element(id, "bereich", x, y, width, height, "", "ethicbuilds:ui", 0, TextColor.fromHexString("#E8EEF7"), "normal",
+                    action, "", "alle", Map.of(), List.of(), "", Map.of());
+        }
+
+        /** Zusatzfeld aus dem Layout (z. B. zeilenhoehePx), sonst der Ersatzwert. */
+        public String extra(String key, String fallback) {
+            return extra.getOrDefault(key, fallback);
+        }
 
         public boolean clickable() {
             return action != null && !action.isEmpty() && !action.equals("keine") && !"gesperrt".equals(state);
@@ -51,6 +62,7 @@ public final class Layout {
     private final Map<String, String> helpers = new HashMap<>();
     private double boardWidth = 7.2;
     private double boardHeight = 4.5;
+    private final Map<String, double[]> sizes = new HashMap<>();
 
     public static Layout load(String resource) throws IOException {
         try (InputStream in = Layout.class.getResourceAsStream(resource)) {
@@ -67,6 +79,12 @@ public final class Layout {
         JsonObject board = json.getAsJsonObject("tafel");
         boardWidth = board.get("breiteBloecke").getAsDouble();
         boardHeight = board.get("hoeheBloecke").getAsDouble();
+        if (json.has("seitenGroesse")) {
+            for (Map.Entry<String, JsonElement> e : json.getAsJsonObject("seitenGroesse").entrySet()) {
+                JsonObject o = e.getValue().getAsJsonObject();
+                sizes.put(e.getKey(), new double[]{o.get("breiteBloecke").getAsDouble(), o.get("hoeheBloecke").getAsDouble()});
+            }
+        }
         JsonObject glyphJson = json.getAsJsonObject("glyphen");
         Key font = Key.key(glyphJson.get("schrift").getAsString());
         for (Map.Entry<String, JsonElement> e : glyphJson.getAsJsonObject("tabelle").entrySet()) {
@@ -112,11 +130,17 @@ public final class Layout {
         int px = (int) number(o, "px");
         // Ohne Angabe: grosse Zahlen fett, kleine Texte normal
         String font = string(o, "schrift", px >= 30 ? "ethicbuilds:ui_bold" : "ethicbuilds:ui");
+        Map<String, String> extra = new HashMap<>();
+        for (Map.Entry<String, JsonElement> e : o.entrySet()) {
+            if (e.getValue().isJsonPrimitive()) {
+                extra.put(e.getKey(), e.getValue().getAsString());
+            }
+        }
         return new Element(o.get("id").getAsString(), o.get("typ").getAsString(), number(o, "x"), number(o, "y"), number(o, "w"),
                 number(o, "h"), string(o, "text", ""), font, px,
                 color.startsWith("#") ? TextColor.fromHexString(color) : TextColor.fromHexString("#E8EEF7"),
                 string(o, "zustand", "normal"), string(o, "aktion", ""), string(o, "tag", ""), string(o, "sichtbarFuer", "alle"),
-                images, slices, string(o, "fuellstand", ""));
+                images, slices, string(o, "fuellstand", ""), extra);
     }
 
     private static double number(JsonObject o, String field) {
@@ -133,6 +157,18 @@ public final class Layout {
 
     public double boardHeight() {
         return boardHeight;
+    }
+
+    /** Breite der Tafel dieser Seite in Bloecken. */
+    public double width(String page) {
+        double[] size = sizes.get(page);
+        return size != null ? size[0] : boardWidth;
+    }
+
+    /** Hoehe der Tafel dieser Seite in Bloecken. */
+    public double height(String page) {
+        double[] size = sizes.get(page);
+        return size != null ? size[1] : boardHeight;
     }
 
     public Glyph glyph(String name) {

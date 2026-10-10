@@ -13,6 +13,8 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemDisplay;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
 import org.bukkit.event.EventHandler;
@@ -136,6 +138,7 @@ public final class Board implements Listener {
     private final Plugin plugin;
     private final Layout layout;
     private final Pages pages;
+    private final TextMetrics metrics = new TextMetrics();
     private final Map<UUID, Session> sessions = new ConcurrentHashMap<>();
     // Waehrend wir selbst spawnen, darf kein anderes Plugin (z. B. WorldGuard) es verhindern
     private boolean ownSpawn;
@@ -164,7 +167,7 @@ public final class Board implements Listener {
     public void open(Player player, String page, Map<String, Object> data) {
         close(player);
         Session s = new Session(player);
-        if (!hasRoom(s)) {
+        if (!hasRoom(s, page)) {
             player.sendMessage("§cHier ist nicht genug Platz für die Tafel. Stell dich an eine freiere Stelle.");
             return;
         }
@@ -211,11 +214,11 @@ public final class Board implements Listener {
     }
 
     // Ist vor dem Spieler genug freier Raum (keine festen Bloecke zwischen ihm und der Tafel)?
-    private boolean hasRoom(Session s) {
-        double middle = BOTTOM + layout.boardHeight() / 2;
+    private boolean hasRoom(Session s, String page) {
+        double middle = BOTTOM + layout.height(page) / 2;
         for (double d = 1.0; d <= D_BOARD; d += 0.5) {
-            for (double r : new double[]{-layout.boardWidth() / 2 + 0.2, 0, layout.boardWidth() / 2 - 0.2}) {
-                for (double h : new double[]{0.5, middle, layout.boardHeight() - 0.15}) {
+            for (double r : new double[]{-layout.width(page) / 2 + 0.2, 0, layout.width(page) / 2 - 0.2}) {
+                for (double h : new double[]{0.5, middle, layout.height(page) - 0.15}) {
                     if (location(s, r * d / D_BOARD, h, d).getBlock().isSolid()) {
                         return false;
                     }
@@ -357,6 +360,81 @@ public final class Board implements Listener {
         return display;
     }
 
+    /** Gegenstand als flaches Symbol auf der Tafel, size = Kantenlaenge in Bloecken. */
+    public ItemDisplay item(Session s, double x, double y, double size, ItemStack stack) {
+        float k = (float) (D_TEXT / D_BOARD);
+        ItemDisplay display;
+        ownSpawn = true;
+        try {
+            display = s.feet.getWorld().spawn(point(s, x, y, D_TEXT), ItemDisplay.class, d -> {
+                prepare(d);
+                d.setItemStack(stack);
+                d.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GUI);
+                d.setBillboard(Display.Billboard.FIXED);
+                d.setBrightness(new Display.Brightness(15, 15));
+                d.setTransformation(new Transformation(new Vector3f(), new Quaternionf(),
+                        new Vector3f((float) size * k, (float) size * k, 0.0001f), new Quaternionf()));
+            });
+        } finally {
+            ownSpawn = false;
+        }
+        s.player.showEntity(plugin, display);
+        s.extras.add(display);
+        return display;
+    }
+
+    /** Klickbereich ohne Grafik, zum Beispiel fuer Angebote oder Zeilen einer Liste. */
+    public void region(Session s, String id, double x, double y, double width, double height, String action) {
+        s.parts.put(id, new Part(Element.region(id, x, y, width, height, action)));
+    }
+
+    /** Grafik aus dem Layout zur Laufzeit zeichnen (Zustaende wie Haken, Pips), tint faerbt sie ein. */
+    public void glyph(Session s, double x, double y, String name, TextColor tint) {
+        Glyph g = layout.glyph(name);
+        if (g != null) {
+            s.extras.addAll(tiles(s, x, y, D_SHAPE, g, 1, 1, tint));
+        }
+    }
+
+    public enum Align {
+        LEFT, CENTER, RIGHT
+    }
+
+    /** Eine Textzeile, die an x links, mittig oder rechts buendig sitzt. plain ist der reine Text zum Messen. */
+    public TextDisplay line(Session s, double x, double y, Component text, String plain, String font, int px, Align align) {
+        double width = measure(plain, font, px);
+        double center = switch (align) {
+            case LEFT -> x + width / 2;
+            case RIGHT -> x - width / 2;
+            default -> x;
+        };
+        return text(s, center, y, text.font(Key.key(font)), px);
+    }
+
+    /** Breite eines Textes in Bloecken. */
+    public double measure(String plain, String font, int px) {
+        return metrics.width(plain, font) * PX * (px / 160.0) / TEXT_HEIGHT;
+    }
+
+    /** Bricht Text in Zeilen, die in width Bloecke passen. */
+    public List<String> wrap(String plain, String font, int px, double width) {
+        List<String> lines = new ArrayList<>();
+        StringBuilder line = new StringBuilder();
+        for (String word : plain.split(" ")) {
+            String test = line.length() == 0 ? word : line + " " + word;
+            if (line.length() > 0 && measure(test, font, px) > width) {
+                lines.add(line.toString());
+                line = new StringBuilder(word);
+            } else {
+                line = new StringBuilder(test);
+            }
+        }
+        if (line.length() > 0) {
+            lines.add(line.toString());
+        }
+        return lines;
+    }
+
     /** Fortschrittslinie: Spur, darauf die Fuellung von links bis progress (0 bis 1). */
     public void bar(Session s, Element track, double progress, String fill) {
         List<TextDisplay> back = tiles(s, track.x(), track.y(), D_SHAPE, layout.helper("spur"), track.width() / 0.2, track.height() / 0.075, null);
@@ -422,7 +500,7 @@ public final class Board implements Listener {
 
     private Location point(Session s, double x, double y, double depth) {
         double k = depth / D_BOARD;
-        double middle = BOTTOM + layout.boardHeight() / 2;
+        double middle = BOTTOM + layout.height(s.page) / 2;
         return location(s, x * k, s.eye + (middle + y - s.eye) * k, depth);
     }
 
@@ -488,7 +566,7 @@ public final class Board implements Listener {
         }
         Vector hit = eye.toVector().add(direction.multiply(t)).subtract(s.feet.toVector());
         double r = hit.dot(s.right);
-        double y = hit.getY() - (BOTTOM + layout.boardHeight() / 2);
+        double y = hit.getY() - (BOTTOM + layout.height(s.page) / 2);
         Part result = null;
         for (Part part : s.parts.values()) {
             Element e = part.element;
