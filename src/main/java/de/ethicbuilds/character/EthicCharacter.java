@@ -25,7 +25,6 @@ public final class EthicCharacter extends JavaPlugin implements CommandExecutor 
             Layout layout = Layout.load("/tafel.json");
             CharacterPages pages = new CharacterPages(this);
             board = new Board(this, layout, pages);
-            pages.attach(board);
             data = new CharacterData(this);
         } catch (Exception e) {
             getLogger().severe("tafel.json nicht lesbar, EthicCharacter wird abgeschaltet: " + e.getMessage());

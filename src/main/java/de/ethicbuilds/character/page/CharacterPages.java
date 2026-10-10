@@ -14,7 +14,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.Locale;
 
-/** Inhalt und Klicks der Charakter-Tafel. */
+/** Inhalt und Klicks der Charakter-Tafel. Texte und Linien stehen mit ihrer Lage im Layout. */
 public final class CharacterPages implements Board.Pages {
 
     private static final TextColor TEXT = TextColor.fromHexString("#E8EEF7");
@@ -23,16 +23,12 @@ public final class CharacterPages implements Board.Pages {
     private static final TextColor GOLD = TextColor.fromHexString("#FFD24A");
     private static final Key FONT = Key.key("ethicbuilds:ui");
     private static final Key BOLD = Key.key("ethicbuilds:ui_bold");
+    private static final Key HUD = Key.key("ethicbuilds:hud");
 
     private final Plugin plugin;
-    private Board board;
 
     public CharacterPages(Plugin plugin) {
         this.plugin = plugin;
-    }
-
-    public void attach(Board board) {
-        this.board = board;
     }
 
     // ------------------------------------------------------------ Texte der Layout-Elemente
@@ -42,6 +38,7 @@ public final class CharacterPages implements Board.Pages {
         if (e.text().isEmpty()) {
             return null;
         }
+        boolean max = number(s, "xpNext") == 0;
         switch (e.id()) {
             case "kopf_name" -> {
                 // Name, Punkt und Level in einer Zeile, damit sie dicht beieinander stehen
@@ -53,19 +50,39 @@ public final class CharacterPages implements Board.Pages {
                 return null;
             }
             case "kopf_coins" -> {
-                return Component.text().append(Component.text("").font(Key.key("ethicbuilds:hud")).color(TextColor.color(0xFFFFFF)))
-                        .append(Component.text(" " + CoinFormat.number(number(s, "coins")) + " EthicCoins").color(GOLD).font(BOLD)).build();
+                return Component.text().append(Component.text("").font(HUD).color(TextColor.color(0xFFFFFF)))
+                        .append(Component.text(" " + fill(s, e.text())).color(GOLD).font(BOLD)).build();
+            }
+            case "in_level_fuss" -> {
+                if (max) {
+                    return Component.text("Höchstes Level erreicht");
+                }
+            }
+            case "in_xp_fuss" -> {
+                if (max) {
+                    return Component.text("Maximum erreicht");
+                }
             }
             default -> {
-                return Component.text(fill(s, e.text()));
             }
         }
+        return Component.text(fill(s, e.text()));
     }
 
+    // Platzhalter aus den Werten der Tafel, Zahlen mit Tausenderpunkt
     private String fill(Session s, String text) {
-        return text.replace("{name}", string(s, "name")).replace("{level}", String.valueOf(number(s, "level")))
+        long level = number(s, "level");
+        long into = number(s, "xpInto");
+        long next = number(s, "xpNext");
+        long percent = next > 0 ? Math.round(100.0 * into / next) : 100;
+        return text.replace("{name}", string(s, "name")).replace("{level}", String.valueOf(level))
                 .replace("{rang}", string(s, "rank")).replace("{coins}", CoinFormat.number(number(s, "coins")))
-                .replace("{h}", String.valueOf(number(s, "resetHours")));
+                .replace("{xp}", CoinFormat.number(number(s, "xp"))).replace("{xpIntoLevel}", CoinFormat.number(into))
+                .replace("{xpForNextLevel}", CoinFormat.number(next)).replace("{prozent}", String.valueOf(percent))
+                .replace("{n}", String.valueOf(level + 1)).replace("{erledigt}", String.valueOf(number(s, "dailiesDone")))
+                .replace("{h}", String.valueOf(number(s, "resetHours")))
+                .replace("{steuer}", String.format(Locale.GERMANY, "%.1f", (Double) s.data().getOrDefault("tax", 0.0)))
+                .replace("{stufe}", String.valueOf(Math.min(9, level / 10)));
     }
 
     @Override
@@ -83,77 +100,45 @@ public final class CharacterPages implements Board.Pages {
         return c != null ? c : ORANGE;
     }
 
-    // ------------------------------------------------------------ Karten und Seiten
+    // ------------------------------------------------------------ Linien und Seiten
 
     @Override
     public void draw(Board board, Session s, String page) {
-        switch (page) {
-            case "uebersicht" -> overview(board, s);
-            default -> comingSoon(board, s, page);
+        boolean max = number(s, "xpNext") == 0;
+        for (Element e : board.layout().page(page)) {
+            if (e.type().equals("linie") && !e.fill().isEmpty()) {
+                board.bar(s, e, progress(s, e.fill()), max && e.id().startsWith("in_level") ? "gold" : "orange");
+            }
+        }
+        if (!page.equals("uebersicht") && !page.equals("verzauberer")) {
+            board.text(s, 0.9, -0.2, Component.text("Diese Seite kommt als Nächstes.").color(HINT).font(FONT), 22);
         }
     }
 
-    private void overview(Board board, Session s) {
-        long level = number(s, "level");
-        long into = number(s, "xpInto");
-        long next = number(s, "xpNext");
-        double progress = next > 0 ? (double) into / next : 1.0;
-        boolean max = next == 0;
-
-        Element card = element(board, s, "karte_level");
-        title(board, s, card, "Level");
-        big(board, s, card, String.valueOf(level), max ? GOLD : ORANGE);
-        board.bar(s, element(board, s, "karte_level_linie"), progress, max ? "gold" : "orange");
-        small(board, s, card, -0.42, max ? "Höchstes Level" : Math.round(progress * 100) + " % bis Level " + (level + 1), HINT);
-
-        card = element(board, s, "karte_xp");
-        title(board, s, card, "XP gesamt");
-        big(board, s, card, CoinFormat.number(number(s, "xp")), TEXT);
-        small(board, s, card, -0.12, "XP bis nächstes Level", HINT);
-        small(board, s, card, -0.45, max ? "Maximum erreicht" : CoinFormat.number(into) + " / " + CoinFormat.number(next) + " XP", ORANGE);
-
-        card = element(board, s, "karte_kontostand");
-        title(board, s, card, "Kontostand");
-        big(board, s, card, CoinFormat.number(number(s, "coins")), GOLD);
-
-        card = element(board, s, "karte_dailies");
-        long done = number(s, "dailiesDone");
-        title(board, s, card, "Dailies heute");
-        big(board, s, card, done + " / " + CharacterData.DAILIES_PER_DAY, TEXT);
-        board.bar(s, element(board, s, "karte_dailies_linie"), (double) done / CharacterData.DAILIES_PER_DAY, "orange");
-        small(board, s, card, -0.35, "wieder da in " + number(s, "resetHours") + " Std.", HINT);
-
-        card = element(board, s, "karte_steuer");
-        title(board, s, card, "Überweisungssteuer");
-        big(board, s, card, String.format(Locale.GERMANY, "%.1f %%", (Double) s.data().getOrDefault("tax", 0.0)), ORANGE);
-        small(board, s, card, -0.3, "Ändert sich mit dem\nGeld im Umlauf", HINT);
-
-        card = element(board, s, "karte_auktion");
-        title(board, s, card, "Auktionshaus");
-        small(board, s, card, 0.1, "Kaufen und verkaufen\nbeim Auktionator", HINT);
+    // "xpIntoLevel/xpForNextLevel" oder "erledigt/3": Zaehler durch Nenner, ohne Nenner voll
+    private double progress(Session s, String expression) {
+        String[] parts = expression.split("/");
+        if (parts.length != 2) {
+            return 0;
+        }
+        double numerator = value(s, parts[0].trim());
+        double denominator = value(s, parts[1].trim());
+        return denominator > 0 ? Math.max(0, Math.min(1, numerator / denominator)) : 1.0;
     }
 
-    private void comingSoon(Board board, Session s, String page) {
-        board.text(s, 0.9, 0.0, Component.text("Diese Seite kommt als Nächstes.").color(HINT).font(FONT), 22);
-    }
-
-    private Element element(Board board, Session s, String id) {
-        return board.layout().page(s.page()).stream().filter(e -> e.id().equals(id)).findFirst().orElseThrow();
-    }
-
-    private void title(Board board, Session s, Element card, String text) {
-        board.text(s, card.x(), card.y() + card.height() / 2 - 0.25, Component.text(text).color(HINT).font(BOLD), 19);
-    }
-
-    // Grosse Zahl der Karte, die Schrift wird kleiner, wenn der Text sonst nicht passt
-    private void big(Board board, Session s, Element card, String text, TextColor color) {
-        double available = card.width() * 160 * 0.86;
-        int px = (int) Math.min(52, available / (Math.max(1, text.length()) * 0.6));
-        board.text(s, card.x(), card.y() + 0.28, Component.text(text).color(color).font(BOLD), Math.max(20, px));
-    }
-
-    private void small(Board board, Session s, Element card, double offset, String text, TextColor color) {
-        board.text(s, card.x(), card.y() + offset, Component.text(text).color(color).font(FONT), 17);
+    private double value(Session s, String token) {
+        return switch (token) {
+            case "xpIntoLevel" -> number(s, "xpInto");
+            case "xpForNextLevel" -> number(s, "xpNext");
+            case "erledigt" -> number(s, "dailiesDone");
+            default -> {
+                try {
+                    yield Double.parseDouble(token);
+                } catch (NumberFormatException ex) {
+                    yield number(s, token);
+                }
+            }
+        };
     }
 
     // ------------------------------------------------------------ Klicks
@@ -162,9 +147,8 @@ public final class CharacterPages implements Board.Pages {
     public void click(Board board, Session s, Element e) {
         Player player = s.player();
         switch (e.action()) {
-            case "uebersicht", "dailies", "protokoll" -> open(board, s, e.action());
-            case "ueberweisen" -> open(board, s, "ueberweisen");
-            case "auktion" -> {
+            case "uebersicht", "dailies", "protokoll", "ueberweisen" -> open(board, s, e.action());
+            case "auktion", "AuctionApi.open(Player)" -> {
                 board.close(player);
                 AuctionApi auction = Bukkit.getServicesManager().load(AuctionApi.class);
                 if (auction != null) {

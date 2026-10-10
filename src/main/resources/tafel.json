@@ -839,103 +839,103 @@
           }
         ]
       },
-      "knopf_216x51_normal_k": {
-        "b_px": 216,
-        "h_px": 51,
+      "knopf_150x44_normal_k": {
+        "b_px": 150,
+        "h_px": 44,
         "kacheln": [
           {
             "zeichen": "",
             "code": "U+F32F",
-            "b_px": 216,
-            "h_px": 51,
+            "b_px": 150,
+            "h_px": 44,
             "deckend_px": [
               0,
-              215
+              149
             ],
             "x": 0,
             "y": 0,
-            "b": 1.35,
-            "h": 0.319
+            "b": 0.938,
+            "h": 0.275
           }
         ]
       },
-      "knopf_216x51_hover_k": {
-        "b_px": 216,
-        "h_px": 51,
+      "knopf_150x44_hover_k": {
+        "b_px": 150,
+        "h_px": 44,
         "kacheln": [
           {
             "zeichen": "",
             "code": "U+F330",
-            "b_px": 216,
-            "h_px": 51,
+            "b_px": 150,
+            "h_px": 44,
             "deckend_px": [
               0,
-              215
+              149
             ],
             "x": 0,
             "y": 0,
-            "b": 1.35,
-            "h": 0.319
+            "b": 0.938,
+            "h": 0.275
           }
         ]
       },
-      "knopf_216x51_aktiv_k": {
-        "b_px": 216,
-        "h_px": 51,
+      "knopf_150x44_aktiv_k": {
+        "b_px": 150,
+        "h_px": 44,
         "kacheln": [
           {
             "zeichen": "",
             "code": "U+F331",
-            "b_px": 216,
-            "h_px": 51,
+            "b_px": 150,
+            "h_px": 44,
             "deckend_px": [
               0,
-              215
+              149
             ],
             "x": 0,
             "y": 0,
-            "b": 1.35,
-            "h": 0.319
+            "b": 0.938,
+            "h": 0.275
           }
         ]
       },
-      "knopf_216x58_haupt_k": {
-        "b_px": 216,
-        "h_px": 58,
+      "knopf_230x44_haupt_k": {
+        "b_px": 230,
+        "h_px": 44,
         "kacheln": [
           {
             "zeichen": "",
             "code": "U+F332",
-            "b_px": 216,
-            "h_px": 58,
+            "b_px": 230,
+            "h_px": 44,
             "deckend_px": [
               0,
-              215
+              229
             ],
             "x": 0,
             "y": 0,
-            "b": 1.35,
-            "h": 0.363
+            "b": 1.438,
+            "h": 0.275
           }
         ]
       },
-      "knopf_216x58_haupt_hover_k": {
-        "b_px": 216,
-        "h_px": 58,
+      "knopf_230x44_haupt_hover_k": {
+        "b_px": 230,
+        "h_px": 44,
         "kacheln": [
           {
             "zeichen": "",
             "code": "U+F333",
-            "b_px": 216,
-            "h_px": 58,
+            "b_px": 230,
+            "h_px": 44,
             "deckend_px": [
               0,
-              215
+              229
             ],
             "x": 0,
             "y": 0,
-            "b": 1.35,
-            "h": 0.363
+            "b": 1.438,
+            "h": 0.275
           }
         ]
       },
@@ -1874,6 +1874,482 @@
             "h": 0.3
           }
         ]
+      },
+      "rang_120x44_0": {
+        "b_px": 15,
+        "h_px": 44,
+        "kacheln": [
+          {
+            "zeichen": "",
+            "code": "U+F36D",
+            "b_px": 15,
+            "h_px": 44,
+            "deckend_px": [
+              0,
+              14
+            ],
+            "x": 0,
+            "y": 0,
+            "b": 0.094,
+            "h": 0.275
+          }
+        ]
+      },
+      "rang_120x44_1": {
+        "b_px": 15,
+        "h_px": 44,
+        "kacheln": [
+          {
+            "zeichen": "",
+            "code": "U+F36E",
+            "b_px": 15,
+            "h_px": 44,
+            "deckend_px": [
+              0,
+              14
+            ],
+            "x": 0,
+            "y": 0,
+            "b": 0.094,
+            "h": 0.275
+          }
+        ]
+      },
+      "rang_120x44_2": {
+        "b_px": 15,
+        "h_px": 44,
+        "kacheln": [
+          {
+            "zeichen": "",
+            "code": "U+F36F",
+            "b_px": 15,
+            "h_px": 44,
+            "deckend_px": [
+              0,
+              14
+            ],
+            "x": 0,
+            "y": 0,
+            "b": 0.094,
+            "h": 0.275
+          }
+        ]
+      },
+      "rang_120x44_3": {
+        "b_px": 15,
+        "h_px": 44,
+        "kacheln": [
+          {
+            "zeichen": "",
+            "code": "U+F370",
+            "b_px": 15,
+            "h_px": 44,
+            "deckend_px": [
+              0,
+              14
+            ],
+            "x": 0,
+            "y": 0,
+            "b": 0.094,
+            "h": 0.275
+          }
+        ]
+      },
+      "rang_120x44_4": {
+        "b_px": 15,
+        "h_px": 44,
+        "kacheln": [
+          {
+            "zeichen": "",
+            "code": "U+F371",
+            "b_px": 15,
+            "h_px": 44,
+            "deckend_px": [
+              0,
+              14
+            ],
+            "x": 0,
+            "y": 0,
+            "b": 0.094,
+            "h": 0.275
+          }
+        ]
+      },
+      "rang_120x44_5": {
+        "b_px": 15,
+        "h_px": 44,
+        "kacheln": [
+          {
+            "zeichen": "",
+            "code": "U+F372",
+            "b_px": 15,
+            "h_px": 44,
+            "deckend_px": [
+              0,
+              14
+            ],
+            "x": 0,
+            "y": 0,
+            "b": 0.094,
+            "h": 0.275
+          }
+        ]
+      },
+      "rang_120x44_6": {
+        "b_px": 15,
+        "h_px": 44,
+        "kacheln": [
+          {
+            "zeichen": "",
+            "code": "U+F373",
+            "b_px": 15,
+            "h_px": 44,
+            "deckend_px": [
+              0,
+              14
+            ],
+            "x": 0,
+            "y": 0,
+            "b": 0.094,
+            "h": 0.275
+          }
+        ]
+      },
+      "rang_120x44_7": {
+        "b_px": 15,
+        "h_px": 44,
+        "kacheln": [
+          {
+            "zeichen": "",
+            "code": "U+F374",
+            "b_px": 15,
+            "h_px": 44,
+            "deckend_px": [
+              0,
+              14
+            ],
+            "x": 0,
+            "y": 0,
+            "b": 0.094,
+            "h": 0.275
+          }
+        ]
+      },
+      "pille_266x48_52-48-39": {
+        "b_px": 266,
+        "h_px": 48,
+        "kacheln": [
+          {
+            "zeichen": "",
+            "code": "U+F375",
+            "b_px": 133,
+            "h_px": 48,
+            "deckend_px": [
+              0,
+              132
+            ],
+            "x": -0.416,
+            "y": 0,
+            "b": 0.831,
+            "h": 0.3
+          },
+          {
+            "zeichen": "",
+            "code": "U+F376",
+            "b_px": 133,
+            "h_px": 48,
+            "deckend_px": [
+              0,
+              132
+            ],
+            "x": 0.416,
+            "y": 0,
+            "b": 0.831,
+            "h": 0.3
+          }
+        ]
+      },
+      "pille_170x52_22-42-64": {
+        "b_px": 170,
+        "h_px": 52,
+        "kacheln": [
+          {
+            "zeichen": "",
+            "code": "U+F377",
+            "b_px": 170,
+            "h_px": 52,
+            "deckend_px": [
+              0,
+              169
+            ],
+            "x": 0,
+            "y": 0,
+            "b": 1.063,
+            "h": 0.325
+          }
+        ]
+      },
+      "karte_330x516": {
+        "b_px": 330,
+        "h_px": 516,
+        "kacheln": [
+          {
+            "zeichen": "",
+            "code": "U+F378",
+            "b_px": 165,
+            "h_px": 172,
+            "deckend_px": [
+              0,
+              164
+            ],
+            "x": -0.516,
+            "y": 1.075,
+            "b": 1.031,
+            "h": 1.075
+          },
+          {
+            "zeichen": "",
+            "code": "U+F379",
+            "b_px": 165,
+            "h_px": 172,
+            "deckend_px": [
+              0,
+              164
+            ],
+            "x": 0.516,
+            "y": 1.075,
+            "b": 1.031,
+            "h": 1.075
+          },
+          {
+            "zeichen": "",
+            "code": "U+F37A",
+            "b_px": 165,
+            "h_px": 172,
+            "deckend_px": [
+              0,
+              164
+            ],
+            "x": -0.516,
+            "y": 0,
+            "b": 1.031,
+            "h": 1.075
+          },
+          {
+            "zeichen": "",
+            "code": "U+F37B",
+            "b_px": 165,
+            "h_px": 172,
+            "deckend_px": [
+              0,
+              164
+            ],
+            "x": 0.516,
+            "y": 0,
+            "b": 1.031,
+            "h": 1.075
+          },
+          {
+            "zeichen": "",
+            "code": "U+F37C",
+            "b_px": 165,
+            "h_px": 172,
+            "deckend_px": [
+              0,
+              164
+            ],
+            "x": -0.516,
+            "y": -1.075,
+            "b": 1.031,
+            "h": 1.075
+          },
+          {
+            "zeichen": "",
+            "code": "U+F37D",
+            "b_px": 165,
+            "h_px": 172,
+            "deckend_px": [
+              0,
+              164
+            ],
+            "x": 0.516,
+            "y": -1.075,
+            "b": 1.031,
+            "h": 1.075
+          }
+        ]
+      },
+      "karte_756x516": {
+        "b_px": 756,
+        "h_px": 516,
+        "kacheln": [
+          {
+            "zeichen": "",
+            "code": "U+F37E",
+            "b_px": 252,
+            "h_px": 172,
+            "deckend_px": [
+              0,
+              251
+            ],
+            "x": -1.575,
+            "y": 1.075,
+            "b": 1.575,
+            "h": 1.075
+          },
+          {
+            "zeichen": "",
+            "code": "U+F37F",
+            "b_px": 252,
+            "h_px": 172,
+            "deckend_px": [
+              0,
+              251
+            ],
+            "x": 0,
+            "y": 1.075,
+            "b": 1.575,
+            "h": 1.075
+          },
+          {
+            "zeichen": "",
+            "code": "U+F380",
+            "b_px": 252,
+            "h_px": 172,
+            "deckend_px": [
+              0,
+              251
+            ],
+            "x": 1.575,
+            "y": 1.075,
+            "b": 1.575,
+            "h": 1.075
+          },
+          {
+            "zeichen": "",
+            "code": "U+F381",
+            "b_px": 252,
+            "h_px": 172,
+            "deckend_px": [
+              0,
+              251
+            ],
+            "x": -1.575,
+            "y": 0,
+            "b": 1.575,
+            "h": 1.075
+          },
+          {
+            "zeichen": "",
+            "code": "U+F382",
+            "b_px": 252,
+            "h_px": 172,
+            "deckend_px": [
+              0,
+              251
+            ],
+            "x": 0,
+            "y": 0,
+            "b": 1.575,
+            "h": 1.075
+          },
+          {
+            "zeichen": "",
+            "code": "U+F383",
+            "b_px": 252,
+            "h_px": 172,
+            "deckend_px": [
+              0,
+              251
+            ],
+            "x": 1.575,
+            "y": 0,
+            "b": 1.575,
+            "h": 1.075
+          },
+          {
+            "zeichen": "",
+            "code": "U+F384",
+            "b_px": 252,
+            "h_px": 172,
+            "deckend_px": [
+              0,
+              251
+            ],
+            "x": -1.575,
+            "y": -1.075,
+            "b": 1.575,
+            "h": 1.075
+          },
+          {
+            "zeichen": "",
+            "code": "U+F385",
+            "b_px": 252,
+            "h_px": 172,
+            "deckend_px": [
+              0,
+              251
+            ],
+            "x": 0,
+            "y": -1.075,
+            "b": 1.575,
+            "h": 1.075
+          },
+          {
+            "zeichen": "",
+            "code": "U+F386",
+            "b_px": 252,
+            "h_px": 172,
+            "deckend_px": [
+              0,
+              251
+            ],
+            "x": 1.575,
+            "y": -1.075,
+            "b": 1.575,
+            "h": 1.075
+          }
+        ]
+      },
+      "knopf_140x42_haupt_k": {
+        "b_px": 140,
+        "h_px": 42,
+        "kacheln": [
+          {
+            "zeichen": "",
+            "code": "U+F387",
+            "b_px": 140,
+            "h_px": 42,
+            "deckend_px": [
+              0,
+              139
+            ],
+            "x": 0,
+            "y": 0,
+            "b": 0.875,
+            "h": 0.263
+          }
+        ]
+      },
+      "knopf_140x42_haupt_hover_k": {
+        "b_px": 140,
+        "h_px": 42,
+        "kacheln": [
+          {
+            "zeichen": "",
+            "code": "U+F388",
+            "b_px": 140,
+            "h_px": 42,
+            "deckend_px": [
+              0,
+              139
+            ],
+            "x": 0,
+            "y": 0,
+            "b": 0.875,
+            "h": 0.263
+          }
+        ]
       }
     }
   },
@@ -2205,62 +2681,266 @@
         }
       },
       {
-        "id": "karte_level_linie",
+        "id": "in_level_titel",
+        "typ": "text",
+        "x": -0.858,
+        "y": 1.356,
+        "w": 1.358,
+        "h": 0.138,
+        "px": 17,
+        "text": "Level",
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "in_level_zahl",
+        "typ": "text",
+        "x": -0.858,
+        "y": 1.072,
+        "w": 1.358,
+        "h": 0.356,
+        "px": 52,
+        "text": "{level}",
+        "farbe": "#F9A11E"
+      },
+      {
+        "id": "in_level_linie",
         "typ": "linie",
         "x": -0.858,
-        "y": 0.47500000000000003,
-        "w": 1.3,
-        "h": 0.0375,
+        "y": 0.8,
+        "w": 1.358,
+        "h": 0.037,
+        "px": 6,
+        "farbe": "#F9A11E",
+        "track": "#1F3A59",
+        "fuellstand": "xpIntoLevel/xpForNextLevel",
+        "radiusPx": 3,
         "bild": {
           "spur": "linie_spur"
         }
       },
       {
-        "id": "karte_dailies_linie",
-        "typ": "linie",
+        "id": "in_level_fuss",
+        "typ": "text",
         "x": -0.858,
-        "y": -1.312,
-        "w": 1.3,
-        "h": 0.0375,
-        "bild": {
-          "spur": "linie_spur"
-        }
+        "y": -0.016,
+        "w": 1.358,
+        "h": 0.119,
+        "px": 16,
+        "text": "{prozent} % bis Level {n}",
+        "farbe": "#9FB0C4"
       },
       {
-        "id": "karte_kontostand_knopf",
-        "typ": "knopf",
+        "id": "in_xp_titel",
+        "typ": "text",
+        "x": 0.887,
+        "y": 1.356,
+        "w": 1.358,
+        "h": 0.138,
+        "px": 17,
+        "text": "XP gesamt",
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "in_xp_zahl",
+        "typ": "text",
+        "x": 0.887,
+        "y": 1.072,
+        "w": 1.358,
+        "h": 0.356,
+        "px": 52,
+        "text": "{xp}",
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "in_xp_sub",
+        "typ": "text",
+        "x": 0.887,
+        "y": 0.797,
+        "w": 1.358,
+        "h": 0.119,
+        "px": 16,
+        "text": "XP bis nächstes Level",
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "in_xp_fuss",
+        "typ": "text",
+        "x": 0.887,
+        "y": 0,
+        "w": 1.358,
+        "h": 0.15,
+        "px": 20,
+        "text": "{xpIntoLevel} / {xpForNextLevel} XP",
+        "farbe": "#F9A11E"
+      },
+      {
+        "id": "in_kontostand_titel",
+        "typ": "text",
         "x": 2.633,
-        "y": 0.07500000000000007,
-        "w": 1.35,
-        "h": 0.32,
+        "y": 1.356,
+        "w": 1.358,
+        "h": 0.138,
+        "px": 17,
+        "text": "Kontostand",
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "in_kontostand_zahl",
+        "typ": "text",
+        "x": 2.633,
+        "y": 1.072,
+        "w": 1.358,
+        "h": 0.356,
+        "px": 52,
+        "text": "{coins}",
+        "farbe": "#FFD24A"
+      },
+      {
+        "id": "in_kontostand_sub",
+        "typ": "text",
+        "x": 2.633,
+        "y": 0.797,
+        "w": 1.358,
+        "h": 0.119,
+        "px": 16,
+        "text": "EthicCoins",
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "in_kontostand_knopf",
+        "typ": "knopf",
+        "x": 2.423,
+        "y": 0.062,
+        "w": 0.938,
+        "h": 0.275,
+        "px": 17,
         "text": "Überweisen",
-        "px": 18,
         "zustand": "normal",
         "aktion": "ueberweisen",
-        "sichtbarFuer": "alle",
-        "tag": "",
         "bild": {
-          "normal": "knopf_216x51_normal_k",
-          "hover": "knopf_216x51_hover_k",
-          "aktiv": "knopf_216x51_aktiv_k"
+          "normal": "knopf_150x44_normal_k",
+          "hover": "knopf_150x44_hover_k",
+          "aktiv": "knopf_150x44_aktiv_k"
         }
       },
       {
-        "id": "karte_auktion_knopf",
-        "typ": "knopf",
-        "x": 2.633,
-        "y": -1.692,
-        "w": 1.35,
-        "h": 0.36,
-        "text": "Auktionshaus öffnen",
+        "id": "in_dailies_titel",
+        "typ": "text",
+        "x": -0.858,
+        "y": -0.531,
+        "w": 1.358,
+        "h": 0.138,
         "px": 17,
-        "zustand": "haupt",
-        "aktion": "auktion",
-        "sichtbarFuer": "alle",
-        "tag": "",
+        "text": "Dailies heute",
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "in_dailies_zahl",
+        "typ": "text",
+        "x": -0.858,
+        "y": -0.816,
+        "w": 1.358,
+        "h": 0.356,
+        "px": 52,
+        "text": "{erledigt} / 3",
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "in_dailies_linie",
+        "typ": "linie",
+        "x": -0.858,
+        "y": -1.087,
+        "w": 1.358,
+        "h": 0.037,
+        "px": 6,
+        "farbe": "#F9A11E",
+        "track": "#1F3A59",
+        "fuellstand": "erledigt/3",
+        "radiusPx": 3,
         "bild": {
-          "haupt": "knopf_216x58_haupt_k",
-          "hover": "knopf_216x58_haupt_hover_k"
+          "spur": "linie_spur"
+        }
+      },
+      {
+        "id": "in_dailies_fuss",
+        "typ": "text",
+        "x": -0.858,
+        "y": -1.903,
+        "w": 1.358,
+        "h": 0.119,
+        "px": 16,
+        "text": "wieder da in {h} Std.",
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "in_steuer_titel",
+        "typ": "text",
+        "x": 0.887,
+        "y": -0.531,
+        "w": 1.358,
+        "h": 0.138,
+        "px": 17,
+        "text": "Überweisungssteuer",
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "in_steuer_zahl",
+        "typ": "text",
+        "x": 0.887,
+        "y": -0.816,
+        "w": 1.358,
+        "h": 0.356,
+        "px": 52,
+        "text": "{steuer} %",
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "in_steuer_fuss",
+        "typ": "text",
+        "x": 0.887,
+        "y": -1.903,
+        "w": 1.358,
+        "h": 0.119,
+        "px": 16,
+        "text": "fällt nur in Survival an",
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "in_auktion_titel",
+        "typ": "text",
+        "x": 2.633,
+        "y": -0.531,
+        "w": 1.358,
+        "h": 0.138,
+        "px": 17,
+        "text": "Auktionshaus",
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "in_auktion_text",
+        "typ": "text",
+        "x": 2.633,
+        "y": -0.825,
+        "w": 1.358,
+        "h": 0.325,
+        "px": 20,
+        "text": "Kaufen, verkaufen und Einnahmen abholen.",
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "in_auktion_knopf",
+        "typ": "knopf",
+        "x": 2.673,
+        "y": -1.825,
+        "w": 1.438,
+        "h": 0.275,
+        "px": 17,
+        "text": "Auktionshaus öffnen",
+        "zustand": "haupt",
+        "aktion": "AuctionApi.open(Player)",
+        "bild": {
+          "haupt": "knopf_230x44_haupt_k",
+          "hover": "knopf_230x44_haupt_hover_k"
         }
       }
     ],
@@ -3538,6 +4218,1016 @@
           "haupt": "knopf_230x48_haupt_t",
           "hover": "knopf_230x48_haupt_hover_t"
         }
+      }
+    ],
+    "verzauberer": [
+      {
+        "id": "tafel",
+        "typ": "tafel",
+        "x": 0,
+        "y": 0,
+        "w": 7.2,
+        "h": 4.5,
+        "fuellung": "#0E1A29",
+        "rand": "#1C3350",
+        "randPx": 6,
+        "radiusPx": 30,
+        "bild": "tafel"
+      },
+      {
+        "id": "kopf_bild",
+        "typ": "kopf",
+        "x": -3.25,
+        "y": 1.9,
+        "w": 0.4,
+        "h": 0.4
+      },
+      {
+        "id": "kopf_name",
+        "typ": "text",
+        "x": -2.294,
+        "y": 1.9,
+        "w": 1.312,
+        "h": 0.4,
+        "text": "{name}",
+        "schrift": "ethicbuilds:ui_bold",
+        "px": 36,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "kopf_level",
+        "typ": "text",
+        "x": -1.006,
+        "y": 1.9,
+        "w": 1.062,
+        "h": 0.4,
+        "text": "Level {level}",
+        "schrift": "ethicbuilds:ui_bold",
+        "px": 36,
+        "farbe": "#F9A11E",
+        "hinweis": "Punkt in #9FB0C4 zwischen Name und Level"
+      },
+      {
+        "id": "kopf_rang",
+        "typ": "pille",
+        "x": 0,
+        "y": 1.9,
+        "w": 0.75,
+        "h": 0.275,
+        "fuellung": "LuckPerms color1>color2",
+        "text": "{rang}",
+        "px": 17,
+        "farbe": "#142536",
+        "scheiben": [
+          {
+            "bild": "rang_120x44_0",
+            "nach": 0
+          },
+          {
+            "bild": "rang_120x44_1",
+            "nach": 1
+          },
+          {
+            "bild": "rang_120x44_2",
+            "nach": 2
+          },
+          {
+            "bild": "rang_120x44_3",
+            "nach": 3
+          },
+          {
+            "bild": "rang_120x44_4",
+            "nach": 4
+          },
+          {
+            "bild": "rang_120x44_5",
+            "nach": 5
+          },
+          {
+            "bild": "rang_120x44_6",
+            "nach": 6
+          },
+          {
+            "bild": "rang_120x44_7",
+            "nach": 7
+          }
+        ]
+      },
+      {
+        "id": "kopf_stufe",
+        "typ": "pille",
+        "x": 1.306,
+        "y": 1.9,
+        "w": 1.663,
+        "h": 0.3,
+        "fuellung": "rgba(249,161,30,0.16)",
+        "rand": "#F9A11E",
+        "randPx": 2,
+        "text": "Stufe {stufe} von 9 freigeschaltet",
+        "px": 17,
+        "farbe": "#F9A11E",
+        "bild": {
+          "normal": "pille_266x48_52-48-39"
+        }
+      },
+      {
+        "id": "kopf_coins",
+        "typ": "pille",
+        "x": 2.919,
+        "y": 1.9,
+        "w": 1.062,
+        "h": 0.325,
+        "fuellung": "#162A40",
+        "rand": "rgba(255,255,255,0.08)",
+        "text": "{coins}",
+        "px": 24,
+        "farbe": "#FFD24A",
+        "icon": "muenze",
+        "bild": {
+          "normal": "pille_170x52_22-42-64"
+        }
+      },
+      {
+        "id": "v_gegenstand",
+        "typ": "karte",
+        "x": -2.419,
+        "y": -0.05,
+        "w": 2.062,
+        "h": 3.225,
+        "fuellung": "#162A40",
+        "radiusPx": 22,
+        "zustandLeer": "Kein Gegenstand in der Hand (Text + Hinweis Haupthand, Icon gedimmt #6B7C90)",
+        "bild": {
+          "normal": "karte_330x516"
+        }
+      },
+      {
+        "id": "v_gs_label",
+        "typ": "text",
+        "x": -2.419,
+        "y": 1.356,
+        "w": 1.788,
+        "h": 0.138,
+        "text": "Gegenstand in der Hand",
+        "px": 17,
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "v_gs_kachel",
+        "typ": "item-kachel",
+        "x": -3.025,
+        "y": 0.925,
+        "w": 0.575,
+        "h": 0.575,
+        "fuellung": "#0E1A29",
+        "radiusPx": 20,
+        "hinweis": "Item-Icon des Gegenstands"
+      },
+      {
+        "id": "v_gs_name",
+        "typ": "text",
+        "x": -2.075,
+        "y": 1.038,
+        "w": 1.125,
+        "h": 0.225,
+        "text": "{itemName}",
+        "px": 25,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_gs_hand",
+        "typ": "text",
+        "x": -2.075,
+        "y": 0.85,
+        "w": 1.125,
+        "h": 0.125,
+        "text": "Haupthand",
+        "px": 15,
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "v_gs_trenner",
+        "typ": "linie",
+        "x": -2.419,
+        "y": 0.559,
+        "w": 1.788,
+        "h": 0.006,
+        "farbe": "rgba(255,255,255,0.08)",
+        "bild": {
+          "spur": "linie_spur"
+        }
+      },
+      {
+        "id": "v_ench_0_name",
+        "typ": "text",
+        "x": -2.906,
+        "y": 0.362,
+        "w": 0.812,
+        "h": 0.237,
+        "text": "{enchName}",
+        "px": 18,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_ench_0_pips",
+        "typ": "stufen-pips",
+        "x": -2.056,
+        "y": 0.362,
+        "w": 0.762,
+        "h": 0.05,
+        "anzahl": 9,
+        "gefuellt": "#F9A11E",
+        "leer": "#1F3A59",
+        "hinweis": "9 Segmente, gefüllt = Stufe"
+      },
+      {
+        "id": "v_ench_0_stufe",
+        "typ": "text",
+        "x": -1.575,
+        "y": 0.362,
+        "w": 0.1,
+        "h": 0.237,
+        "text": "{enchStufe}",
+        "px": 18,
+        "farbe": "#F9A11E"
+      },
+      {
+        "id": "v_ench_1_name",
+        "typ": "text",
+        "x": -2.906,
+        "y": 0.05,
+        "w": 0.812,
+        "h": 0.237,
+        "text": "{enchName}",
+        "px": 18,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_ench_1_pips",
+        "typ": "stufen-pips",
+        "x": -2.056,
+        "y": 0.05,
+        "w": 0.762,
+        "h": 0.05,
+        "anzahl": 9,
+        "gefuellt": "#F9A11E",
+        "leer": "#1F3A59",
+        "hinweis": "9 Segmente, gefüllt = Stufe"
+      },
+      {
+        "id": "v_ench_1_stufe",
+        "typ": "text",
+        "x": -1.575,
+        "y": 0.05,
+        "w": 0.1,
+        "h": 0.237,
+        "text": "{enchStufe}",
+        "px": 18,
+        "farbe": "#F9A11E"
+      },
+      {
+        "id": "v_ench_2_name",
+        "typ": "text",
+        "x": -2.906,
+        "y": -0.263,
+        "w": 0.812,
+        "h": 0.237,
+        "text": "{enchName}",
+        "px": 18,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_ench_2_pips",
+        "typ": "stufen-pips",
+        "x": -2.056,
+        "y": -0.263,
+        "w": 0.762,
+        "h": 0.05,
+        "anzahl": 9,
+        "gefuellt": "#F9A11E",
+        "leer": "#1F3A59",
+        "hinweis": "9 Segmente, gefüllt = Stufe"
+      },
+      {
+        "id": "v_ench_2_stufe",
+        "typ": "text",
+        "x": -1.575,
+        "y": -0.263,
+        "w": 0.1,
+        "h": 0.237,
+        "text": "{enchStufe}",
+        "px": 18,
+        "farbe": "#F9A11E"
+      },
+      {
+        "id": "v_ench_3_name",
+        "typ": "text",
+        "x": -2.906,
+        "y": -0.575,
+        "w": 0.812,
+        "h": 0.237,
+        "text": "{enchName}",
+        "px": 18,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_ench_3_pips",
+        "typ": "stufen-pips",
+        "x": -2.056,
+        "y": -0.575,
+        "w": 0.762,
+        "h": 0.05,
+        "anzahl": 9,
+        "gefuellt": "#F9A11E",
+        "leer": "#1F3A59",
+        "hinweis": "9 Segmente, gefüllt = Stufe"
+      },
+      {
+        "id": "v_ench_3_stufe",
+        "typ": "text",
+        "x": -1.575,
+        "y": -0.575,
+        "w": 0.1,
+        "h": 0.237,
+        "text": "{enchStufe}",
+        "px": 18,
+        "farbe": "#F9A11E"
+      },
+      {
+        "id": "v_ench_4_name",
+        "typ": "text",
+        "x": -2.906,
+        "y": -0.887,
+        "w": 0.812,
+        "h": 0.237,
+        "text": "{enchName}",
+        "px": 18,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_ench_4_pips",
+        "typ": "stufen-pips",
+        "x": -2.056,
+        "y": -0.887,
+        "w": 0.762,
+        "h": 0.05,
+        "anzahl": 9,
+        "gefuellt": "#F9A11E",
+        "leer": "#1F3A59",
+        "hinweis": "9 Segmente, gefüllt = Stufe"
+      },
+      {
+        "id": "v_ench_4_stufe",
+        "typ": "text",
+        "x": -1.575,
+        "y": -0.887,
+        "w": 0.1,
+        "h": 0.237,
+        "text": "{enchStufe}",
+        "px": 18,
+        "farbe": "#F9A11E"
+      },
+      {
+        "id": "v_ench_5_name",
+        "typ": "text",
+        "x": -2.906,
+        "y": -1.2,
+        "w": 0.812,
+        "h": 0.237,
+        "text": "{enchName}",
+        "px": 18,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_ench_5_pips",
+        "typ": "stufen-pips",
+        "x": -2.056,
+        "y": -1.2,
+        "w": 0.762,
+        "h": 0.05,
+        "anzahl": 9,
+        "gefuellt": "#F9A11E",
+        "leer": "#1F3A59",
+        "hinweis": "9 Segmente, gefüllt = Stufe"
+      },
+      {
+        "id": "v_ench_5_stufe",
+        "typ": "text",
+        "x": -1.575,
+        "y": -1.2,
+        "w": 0.1,
+        "h": 0.237,
+        "text": "{enchStufe}",
+        "px": 18,
+        "farbe": "#F9A11E"
+      },
+      {
+        "id": "v_auf_karte",
+        "typ": "karte",
+        "x": 1.087,
+        "y": -0.05,
+        "w": 4.725,
+        "h": 3.225,
+        "fuellung": "#162A40",
+        "radiusPx": 22,
+        "zustandLeer": "Keine passenden Bücher (Icon Buch gedimmt, Text, Hinweis Zauberbücher sammeln)",
+        "bild": {
+          "normal": "karte_756x516"
+        }
+      },
+      {
+        "id": "v_auf_titel",
+        "typ": "text",
+        "x": -0.013,
+        "y": 1.322,
+        "w": 2.25,
+        "h": 0.206,
+        "text": "Mögliche Aufwertungen",
+        "px": 26,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_auf_sub",
+        "typ": "text",
+        "x": 1.969,
+        "y": 1.306,
+        "w": 1.562,
+        "h": 0.138,
+        "text": "aus deinen Zauberbüchern",
+        "px": 16,
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "v_zeile_0",
+        "typ": "zeile",
+        "x": 1.087,
+        "y": 0.942,
+        "w": 4.45,
+        "h": 0.403,
+        "zustand": "normal",
+        "zustaendeMoeglich": "normal,hover,gesperrt",
+        "fuellung": "#1C3350",
+        "gesperrtFuellung": "#122234",
+        "radiusPx": 18,
+        "gesperrtGrund": "Stufe nicht freigeschaltet | XP fehlen | Coins fehlen (fehlender Wert rot #E05252)"
+      },
+      {
+        "id": "v_zeile_0_name",
+        "typ": "text",
+        "x": -0.395,
+        "y": 1.012,
+        "w": 1.286,
+        "h": 0.163,
+        "text": "{enchName}",
+        "px": 20,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_zeile_0_sub",
+        "typ": "text",
+        "x": -0.395,
+        "y": 0.863,
+        "w": 1.286,
+        "h": 0.125,
+        "text": "von Stufe {x} auf {y}",
+        "px": 15,
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "v_zeile_0_xp",
+        "typ": "text",
+        "x": 0.676,
+        "y": 0.942,
+        "w": 0.681,
+        "h": 0.403,
+        "text": "{xp} XP",
+        "px": 18,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_zeile_0_coins",
+        "typ": "text",
+        "x": 1.406,
+        "y": 0.942,
+        "w": 0.605,
+        "h": 0.403,
+        "text": "{coins}",
+        "px": 18,
+        "farbe": "#FFD24A",
+        "icon": "muenze"
+      },
+      {
+        "id": "v_zeile_0_chance",
+        "typ": "text",
+        "x": 2.023,
+        "y": 0.942,
+        "w": 0.454,
+        "h": 0.403,
+        "text": "{chance} %",
+        "px": 18,
+        "farbe": "#2DBE6C"
+      },
+      {
+        "id": "v_zeile_0_knopf",
+        "typ": "knopf",
+        "x": 2.775,
+        "y": 0.942,
+        "w": 0.875,
+        "h": 0.263,
+        "text": "Verzaubern",
+        "px": 17,
+        "zustand": "haupt",
+        "gesperrtText": "Gesperrt",
+        "aktion": "verzaubern",
+        "bild": {
+          "haupt": "knopf_140x42_haupt_k",
+          "hover": "knopf_140x42_haupt_hover_k"
+        }
+      },
+      {
+        "id": "v_zeile_1",
+        "typ": "zeile",
+        "x": 1.087,
+        "y": 0.489,
+        "w": 4.45,
+        "h": 0.403,
+        "zustand": "hover",
+        "zustaendeMoeglich": "normal,hover,gesperrt",
+        "fuellung": "#1C3350",
+        "gesperrtFuellung": "#122234",
+        "radiusPx": 18,
+        "gesperrtGrund": "Stufe nicht freigeschaltet | XP fehlen | Coins fehlen (fehlender Wert rot #E05252)"
+      },
+      {
+        "id": "v_zeile_1_name",
+        "typ": "text",
+        "x": -0.395,
+        "y": 0.559,
+        "w": 1.286,
+        "h": 0.163,
+        "text": "{enchName}",
+        "px": 20,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_zeile_1_sub",
+        "typ": "text",
+        "x": -0.395,
+        "y": 0.409,
+        "w": 1.286,
+        "h": 0.125,
+        "text": "von Stufe {x} auf {y}",
+        "px": 15,
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "v_zeile_1_xp",
+        "typ": "text",
+        "x": 0.676,
+        "y": 0.489,
+        "w": 0.681,
+        "h": 0.403,
+        "text": "{xp} XP",
+        "px": 18,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_zeile_1_coins",
+        "typ": "text",
+        "x": 1.406,
+        "y": 0.489,
+        "w": 0.605,
+        "h": 0.403,
+        "text": "{coins}",
+        "px": 18,
+        "farbe": "#FFD24A",
+        "icon": "muenze"
+      },
+      {
+        "id": "v_zeile_1_chance",
+        "typ": "text",
+        "x": 2.023,
+        "y": 0.489,
+        "w": 0.454,
+        "h": 0.403,
+        "text": "{chance} %",
+        "px": 18,
+        "farbe": "#2DBE6C"
+      },
+      {
+        "id": "v_zeile_1_knopf",
+        "typ": "knopf",
+        "x": 2.775,
+        "y": 0.489,
+        "w": 0.875,
+        "h": 0.263,
+        "text": "Verzaubern",
+        "px": 17,
+        "zustand": "haupt",
+        "gesperrtText": "Gesperrt",
+        "aktion": "verzaubern",
+        "bild": {
+          "haupt": "knopf_140x42_haupt_k",
+          "hover": "knopf_140x42_haupt_hover_k"
+        }
+      },
+      {
+        "id": "v_zeile_2",
+        "typ": "zeile",
+        "x": 1.087,
+        "y": 0.036,
+        "w": 4.45,
+        "h": 0.403,
+        "zustand": "normal",
+        "zustaendeMoeglich": "normal,hover,gesperrt",
+        "fuellung": "#1C3350",
+        "gesperrtFuellung": "#122234",
+        "radiusPx": 18,
+        "gesperrtGrund": "Stufe nicht freigeschaltet | XP fehlen | Coins fehlen (fehlender Wert rot #E05252)"
+      },
+      {
+        "id": "v_zeile_2_name",
+        "typ": "text",
+        "x": -0.395,
+        "y": 0.106,
+        "w": 1.286,
+        "h": 0.163,
+        "text": "{enchName}",
+        "px": 20,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_zeile_2_sub",
+        "typ": "text",
+        "x": -0.395,
+        "y": -0.044,
+        "w": 1.286,
+        "h": 0.125,
+        "text": "von Stufe {x} auf {y}",
+        "px": 15,
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "v_zeile_2_xp",
+        "typ": "text",
+        "x": 0.676,
+        "y": 0.036,
+        "w": 0.681,
+        "h": 0.403,
+        "text": "{xp} XP",
+        "px": 18,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_zeile_2_coins",
+        "typ": "text",
+        "x": 1.406,
+        "y": 0.036,
+        "w": 0.605,
+        "h": 0.403,
+        "text": "{coins}",
+        "px": 18,
+        "farbe": "#FFD24A",
+        "icon": "muenze"
+      },
+      {
+        "id": "v_zeile_2_chance",
+        "typ": "text",
+        "x": 2.023,
+        "y": 0.036,
+        "w": 0.454,
+        "h": 0.403,
+        "text": "{chance} %",
+        "px": 18,
+        "farbe": "#2DBE6C"
+      },
+      {
+        "id": "v_zeile_2_knopf",
+        "typ": "knopf",
+        "x": 2.775,
+        "y": 0.036,
+        "w": 0.875,
+        "h": 0.263,
+        "text": "Verzaubern",
+        "px": 17,
+        "zustand": "haupt",
+        "gesperrtText": "Gesperrt",
+        "aktion": "verzaubern",
+        "bild": {
+          "haupt": "knopf_140x42_haupt_k",
+          "hover": "knopf_140x42_haupt_hover_k"
+        }
+      },
+      {
+        "id": "v_zeile_3",
+        "typ": "zeile",
+        "x": 1.087,
+        "y": -0.417,
+        "w": 4.45,
+        "h": 0.403,
+        "zustand": "normal",
+        "zustaendeMoeglich": "normal,hover,gesperrt",
+        "fuellung": "#1C3350",
+        "gesperrtFuellung": "#122234",
+        "radiusPx": 18,
+        "gesperrtGrund": "Stufe nicht freigeschaltet | XP fehlen | Coins fehlen (fehlender Wert rot #E05252)"
+      },
+      {
+        "id": "v_zeile_3_name",
+        "typ": "text",
+        "x": -0.395,
+        "y": -0.347,
+        "w": 1.286,
+        "h": 0.163,
+        "text": "{enchName}",
+        "px": 20,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_zeile_3_sub",
+        "typ": "text",
+        "x": -0.395,
+        "y": -0.497,
+        "w": 1.286,
+        "h": 0.125,
+        "text": "von Stufe {x} auf {y}",
+        "px": 15,
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "v_zeile_3_xp",
+        "typ": "text",
+        "x": 0.676,
+        "y": -0.417,
+        "w": 0.681,
+        "h": 0.403,
+        "text": "{xp} XP",
+        "px": 18,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_zeile_3_coins",
+        "typ": "text",
+        "x": 1.406,
+        "y": -0.417,
+        "w": 0.605,
+        "h": 0.403,
+        "text": "{coins}",
+        "px": 18,
+        "farbe": "#FFD24A",
+        "icon": "muenze"
+      },
+      {
+        "id": "v_zeile_3_chance",
+        "typ": "text",
+        "x": 2.023,
+        "y": -0.417,
+        "w": 0.454,
+        "h": 0.403,
+        "text": "{chance} %",
+        "px": 18,
+        "farbe": "#2DBE6C"
+      },
+      {
+        "id": "v_zeile_3_knopf",
+        "typ": "knopf",
+        "x": 2.775,
+        "y": -0.417,
+        "w": 0.875,
+        "h": 0.263,
+        "text": "Verzaubern",
+        "px": 17,
+        "zustand": "haupt",
+        "gesperrtText": "Gesperrt",
+        "aktion": "verzaubern",
+        "bild": {
+          "haupt": "knopf_140x42_haupt_k",
+          "hover": "knopf_140x42_haupt_hover_k"
+        }
+      },
+      {
+        "id": "v_zeile_4",
+        "typ": "zeile",
+        "x": 1.087,
+        "y": -0.87,
+        "w": 4.45,
+        "h": 0.403,
+        "zustand": "normal",
+        "zustaendeMoeglich": "normal,hover,gesperrt",
+        "fuellung": "#1C3350",
+        "gesperrtFuellung": "#122234",
+        "radiusPx": 18,
+        "gesperrtGrund": "Stufe nicht freigeschaltet | XP fehlen | Coins fehlen (fehlender Wert rot #E05252)"
+      },
+      {
+        "id": "v_zeile_4_name",
+        "typ": "text",
+        "x": -0.395,
+        "y": -0.8,
+        "w": 1.286,
+        "h": 0.163,
+        "text": "{enchName}",
+        "px": 20,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_zeile_4_sub",
+        "typ": "text",
+        "x": -0.395,
+        "y": -0.95,
+        "w": 1.286,
+        "h": 0.125,
+        "text": "von Stufe {x} auf {y}",
+        "px": 15,
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "v_zeile_4_xp",
+        "typ": "text",
+        "x": 0.676,
+        "y": -0.87,
+        "w": 0.681,
+        "h": 0.403,
+        "text": "{xp} XP",
+        "px": 18,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_zeile_4_coins",
+        "typ": "text",
+        "x": 1.406,
+        "y": -0.87,
+        "w": 0.605,
+        "h": 0.403,
+        "text": "{coins}",
+        "px": 18,
+        "farbe": "#FFD24A",
+        "icon": "muenze"
+      },
+      {
+        "id": "v_zeile_4_chance",
+        "typ": "text",
+        "x": 2.023,
+        "y": -0.87,
+        "w": 0.454,
+        "h": 0.403,
+        "text": "{chance} %",
+        "px": 18,
+        "farbe": "#2DBE6C"
+      },
+      {
+        "id": "v_zeile_4_knopf",
+        "typ": "knopf",
+        "x": 2.775,
+        "y": -0.87,
+        "w": 0.875,
+        "h": 0.263,
+        "text": "Verzaubern",
+        "px": 17,
+        "zustand": "haupt",
+        "gesperrtText": "Gesperrt",
+        "aktion": "verzaubern",
+        "bild": {
+          "haupt": "knopf_140x42_haupt_k",
+          "hover": "knopf_140x42_haupt_hover_k"
+        }
+      },
+      {
+        "id": "v_zeile_5",
+        "typ": "zeile",
+        "x": 1.087,
+        "y": -1.323,
+        "w": 4.45,
+        "h": 0.403,
+        "zustand": "normal",
+        "zustaendeMoeglich": "normal,hover,gesperrt",
+        "fuellung": "#1C3350",
+        "gesperrtFuellung": "#122234",
+        "radiusPx": 18,
+        "gesperrtGrund": "Stufe nicht freigeschaltet | XP fehlen | Coins fehlen (fehlender Wert rot #E05252)"
+      },
+      {
+        "id": "v_zeile_5_name",
+        "typ": "text",
+        "x": -0.395,
+        "y": -1.253,
+        "w": 1.286,
+        "h": 0.163,
+        "text": "{enchName}",
+        "px": 20,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_zeile_5_sub",
+        "typ": "text",
+        "x": -0.395,
+        "y": -1.403,
+        "w": 1.286,
+        "h": 0.125,
+        "text": "von Stufe {x} auf {y}",
+        "px": 15,
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "v_zeile_5_xp",
+        "typ": "text",
+        "x": 0.676,
+        "y": -1.323,
+        "w": 0.681,
+        "h": 0.403,
+        "text": "{xp} XP",
+        "px": 18,
+        "farbe": "#E8EEF7"
+      },
+      {
+        "id": "v_zeile_5_coins",
+        "typ": "text",
+        "x": 1.406,
+        "y": -1.323,
+        "w": 0.605,
+        "h": 0.403,
+        "text": "{coins}",
+        "px": 18,
+        "farbe": "#FFD24A",
+        "icon": "muenze"
+      },
+      {
+        "id": "v_zeile_5_chance",
+        "typ": "text",
+        "x": 2.023,
+        "y": -1.323,
+        "w": 0.454,
+        "h": 0.403,
+        "text": "{chance} %",
+        "px": 18,
+        "farbe": "#2DBE6C"
+      },
+      {
+        "id": "v_zeile_5_knopf",
+        "typ": "knopf",
+        "x": 2.775,
+        "y": -1.323,
+        "w": 0.875,
+        "h": 0.263,
+        "text": "Verzaubern",
+        "px": 17,
+        "zustand": "haupt",
+        "gesperrtText": "Gesperrt",
+        "aktion": "verzaubern",
+        "bild": {
+          "haupt": "knopf_140x42_haupt_k",
+          "hover": "knopf_140x42_haupt_hover_k"
+        }
+      },
+      {
+        "id": "v_xp_label",
+        "typ": "text",
+        "x": -3.169,
+        "y": -1.944,
+        "w": 0.562,
+        "h": 0.312,
+        "text": "XP im Level",
+        "px": 16,
+        "farbe": "#9FB0C4"
+      },
+      {
+        "id": "v_xp_linie",
+        "typ": "linie",
+        "x": -1.944,
+        "y": -1.969,
+        "w": 1.688,
+        "h": 0.05,
+        "track": "#1F3A59",
+        "farbe": "#F9A11E",
+        "fuellstand": "xpIntoLevel/xpForNextLevel",
+        "radiusPx": 4,
+        "bild": {
+          "spur": "linie_spur"
+        }
+      },
+      {
+        "id": "v_xp_zahl",
+        "typ": "text",
+        "x": -0.475,
+        "y": -1.944,
+        "w": 1.05,
+        "h": 0.312,
+        "text": "{xpIntoLevel} / {xpForNextLevel} XP",
+        "px": 19,
+        "farbe": "#F9A11E"
+      },
+      {
+        "id": "v_hinweis",
+        "typ": "text",
+        "x": 1.819,
+        "y": -1.944,
+        "w": 3.263,
+        "h": 0.312,
+        "text": "Bei Fehlschlag sinkt die Verzauberung eine Stufe, die Kosten sind weg.",
+        "px": 16,
+        "farbe": "#9FB0C4",
+        "ausrichtung": "rechts",
+        "icon": "warnung"
       }
     ]
   }

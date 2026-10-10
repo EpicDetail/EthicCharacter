@@ -39,7 +39,7 @@ public final class Layout {
 
     public record Element(String id, String type, double x, double y, double width, double height, String text, String font,
                           int px, TextColor color, String state, String action, String tag, String visibleFor,
-                          Map<String, String> images, List<Slice> slices) {
+                          Map<String, String> images, List<Slice> slices, String fill) {
 
         public boolean clickable() {
             return action != null && !action.isEmpty() && !action.equals("keine") && !"gesperrt".equals(state);
@@ -109,11 +109,14 @@ public final class Layout {
             }
         }
         String color = string(o, "farbe", "#E8EEF7");
+        int px = (int) number(o, "px");
+        // Ohne Angabe: grosse Zahlen fett, kleine Texte normal
+        String font = string(o, "schrift", px >= 30 ? "ethicbuilds:ui_bold" : "ethicbuilds:ui");
         return new Element(o.get("id").getAsString(), o.get("typ").getAsString(), number(o, "x"), number(o, "y"), number(o, "w"),
-                number(o, "h"), string(o, "text", ""), string(o, "schrift", "ethicbuilds:ui_bold"), (int) number(o, "px"),
+                number(o, "h"), string(o, "text", ""), font, px,
                 color.startsWith("#") ? TextColor.fromHexString(color) : TextColor.fromHexString("#E8EEF7"),
                 string(o, "zustand", "normal"), string(o, "aktion", ""), string(o, "tag", ""), string(o, "sichtbarFuer", "alle"),
-                images, slices);
+                images, slices, string(o, "fuellstand", ""));
     }
 
     private static double number(JsonObject o, String field) {
