@@ -51,6 +51,10 @@ public final class EthicCharacter extends JavaPlugin implements CommandExecutor 
                 Hud hud = new Hud(this, HudLayout.load("/hud.json"));
                 getServer().getPluginManager().registerEvents(hud, this);
                 hud.start();
+                de.ethicbuilds.character.hud.GroupHud groupHud = new de.ethicbuilds.character.hud.GroupHud(this);
+                getServer().getPluginManager().registerEvents(groupHud, this);
+                groupHud.start();
+                getServer().getPluginManager().registerEvents(new de.ethicbuilds.character.hud.FindToast(this), this);
             } catch (Exception e) {
                 getLogger().warning("HUD nicht gestartet: " + e.getMessage());
             }

@@ -22,6 +22,9 @@ public final class HudLayout {
     public record Glyph(String chars, int width, int advance) {
     }
 
+    /** Breite eines Leerzeichens in Texten (px) */
+    public static final int SPACE = 3;
+
     public final Key font;
     public final int rowWidth;
     public final int coinsX;
@@ -38,16 +41,19 @@ public final class HudLayout {
     public final String[] minus = new String[8];
 
     // Zweite Ebene: Leben links, Hunger rechts (gespiegelt)
-    public final Glyph lifePlate;
+    public final int trackWidth;
+    /** Zahlen und Prozent mit Rand in der XP-Leiste (Zeile 1) und in den Leisten der Zeile 2 */
+    public final Map<Character, Glyph> xpText = new HashMap<>();
+    public final Map<Character, Glyph> barText = new HashMap<>();
+    public final Glyph heartPlate;
+    public final Glyph heart;
     public final Glyph lifeTrack;
     public final Glyph lifeRim;
     public final List<Glyph> lifeFill = new ArrayList<>();
     public final List<Glyph> lifeFillSquare = new ArrayList<>();
     public final List<Glyph> lifeOver = new ArrayList<>();
-    public final Map<Character, Glyph> lifeBig = new HashMap<>();
-    public final Map<Character, Glyph> lifeSmall = new HashMap<>();
-    public final int lifePlateX;
-    public final int lifePlateWidth;
+    public final int heartX;
+    public final int heartPlateWidth;
     public final int lifeTrackX;
     public final int lifeTrackWidth;
     public final Glyph foodPlate;
@@ -86,18 +92,19 @@ public final class HudLayout {
             minus[i] = m.get(i).getAsString();
         }
         JsonObject life = json.getAsJsonObject("leben");
-        lifePlate = glyph(life.getAsJsonObject("plakette"));
+        trackWidth = json.get("spurBreite").getAsInt();
+        json.getAsJsonObject("xpText").entrySet().forEach(e -> xpText.put(e.getKey().charAt(0), glyph(e.getValue().getAsJsonObject())));
+        heartPlate = glyph(life.getAsJsonObject("herzPlakette"));
+        heart = glyph(life.getAsJsonObject("herz"));
         lifeTrack = glyph(life.getAsJsonObject("spur"));
         lifeRim = glyph(life.getAsJsonObject("rand"));
         fill(life.getAsJsonArray("fuellung"), lifeFill);
         fill(life.getAsJsonArray("eck"), lifeFillSquare);
         fill(life.getAsJsonArray("ueber"), lifeOver);
-        JsonObject lifeDigits = life.getAsJsonObject("ziffern");
-        lifeDigits.getAsJsonObject("gross").entrySet().forEach(e -> lifeBig.put(e.getKey().charAt(0), glyph(e.getValue().getAsJsonObject())));
-        lifeDigits.getAsJsonObject("klein").entrySet().forEach(e -> lifeSmall.put(e.getKey().charAt(0), glyph(e.getValue().getAsJsonObject())));
-        lifePlateX = life.getAsJsonObject("lage").get("plakette").getAsInt();
+        life.getAsJsonObject("text").entrySet().forEach(e -> barText.put(e.getKey().charAt(0), glyph(e.getValue().getAsJsonObject())));
+        heartX = life.getAsJsonObject("lage").get("herz").getAsInt();
         lifeTrackX = life.getAsJsonObject("lage").get("spur").getAsInt();
-        lifePlateWidth = life.get("plaketteBreite").getAsInt();
+        heartPlateWidth = life.get("plaketteBreite").getAsInt();
         lifeTrackWidth = life.get("spurBreite").getAsInt();
         JsonObject food = json.getAsJsonObject("hunger");
         foodPlate = glyph(food.getAsJsonObject("plakette"));
@@ -140,7 +147,9 @@ public final class HudLayout {
         int width = 0;
         for (char c : text.toCharArray()) {
             Glyph g = map.get(c);
-            if (g != null) {
+            if (c == ' ') {
+                width += SPACE;
+            } else if (g != null) {
                 width += g.advance();
             }
         }

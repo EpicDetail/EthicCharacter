@@ -259,147 +259,209 @@
   "ziffern": {
     "gross": {
       "0": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 5,
         "lauf": 6
       },
       "1": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 5,
         "lauf": 5
       },
       "2": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 5,
         "lauf": 6
       },
       "3": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 5,
         "lauf": 6
       },
       "4": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 5,
         "lauf": 6
       },
       "5": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 5,
         "lauf": 6
       },
       "6": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 5,
         "lauf": 6
       },
       "7": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 5,
         "lauf": 6
       },
       "8": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 5,
         "lauf": 6
       },
       "9": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 5,
         "lauf": 6
       },
       ".": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 1,
         "lauf": 2
       },
       "+": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 5,
         "lauf": 6
       },
       "-": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 5,
         "lauf": 6
       },
       "K": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 5,
         "lauf": 6
       },
       "M": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 5,
         "lauf": 6
       }
     },
     "klein": {
       "0": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 3,
         "lauf": 4
       },
       "1": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 3,
         "lauf": 4
       },
       "2": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 3,
         "lauf": 4
       },
       "3": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 3,
         "lauf": 4
       },
       "4": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 3,
         "lauf": 4
       },
       "5": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 3,
         "lauf": 4
       },
       "6": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 3,
         "lauf": 4
       },
       "7": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 3,
         "lauf": 4
       },
       "8": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 3,
         "lauf": 4
       },
       "9": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 3,
         "lauf": 4
       },
       "+": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 3,
         "lauf": 4
       },
       "-": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 3,
         "lauf": 4
       },
       ".": {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 1,
         "lauf": 2
       }
+    }
+  },
+  "xpText": {
+    "0": {
+      "zeichen": "",
+      "breite": 7,
+      "lauf": 8
+    },
+    "1": {
+      "zeichen": "",
+      "breite": 7,
+      "lauf": 7
+    },
+    "2": {
+      "zeichen": "",
+      "breite": 7,
+      "lauf": 8
+    },
+    "3": {
+      "zeichen": "",
+      "breite": 7,
+      "lauf": 8
+    },
+    "4": {
+      "zeichen": "",
+      "breite": 7,
+      "lauf": 8
+    },
+    "5": {
+      "zeichen": "",
+      "breite": 7,
+      "lauf": 8
+    },
+    "6": {
+      "zeichen": "",
+      "breite": 7,
+      "lauf": 8
+    },
+    "7": {
+      "zeichen": "",
+      "breite": 7,
+      "lauf": 8
+    },
+    "8": {
+      "zeichen": "",
+      "breite": 7,
+      "lauf": 8
+    },
+    "9": {
+      "zeichen": "",
+      "breite": 7,
+      "lauf": 8
+    },
+    ".": {
+      "zeichen": "",
+      "breite": 3,
+      "lauf": 4
+    },
+    "%": {
+      "zeichen": "",
+      "breite": 7,
+      "lauf": 8
     }
   },
   "abstand": {
@@ -429,750 +491,867 @@
     "level": 66,
     "spur": 90
   },
+  "spurBreite": 92,
   "leben": {
-    "plakette": {
-      "zeichen": "",
-      "breite": 26,
-      "lauf": 27
+    "herzPlakette": {
+      "zeichen": "",
+      "breite": 11,
+      "lauf": 12
+    },
+    "herz": {
+      "zeichen": "",
+      "breite": 9,
+      "lauf": 10
     },
     "spur": {
-      "zeichen": "",
-      "breite": 59,
-      "lauf": 60
+      "zeichen": "",
+      "breite": 74,
+      "lauf": 75
     },
     "rand": {
-      "zeichen": "",
-      "breite": 59,
-      "lauf": 60
+      "zeichen": "",
+      "breite": 74,
+      "lauf": 75
     },
     "fuellung": [
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 2,
         "lauf": 3
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 4,
         "lauf": 5
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 6,
         "lauf": 7
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 8,
         "lauf": 9
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 10,
         "lauf": 11
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 12,
         "lauf": 13
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 14,
         "lauf": 15
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 16,
         "lauf": 17
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 18,
         "lauf": 19
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 20,
         "lauf": 21
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 22,
         "lauf": 23
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 24,
         "lauf": 25
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 26,
         "lauf": 27
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 28,
         "lauf": 29
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 30,
         "lauf": 31
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 32,
         "lauf": 33
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 34,
         "lauf": 35
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 36,
         "lauf": 37
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 38,
         "lauf": 39
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 40,
         "lauf": 41
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 42,
         "lauf": 43
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 44,
         "lauf": 45
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 46,
         "lauf": 47
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 48,
         "lauf": 49
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 50,
         "lauf": 51
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 52,
         "lauf": 53
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 54,
         "lauf": 55
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 56,
         "lauf": 57
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 58,
         "lauf": 59
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 60,
         "lauf": 61
+      },
+      {
+        "zeichen": "",
+        "breite": 62,
+        "lauf": 63
+      },
+      {
+        "zeichen": "",
+        "breite": 64,
+        "lauf": 65
+      },
+      {
+        "zeichen": "",
+        "breite": 66,
+        "lauf": 67
+      },
+      {
+        "zeichen": "",
+        "breite": 68,
+        "lauf": 69
+      },
+      {
+        "zeichen": "",
+        "breite": 70,
+        "lauf": 71
+      },
+      {
+        "zeichen": "",
+        "breite": 72,
+        "lauf": 73
+      },
+      {
+        "zeichen": "",
+        "breite": 74,
+        "lauf": 75
       }
     ],
     "eck": [
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 2,
         "lauf": 3
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 4,
         "lauf": 5
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 6,
         "lauf": 7
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 8,
         "lauf": 9
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 10,
         "lauf": 11
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 12,
         "lauf": 13
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 14,
         "lauf": 15
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 16,
         "lauf": 17
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 18,
         "lauf": 19
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 20,
         "lauf": 21
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 22,
         "lauf": 23
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 24,
         "lauf": 25
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 26,
         "lauf": 27
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 28,
         "lauf": 29
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 30,
         "lauf": 31
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 32,
         "lauf": 33
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 34,
         "lauf": 35
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 36,
         "lauf": 37
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 38,
         "lauf": 39
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 40,
         "lauf": 41
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 42,
         "lauf": 43
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 44,
         "lauf": 45
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 46,
         "lauf": 47
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 48,
         "lauf": 49
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 50,
         "lauf": 51
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 52,
         "lauf": 53
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 54,
         "lauf": 55
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 56,
         "lauf": 57
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 58,
         "lauf": 59
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 60,
         "lauf": 61
+      },
+      {
+        "zeichen": "",
+        "breite": 62,
+        "lauf": 63
+      },
+      {
+        "zeichen": "",
+        "breite": 64,
+        "lauf": 65
+      },
+      {
+        "zeichen": "",
+        "breite": 66,
+        "lauf": 67
+      },
+      {
+        "zeichen": "",
+        "breite": 68,
+        "lauf": 69
+      },
+      {
+        "zeichen": "",
+        "breite": 70,
+        "lauf": 71
+      },
+      {
+        "zeichen": "",
+        "breite": 72,
+        "lauf": 73
+      },
+      {
+        "zeichen": "",
+        "breite": 74,
+        "lauf": 75
       }
     ],
     "ueber": [
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 2,
         "lauf": 3
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 4,
         "lauf": 5
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 6,
         "lauf": 7
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 8,
         "lauf": 9
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 10,
         "lauf": 11
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 12,
         "lauf": 13
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 14,
         "lauf": 15
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 16,
         "lauf": 17
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 18,
         "lauf": 19
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 20,
         "lauf": 21
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 22,
         "lauf": 23
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 24,
         "lauf": 25
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 26,
         "lauf": 27
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 28,
         "lauf": 29
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 30,
         "lauf": 31
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 32,
         "lauf": 33
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 34,
         "lauf": 35
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 36,
         "lauf": 37
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 38,
         "lauf": 39
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 40,
         "lauf": 41
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 42,
         "lauf": 43
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 44,
         "lauf": 45
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 46,
         "lauf": 47
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 48,
         "lauf": 49
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 50,
         "lauf": 51
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 52,
         "lauf": 53
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 54,
         "lauf": 55
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 56,
         "lauf": 57
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 58,
         "lauf": 59
       },
       {
-        "zeichen": "",
+        "zeichen": "",
         "breite": 60,
         "lauf": 61
+      },
+      {
+        "zeichen": "",
+        "breite": 62,
+        "lauf": 63
+      },
+      {
+        "zeichen": "",
+        "breite": 64,
+        "lauf": 65
+      },
+      {
+        "zeichen": "",
+        "breite": 66,
+        "lauf": 67
+      },
+      {
+        "zeichen": "",
+        "breite": 68,
+        "lauf": 69
+      },
+      {
+        "zeichen": "",
+        "breite": 70,
+        "lauf": 71
+      },
+      {
+        "zeichen": "",
+        "breite": 72,
+        "lauf": 73
+      },
+      {
+        "zeichen": "",
+        "breite": 74,
+        "lauf": 75
       }
     ],
-    "ziffern": {
-      "gross": {
-        "0": {
-          "zeichen": "",
-          "breite": 5,
-          "lauf": 6
-        },
-        "1": {
-          "zeichen": "",
-          "breite": 5,
-          "lauf": 5
-        },
-        "2": {
-          "zeichen": "",
-          "breite": 5,
-          "lauf": 6
-        },
-        "3": {
-          "zeichen": "",
-          "breite": 5,
-          "lauf": 6
-        },
-        "4": {
-          "zeichen": "",
-          "breite": 5,
-          "lauf": 6
-        },
-        "5": {
-          "zeichen": "",
-          "breite": 5,
-          "lauf": 6
-        },
-        "6": {
-          "zeichen": "",
-          "breite": 5,
-          "lauf": 6
-        },
-        "7": {
-          "zeichen": "",
-          "breite": 5,
-          "lauf": 6
-        },
-        "8": {
-          "zeichen": "",
-          "breite": 5,
-          "lauf": 6
-        },
-        "9": {
-          "zeichen": "",
-          "breite": 5,
-          "lauf": 6
-        },
-        ".": {
-          "zeichen": "",
-          "breite": 1,
-          "lauf": 2
-        }
+    "text": {
+      "0": {
+        "zeichen": "",
+        "breite": 7,
+        "lauf": 8
       },
-      "klein": {
-        "0": {
-          "zeichen": "",
-          "breite": 3,
-          "lauf": 4
-        },
-        "1": {
-          "zeichen": "",
-          "breite": 3,
-          "lauf": 4
-        },
-        "2": {
-          "zeichen": "",
-          "breite": 3,
-          "lauf": 4
-        },
-        "3": {
-          "zeichen": "",
-          "breite": 3,
-          "lauf": 4
-        },
-        "4": {
-          "zeichen": "",
-          "breite": 3,
-          "lauf": 4
-        },
-        "5": {
-          "zeichen": "",
-          "breite": 3,
-          "lauf": 4
-        },
-        "6": {
-          "zeichen": "",
-          "breite": 3,
-          "lauf": 4
-        },
-        "7": {
-          "zeichen": "",
-          "breite": 3,
-          "lauf": 4
-        },
-        "8": {
-          "zeichen": "",
-          "breite": 3,
-          "lauf": 4
-        },
-        "9": {
-          "zeichen": "",
-          "breite": 3,
-          "lauf": 4
-        },
-        ".": {
-          "zeichen": "",
-          "breite": 1,
-          "lauf": 2
-        }
+      "1": {
+        "zeichen": "",
+        "breite": 7,
+        "lauf": 7
+      },
+      "2": {
+        "zeichen": "",
+        "breite": 7,
+        "lauf": 8
+      },
+      "3": {
+        "zeichen": "",
+        "breite": 7,
+        "lauf": 8
+      },
+      "4": {
+        "zeichen": "",
+        "breite": 7,
+        "lauf": 8
+      },
+      "5": {
+        "zeichen": "",
+        "breite": 7,
+        "lauf": 8
+      },
+      "6": {
+        "zeichen": "",
+        "breite": 7,
+        "lauf": 8
+      },
+      "7": {
+        "zeichen": "",
+        "breite": 7,
+        "lauf": 8
+      },
+      "8": {
+        "zeichen": "",
+        "breite": 7,
+        "lauf": 8
+      },
+      "9": {
+        "zeichen": "",
+        "breite": 7,
+        "lauf": 8
+      },
+      ".": {
+        "zeichen": "",
+        "breite": 3,
+        "lauf": 4
+      },
+      "%": {
+        "zeichen": "",
+        "breite": 7,
+        "lauf": 8
       }
     },
     "lage": {
-      "plakette": 0,
-      "spur": 28
+      "herz": 0,
+      "spur": 13
     },
-    "plaketteBreite": 26,
-    "spurBreite": 59
+    "plaketteBreite": 11,
+    "spurBreite": 74
   },
   "hunger": {
     "plakette": {
-      "zeichen": "",
-      "breite": 10,
-      "lauf": 11
+      "zeichen": "",
+      "breite": 11,
+      "lauf": 12
     },
     "spur": {
-      "zeichen": "",
-      "breite": 75,
-      "lauf": 76
+      "zeichen": "",
+      "breite": 74,
+      "lauf": 75
     },
     "icon": {
-      "zeichen": "",
+      "zeichen": "",
       "breite": 6,
       "lauf": 7
     },
     "fuellung": [
       {
-        "zeichen": "",
-        "breite": 3,
-        "lauf": 4
+        "zeichen": "",
+        "breite": 2,
+        "lauf": 3
       },
       {
-        "zeichen": "",
+        "zeichen": "",
+        "breite": 4,
+        "lauf": 5
+      },
+      {
+        "zeichen": "",
         "breite": 6,
         "lauf": 7
       },
       {
-        "zeichen": "",
-        "breite": 9,
-        "lauf": 10
+        "zeichen": "",
+        "breite": 8,
+        "lauf": 9
       },
       {
-        "zeichen": "",
+        "zeichen": "",
+        "breite": 10,
+        "lauf": 11
+      },
+      {
+        "zeichen": "",
         "breite": 12,
         "lauf": 13
       },
       {
-        "zeichen": "",
-        "breite": 15,
-        "lauf": 16
+        "zeichen": "",
+        "breite": 14,
+        "lauf": 15
       },
       {
-        "zeichen": "",
+        "zeichen": "",
+        "breite": 16,
+        "lauf": 17
+      },
+      {
+        "zeichen": "",
         "breite": 18,
         "lauf": 19
       },
       {
-        "zeichen": "",
-        "breite": 21,
-        "lauf": 22
+        "zeichen": "",
+        "breite": 20,
+        "lauf": 21
       },
       {
-        "zeichen": "",
+        "zeichen": "",
+        "breite": 22,
+        "lauf": 23
+      },
+      {
+        "zeichen": "",
         "breite": 24,
         "lauf": 25
       },
       {
-        "zeichen": "",
-        "breite": 27,
-        "lauf": 28
+        "zeichen": "",
+        "breite": 26,
+        "lauf": 27
       },
       {
-        "zeichen": "",
+        "zeichen": "",
+        "breite": 28,
+        "lauf": 29
+      },
+      {
+        "zeichen": "",
         "breite": 30,
         "lauf": 31
       },
       {
-        "zeichen": "",
-        "breite": 33,
-        "lauf": 34
+        "zeichen": "",
+        "breite": 32,
+        "lauf": 33
       },
       {
-        "zeichen": "",
+        "zeichen": "",
+        "breite": 34,
+        "lauf": 35
+      },
+      {
+        "zeichen": "",
         "breite": 36,
         "lauf": 37
       },
       {
-        "zeichen": "",
-        "breite": 39,
-        "lauf": 40
+        "zeichen": "",
+        "breite": 38,
+        "lauf": 39
       },
       {
-        "zeichen": "",
+        "zeichen": "",
+        "breite": 40,
+        "lauf": 41
+      },
+      {
+        "zeichen": "",
         "breite": 42,
         "lauf": 43
       },
       {
-        "zeichen": "",
-        "breite": 45,
-        "lauf": 46
+        "zeichen": "",
+        "breite": 44,
+        "lauf": 45
       },
       {
         "zeichen": "",
+        "breite": 46,
+        "lauf": 47
+      },
+      {
+        "zeichen": "",
         "breite": 48,
         "lauf": 49
       },
       {
-        "zeichen": "",
-        "breite": 51,
-        "lauf": 52
+        "zeichen": "",
+        "breite": 50,
+        "lauf": 51
       },
       {
-        "zeichen": "",
+        "zeichen": "",
+        "breite": 52,
+        "lauf": 53
+      },
+      {
+        "zeichen": "",
         "breite": 54,
         "lauf": 55
       },
       {
-        "zeichen": "",
-        "breite": 57,
-        "lauf": 58
+        "zeichen": "",
+        "breite": 56,
+        "lauf": 57
       },
       {
-        "zeichen": "",
+        "zeichen": "",
+        "breite": 58,
+        "lauf": 59
+      },
+      {
+        "zeichen": "",
         "breite": 60,
         "lauf": 61
       },
       {
-        "zeichen": "",
-        "breite": 63,
-        "lauf": 64
+        "zeichen": "",
+        "breite": 62,
+        "lauf": 63
       },
       {
-        "zeichen": "",
+        "zeichen": "",
+        "breite": 64,
+        "lauf": 65
+      },
+      {
+        "zeichen": "",
         "breite": 66,
         "lauf": 67
       },
       {
-        "zeichen": "",
-        "breite": 69,
-        "lauf": 70
+        "zeichen": "",
+        "breite": 68,
+        "lauf": 69
       },
       {
-        "zeichen": "",
+        "zeichen": "",
+        "breite": 70,
+        "lauf": 71
+      },
+      {
+        "zeichen": "",
         "breite": 72,
         "lauf": 73
       },
       {
-        "zeichen": "",
-        "breite": 75,
-        "lauf": 76
+        "zeichen": "",
+        "breite": 74,
+        "lauf": 75
       }
     ],
     "lage": {
-      "plakette": 172,
+      "plakette": 171,
       "spur": 95
     },
-    "plaketteBreite": 10,
-    "spurBreite": 75,
-    "schritt": 3
+    "plaketteBreite": 11,
+    "spurBreite": 74,
+    "schritt": 2
   }
 }

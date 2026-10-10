@@ -45,7 +45,6 @@ public final class Hud implements Listener {
     private static final TextColor ORANGE = TextColor.fromHexString("#F9A11E");
     private static final TextColor GREEN = TextColor.fromHexString("#2DBE6C");
     private static final TextColor RED = TextColor.fromHexString("#E05252");
-    private static final TextColor LIFE_TEXT = TextColor.fromHexString("#E8EEF7");
     private static final TextColor LIFE_OVER = TextColor.fromHexString("#FF9A9A");
     private static final TextColor POISON = TextColor.fromHexString("#B8C93A");
     private static final TextColor WITHER = TextColor.fromHexString("#5B4B55");
@@ -60,7 +59,6 @@ public final class Hud implements Listener {
     private static final double FLASH_MIX = 0.45;
     /** Hunger unter 20 % (food / 20): orange und blinkend */
     private static final double HUNGER_LOW = 0.2;
-    private static final int LIFE_DIGITS_MAX_WIDTH = 24;
 
     /** Zugewinn der letzten Sekunden: mehrere Zugaenge addieren sich, solange sie nah beieinander liegen. */
     private static final class Gain {
@@ -268,7 +266,10 @@ public final class Hud implements Listener {
             row.goTo(layout.trackX);
             row.put(layout.fill.get(Math.min(steps, layout.fill.size()) - 1), max ? GOLD : ORANGE);
         }
-        // Zweite Ebene: zurueckspringen, die Glyphen liegen durch ihr ascent hoeher (Oberkante 51)
+        // Prozent in der Leiste, mittig: zurueckspringen und darueber setzen (weisser Text, dunkler Rand ist eingebaut)
+        int percent = max ? 100 : Math.min(99, (int) Math.floor(progress * 100));
+        centered(row, percent + " %", layout.xpText, layout.trackX, layout.trackWidth);
+        // Zweite Ebene: zurueckspringen, die Glyphen liegen durch ihr ascent hoeher (Oberkante 52)
         life(row, vitals);
         food(row, vitals);
         row.goTo(layout.rowWidth);
@@ -282,20 +283,23 @@ public final class Hud implements Listener {
         return TextColor.color(r, g, b);
     }
 
-    /** Leben links: Plakette mit Zahl, Spur, rote Fuellung (Gift, Wither, Blinken, Absorption, Ueberfuellung). */
+    /** Text mittig ueber einer Leiste: auf x zurueckspringen, Text setzen (liegt vor allem, was davor gezeichnet wurde). */
+    private void centered(Row row, String text, Map<Character, Glyph> table, int barX, int barWidth) {
+        row.goTo(barX + Math.max(0, (barWidth - layout.width(text, table)) / 2));
+        row.text(text, table, WHITE);
+    }
+
+    /** Leben links: Herz, Leiste mit Zahl darin, rote Fuellung (Gift, Wither, Blinken, Absorption, Ueberfuellung). */
     private void life(Row row, Vitals v) {
         long lpMax = Math.max(1, v.lpMax());
         long lp = Math.max(0, v.lp());
         boolean over = lp > lpMax;
         int steps = layout.lifeFill.size();
 
-        row.goTo(layout.lifePlateX);
-        row.put(layout.lifePlate, WHITE);
-        String number = CoinFormat.number(lp);
-        boolean smallDigits = layout.width(number, layout.lifeBig) > LIFE_DIGITS_MAX_WIDTH;
-        Map<Character, Glyph> digits = smallDigits ? layout.lifeSmall : layout.lifeBig;
-        row.goTo(layout.lifePlateX + Math.max(1, (layout.lifePlateWidth - layout.width(number, digits)) / 2));
-        row.text(number, digits, LIFE_TEXT);
+        row.goTo(layout.heartX);
+        row.put(layout.heartPlate, WHITE);
+        row.goTo(layout.heartX + (layout.heartPlateWidth - layout.heart.width()) / 2);
+        row.put(layout.heart, RED);
 
         row.goTo(layout.lifeTrackX);
         row.put(layout.lifeTrack, WHITE);
@@ -327,6 +331,8 @@ public final class Hud implements Listener {
             row.goTo(layout.lifeTrackX);
             row.put(layout.lifeRim, rim);
         }
+        // Zahl zuletzt: liegt ueber Fuellung und Rand
+        centered(row, CoinFormat.number(lp), layout.barText, layout.lifeTrackX, layout.lifeTrackWidth);
     }
 
     /** Hunger rechts, gespiegelt: Spur, Fuellung von rechts nach links, Plakette mit Besteck (unter 20 % orange, blinkend). */
@@ -341,6 +347,7 @@ public final class Hud implements Listener {
             row.goTo(layout.foodTrackX + layout.foodTrackWidth - layout.foodStep * count);
             row.put(layout.foodFill.get(count - 1), color);
         }
+        centered(row, Math.round(v.food() * 100 / 20.0f) + " %", layout.barText, layout.foodTrackX, layout.foodTrackWidth);
         row.goTo(layout.foodPlateX);
         row.put(layout.foodPlate, WHITE);
         row.goTo(layout.foodPlateX + (layout.foodPlateWidth - layout.foodIcon.width()) / 2);
@@ -404,6 +411,10 @@ public final class Hud implements Listener {
 
         void text(String text, Map<Character, Glyph> table, TextColor color) {
             for (char c : text.toCharArray()) {
+                if (c == ' ') {
+                    move(HudLayout.SPACE);
+                    continue;
+                }
                 Glyph g = table.get(c);
                 if (g != null) {
                     put(g, color);
