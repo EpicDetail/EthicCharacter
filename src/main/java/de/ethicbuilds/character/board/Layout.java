@@ -53,7 +53,12 @@ public final class Layout {
         }
 
         public boolean clickable() {
-            return action != null && !action.isEmpty() && !action.equals("keine") && !"gesperrt".equals(state);
+            if ("gesperrt".equals(state)) {
+                return false;
+            }
+            // Knoepfe, Haken und Zeilen sind immer bedienbar, die Seite entscheidet nach der Kennung, was sie tun
+            return type.equals("knopf") || type.equals("checkbox") || type.equals("zeile")
+                    || (action != null && !action.isEmpty() && !action.equals("keine"));
         }
     }
 

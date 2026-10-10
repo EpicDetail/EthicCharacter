@@ -1,3 +1,8 @@
 # HUD ueber der Hotbar (Coins, Level, Leiste). Braucht auf dem Server in EthicLobby hud.survival: true
 hud:
   enabled: true
+
+# Willkommensfenster beim Betreten (Haken "nie wieder" steht in willkommen.yml)
+welcome:
+  enabled: true
+  delay-seconds: 4

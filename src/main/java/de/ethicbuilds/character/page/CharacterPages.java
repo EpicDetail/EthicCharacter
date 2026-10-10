@@ -13,6 +13,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /** Inhalt und Klicks der Charakter-Tafel. Texte und Linien stehen mit ihrer Lage im Layout. */
@@ -27,15 +29,70 @@ public final class CharacterPages implements Board.Pages {
     private static final Key HUD = Key.key("ethicbuilds:hud");
 
     private final Plugin plugin;
+    private final List<PageHandler> handlers = new ArrayList<>();
+    private CharacterData data;
 
     public CharacterPages(Plugin plugin) {
         this.plugin = plugin;
+    }
+
+    /** Meldet eine Seite mit eigenem Inhalt an. */
+    public void register(PageHandler handler) {
+        handlers.add(handler);
+    }
+
+    public void data(CharacterData data) {
+        this.data = data;
+    }
+
+    /** Laedt die Seitendaten vor dem Oeffnen (nicht im Hauptthread). */
+    public void load(Player player, java.util.Map<String, Object> values, String page) {
+        PageHandler handler = handler(page);
+        if (handler != null) {
+            handler.load(player, values, page);
+        }
+    }
+
+    private PageHandler handler(String page) {
+        for (PageHandler handler : handlers) {
+            if (handler.pages().contains(page)) {
+                return handler;
+            }
+        }
+        return null;
+    }
+
+    /** Wechselt die Seite; Seiten mit eigenen Daten laden sie vorher im Hintergrund. */
+    public void navigate(Board board, Session s, String page) {
+        if (!board.layout().hasPage(page)) {
+            return;
+        }
+        PageHandler handler = handler(page);
+        if (handler == null) {
+            board.show(s, page);
+            return;
+        }
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            handler.load(s.player(), s.data(), page);
+            Bukkit.getScheduler().runTask(plugin, () -> {
+                if (board.session(s.player()) == s) {
+                    board.show(s, page);
+                }
+            });
+        });
     }
 
     // ------------------------------------------------------------ Texte der Layout-Elemente
 
     @Override
     public Component content(Session s, Element e) {
+        PageHandler handler = handler(s.page());
+        if (handler != null) {
+            Component custom = handler.content(s, e);
+            if (custom != null) {
+                return custom;
+            }
+        }
         if (e.text().isEmpty()) {
             return null;
         }
@@ -88,7 +145,12 @@ public final class CharacterPages implements Board.Pages {
 
     @Override
     public boolean visible(Session s, Element e) {
-        return !e.visibleFor().equals("team") || Boolean.TRUE.equals(s.data().get("team"));
+        PageHandler handler = handler(s.page());
+        if (handler != null && !handler.visible(s, e)) {
+            return false;
+        }
+        // Alles ausser "alle" (z. B. "moderator,admin,manager") ist nur fuers Team
+        return e.visibleFor().isEmpty() || e.visibleFor().equals("alle") || Boolean.TRUE.equals(s.data().get("team"));
     }
 
     @Override
@@ -111,7 +173,10 @@ public final class CharacterPages implements Board.Pages {
                 board.bar(s, e, progress(s, e.fill()), max && e.id().startsWith("in_level") ? "gold" : "orange");
             }
         }
-        if (!page.equals("uebersicht") && !page.equals("verzauberer")) {
+        PageHandler handler = handler(page);
+        if (handler != null) {
+            handler.draw(board, s, page);
+        } else if (!page.equals("uebersicht") && !page.equals("verzauberer")) {
             board.text(s, 0.9, -0.2, Component.text("Diese Seite kommt als Nächstes.").color(HINT).font(FONT), 22);
         }
     }
@@ -147,6 +212,14 @@ public final class CharacterPages implements Board.Pages {
     @Override
     public void click(Board board, Session s, Element e) {
         Player player = s.player();
+        PageHandler handler = handler(s.page());
+        if (handler != null && handler.click(board, s, e)) {
+            return;
+        }
+        if (e.id().startsWith("nav_")) {
+            navigation(board, s, e);
+            return;
+        }
         switch (e.action()) {
             case "uebersicht", "dailies", "protokoll", "ueberweisen" -> open(board, s, e.action());
             case "auktion", "AuctionApi.open(Player)" -> {
@@ -164,7 +237,31 @@ public final class CharacterPages implements Board.Pages {
 
     private void open(Board board, Session s, String page) {
         if (board.layout().hasPage(page) && !page.equals(s.page())) {
-            board.show(s, page);
+            navigate(board, s, page);
+        }
+    }
+
+    // Navigation links: Der Text des Knopfes sagt, wohin es geht
+    private void navigation(Board board, Session s, Element e) {
+        switch (e.text()) {
+            case "Übersicht" -> open(board, s, "uebersicht");
+            case "Dailies" -> open(board, s, "dailies");
+            case "Überweisen" -> open(board, s, "ueberweisen");
+            case "Wiki" -> open(board, s, "wiki");
+            case "Protokoll" -> open(board, s, "protokoll");
+            case "Auktionshaus" -> {
+                if (board.layout().hasPage("auktion")) {
+                    open(board, s, "auktion");
+                    return;
+                }
+                board.close(s.player());
+                AuctionApi auction = Bukkit.getServicesManager().load(AuctionApi.class);
+                if (auction != null) {
+                    auction.open(s.player());
+                }
+            }
+            default -> {
+            }
         }
     }
 

@@ -9,18 +9,28 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityPotionEffectEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -35,8 +45,22 @@ public final class Hud implements Listener {
     private static final TextColor ORANGE = TextColor.fromHexString("#F9A11E");
     private static final TextColor GREEN = TextColor.fromHexString("#2DBE6C");
     private static final TextColor RED = TextColor.fromHexString("#E05252");
+    private static final TextColor LIFE_TEXT = TextColor.fromHexString("#E8EEF7");
+    private static final TextColor LIFE_OVER = TextColor.fromHexString("#FF9A9A");
+    private static final TextColor POISON = TextColor.fromHexString("#B8C93A");
+    private static final TextColor WITHER = TextColor.fromHexString("#5B4B55");
+    private static final TextColor WITHER_RIM = TextColor.fromHexString("#1C1417");
+    private static final TextColor ABSORPTION = TextColor.fromHexString("#FFD24A");
+    private static final TextColor HUNGER_DIM = TextColor.fromHexString("#8A5A14");
     private static final long GAIN_MILLIS = 2000;
     private static final int MAX_COIN_WIDTH = 48;
+    /** 1 HP = 50 Lebenspunkte */
+    private static final double LP_PER_HP = 50.0;
+    private static final int FLASH_TICKS = 4;
+    private static final double FLASH_MIX = 0.45;
+    /** Hunger unter 20 % (food / 20): orange und blinkend */
+    private static final double HUNGER_LOW = 0.2;
+    private static final int LIFE_DIGITS_MAX_WIDTH = 24;
 
     /** Zugewinn der letzten Sekunden: mehrere Zugaenge addieren sich, solange sie nah beieinander liegen. */
     private static final class Gain {
@@ -48,6 +72,13 @@ public final class Hud implements Listener {
     private final HudLayout layout;
     private final Map<UUID, Long> coins = new ConcurrentHashMap<>();
     private final Map<UUID, Gain> gains = new ConcurrentHashMap<>();
+    /** Ende des Schaden-Blinkens je Spieler (Millisekunden) */
+    private final Map<UUID, Long> flashUntil = new ConcurrentHashMap<>();
+    private final Set<UUID> pending = ConcurrentHashMap.newKeySet();
+
+    /** Lebenspunkte, Absorption und Hunger eines Spielers fuer die zweite Ebene. */
+    private record Vitals(long lp, long lpMax, long absorption, int food, boolean poison, boolean wither, boolean flash, boolean blinkOn) {
+    }
 
     public Hud(Plugin plugin, HudLayout layout) {
         this.plugin = plugin;
@@ -56,7 +87,7 @@ public final class Hud implements Listener {
 
     public void start() {
         Bukkit.getOnlinePlayers().forEach(this::load);
-        Bukkit.getScheduler().runTaskTimer(plugin, this::refreshAll, 20L, 20L);
+        Bukkit.getScheduler().runTaskTimer(plugin, this::refreshAll, 10L, 10L);
         // Kontostand gelegentlich neu lesen, falls anderswo im Netzwerk etwas gebucht wurde
         Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> Bukkit.getOnlinePlayers().forEach(this::reload), 600L, 600L);
     }
@@ -72,6 +103,62 @@ public final class Hud implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         coins.remove(event.getPlayer().getUniqueId());
         gains.remove(event.getPlayer().getUniqueId());
+        flashUntil.remove(event.getPlayer().getUniqueId());
+        pending.remove(event.getPlayer().getUniqueId());
+    }
+
+    // Leben und Hunger: beim Ereignis einen Tick spaeter neu zeichnen (dann gilt der neue Wert), dazu alle 10 Ticks
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onDamage(EntityDamageEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            flashUntil.put(player.getUniqueId(), System.currentTimeMillis() + FLASH_TICKS * 50L);
+            soon(player, 1);
+            // Nach dem Blinken die Anzeige ohne Overlay
+            soon(player, FLASH_TICKS + 1);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onRegain(EntityRegainHealthEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            soon(player, 1);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onFood(FoodLevelChangeEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            soon(player, 1);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onEffect(EntityPotionEffectEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            soon(player, 1);
+        }
+    }
+
+    @EventHandler
+    public void onRespawn(PlayerRespawnEvent event) {
+        flashUntil.remove(event.getPlayer().getUniqueId());
+        soon(event.getPlayer(), 1);
+    }
+
+    private void soon(Player player, long ticks) {
+        // mehrere Ereignisse im selben Tick fassen wir fuer den 1-Tick-Fall zusammen
+        if (ticks == 1 && !pending.add(player.getUniqueId())) {
+            return;
+        }
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            if (ticks == 1) {
+                pending.remove(player.getUniqueId());
+            }
+            if (player.isOnline()) {
+                send(player);
+            }
+        }, ticks);
     }
 
     @EventHandler

@@ -252,9 +252,16 @@ public final class Board implements Listener {
             switch (e.type()) {
                 case "tafel" -> shape(s, part, D_BOARD);
                 case "karte" -> shape(s, part, D_CARD);
-                case "knopf", "pille", "flaeche" -> {
+                case "knopf", "pille", "flaeche", "zeile" -> {
                     shape(s, part, D_SHAPE);
+                    icon(s, part);
                     label(s, part);
+                }
+                case "bild", "icon", "checkbox", "item-kachel", "stufen-pips" -> shape(s, part, D_SHAPE);
+                case "linie" -> {
+                    if (e.fill().isEmpty() && !e.images().isEmpty()) {
+                        shape(s, part, D_LINE);
+                    }
                 }
                 case "text" -> label(s, part);
                 case "kopf" -> head(s, part);
@@ -294,6 +301,17 @@ public final class Board implements Listener {
         part.tiles.addAll(tiles(s, e.x(), e.y(), depth, g, 1, 1, null));
     }
 
+    // Piktogramm links in Pillen, Flaechen und Zeilen (Name des Bildes steht im Layout als iconBild)
+    private void icon(Session s, Part part) {
+        Element e = part.element;
+        Glyph g = layout.glyph(e.extra("iconBild", ""));
+        if (g == null || g.tiles().isEmpty()) {
+            return;
+        }
+        double size = Double.parseDouble(e.extra("iconPx", "24")) / 160.0;
+        part.tiles.addAll(tiles(s, e.x() - e.width() / 2 + 0.06 + size / 2, e.y(), D_LINE, g, 1, 1, null));
+    }
+
     private void label(Session s, Part part) {
         Element e = part.element;
         Component text = pages.content(s, e);
@@ -309,7 +327,9 @@ public final class Board implements Listener {
             };
         }
         Key font = Key.key(e.type().equals("knopf") ? "ethicbuilds:ui" : e.font());
-        part.labels.add(text(s, e.x(), e.y(), D_TEXT, text.color(color).font(font), Math.max(8, e.px())));
+        // Mit Piktogramm links rutscht der Text ein Stueck nach rechts
+        double shift = e.extra().containsKey("iconBild") ? Double.parseDouble(e.extra("iconPx", "24")) / 320.0 + 0.03 : 0;
+        part.labels.add(text(s, e.x() + shift, e.y(), D_TEXT, text.color(color).font(font), Math.max(8, e.px())));
         if (!e.tag().isEmpty()) {
             part.labels.add(text(s, e.x() + e.width() / 2 - 0.22, e.y(), D_TEXT,
                     Component.text(e.tag()).color(TextColor.fromHexString("#6B7C90")).font(Key.key("ethicbuilds:ui_small")), 12));

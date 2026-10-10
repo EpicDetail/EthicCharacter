@@ -37,6 +37,29 @@ public final class HudLayout {
     public final String[] plus = new String[8];
     public final String[] minus = new String[8];
 
+    // Zweite Ebene: Leben links, Hunger rechts (gespiegelt)
+    public final Glyph lifePlate;
+    public final Glyph lifeTrack;
+    public final Glyph lifeRim;
+    public final List<Glyph> lifeFill = new ArrayList<>();
+    public final List<Glyph> lifeFillSquare = new ArrayList<>();
+    public final List<Glyph> lifeOver = new ArrayList<>();
+    public final Map<Character, Glyph> lifeBig = new HashMap<>();
+    public final Map<Character, Glyph> lifeSmall = new HashMap<>();
+    public final int lifePlateX;
+    public final int lifePlateWidth;
+    public final int lifeTrackX;
+    public final int lifeTrackWidth;
+    public final Glyph foodPlate;
+    public final Glyph foodTrack;
+    public final Glyph foodIcon;
+    public final List<Glyph> foodFill = new ArrayList<>();
+    public final int foodPlateX;
+    public final int foodPlateWidth;
+    public final int foodTrackX;
+    public final int foodTrackWidth;
+    public final int foodStep;
+
     private HudLayout(JsonObject json) {
         font = Key.key(json.get("schrift").getAsString());
         rowWidth = json.get("zeileBreite").getAsInt();
@@ -62,6 +85,36 @@ public final class HudLayout {
             plus[i] = p.get(i).getAsString();
             minus[i] = m.get(i).getAsString();
         }
+        JsonObject life = json.getAsJsonObject("leben");
+        lifePlate = glyph(life.getAsJsonObject("plakette"));
+        lifeTrack = glyph(life.getAsJsonObject("spur"));
+        lifeRim = glyph(life.getAsJsonObject("rand"));
+        fill(life.getAsJsonArray("fuellung"), lifeFill);
+        fill(life.getAsJsonArray("eck"), lifeFillSquare);
+        fill(life.getAsJsonArray("ueber"), lifeOver);
+        JsonObject lifeDigits = life.getAsJsonObject("ziffern");
+        lifeDigits.getAsJsonObject("gross").entrySet().forEach(e -> lifeBig.put(e.getKey().charAt(0), glyph(e.getValue().getAsJsonObject())));
+        lifeDigits.getAsJsonObject("klein").entrySet().forEach(e -> lifeSmall.put(e.getKey().charAt(0), glyph(e.getValue().getAsJsonObject())));
+        lifePlateX = life.getAsJsonObject("lage").get("plakette").getAsInt();
+        lifeTrackX = life.getAsJsonObject("lage").get("spur").getAsInt();
+        lifePlateWidth = life.get("plaketteBreite").getAsInt();
+        lifeTrackWidth = life.get("spurBreite").getAsInt();
+        JsonObject food = json.getAsJsonObject("hunger");
+        foodPlate = glyph(food.getAsJsonObject("plakette"));
+        foodTrack = glyph(food.getAsJsonObject("spur"));
+        foodIcon = glyph(food.getAsJsonObject("icon"));
+        fill(food.getAsJsonArray("fuellung"), foodFill);
+        foodPlateX = food.getAsJsonObject("lage").get("plakette").getAsInt();
+        foodTrackX = food.getAsJsonObject("lage").get("spur").getAsInt();
+        foodPlateWidth = food.get("plaketteBreite").getAsInt();
+        foodTrackWidth = food.get("spurBreite").getAsInt();
+        foodStep = food.get("schritt").getAsInt();
+    }
+
+    private static void fill(JsonArray array, List<Glyph> target) {
+        for (JsonElement e : array) {
+            target.add(glyph(e.getAsJsonObject()));
+        }
     }
 
     private static Glyph glyph(JsonObject o) {
@@ -79,7 +132,11 @@ public final class HudLayout {
 
     /** Breite eines Textes in px (ohne den letzten Abstand), unbekannte Zeichen zaehlen nicht. */
     public int width(String text, boolean large) {
-        Map<Character, Glyph> map = large ? big : small;
+        return width(text, large ? big : small);
+    }
+
+    /** Wie oben, aber mit einer frei gewaehlten Zeichentabelle. */
+    public int width(String text, Map<Character, Glyph> map) {
         int width = 0;
         for (char c : text.toCharArray()) {
             Glyph g = map.get(c);
