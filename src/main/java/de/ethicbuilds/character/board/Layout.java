@@ -137,7 +137,7 @@ public final class Layout {
             return;
         }
         Map<String, String> labels = Map.of("uebersicht", "Übersicht", "dailies", "Dailies", "ueberweisen", "Überweisen",
-                "protokoll", "Protokoll", "wiki", "Wiki", "wiki_suche", "Wiki");
+                "protokoll", "Protokoll", "wiki", "Wiki", "wiki_suche", "Wiki", "plots", "Plots", "plots_leer", "Plots");
         for (Map.Entry<String, List<Element>> page : pages.entrySet()) {
             String label = labels.get(page.getKey());
             if (label == null || page.getKey().startsWith("wiki")) {

@@ -252,6 +252,7 @@ public final class CharacterPages implements Board.Pages {
             case "Dailies" -> open(board, s, "dailies");
             case "Überweisen" -> open(board, s, "ueberweisen");
             case "Wiki" -> open(board, s, "wiki");
+            case "Plots" -> open(board, s, "plots");
             case "Protokoll" -> open(board, s, "protokoll");
             case "Auktionshaus" -> {
                 if (board.layout().hasPage("auktion")) {

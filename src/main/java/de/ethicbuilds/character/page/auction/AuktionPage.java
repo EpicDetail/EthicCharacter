@@ -11,10 +11,13 @@ import de.ethicbuilds.economy.format.CoinFormat;
 import de.ethicbuilds.survival.api.AuctionBoardApi;
 import de.ethicbuilds.survival.api.AuctionBoardApi.BookOption;
 import de.ethicbuilds.survival.api.AuctionBoardApi.Category;
+import de.ethicbuilds.survival.api.AuctionBoardApi.GroupSort;
 import de.ethicbuilds.survival.api.AuctionBoardApi.Offer;
+import de.ethicbuilds.survival.api.AuctionBoardApi.Page;
 import de.ethicbuilds.survival.api.AuctionBoardApi.Pickup;
+import de.ethicbuilds.survival.api.AuctionBoardApi.ResourceGroup;
+import de.ethicbuilds.survival.api.AuctionBoardApi.ResourceKey;
 import de.ethicbuilds.survival.api.AuctionBoardApi.SaleEntry;
-import de.ethicbuilds.survival.api.AuctionBoardApi.Sort;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -33,12 +36,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
- * Das Auktionshaus auf der Tafel (Seite "auktion", Kennungen a_*). Ansehen geht ueberall, Einstellen, Abholen, Auszahlen und
- * Zurueckziehen nur beim Auktionator. Bedienung: Klick auf die Karte = Gebot auf das Mindestgebot, Klick auf den Knopf unten
- * in der Karte = Sofortkauf (ohne Sofortkauf: Bieten, bei eigenen Angeboten: Zurueckziehen, bei Abholungen: Abholen).
- * Umschalt+Klick gibt es nicht, weil Schleichen die Tafel schliesst.
+ * Das Auktionshaus auf der Tafel. Ansehen geht ueberall, Einstellen, Abholen, Auszahlen und Zurueckziehen nur beim Auktionator.
+ * <p>
+ * Seiten: "auktion" (Uebersicht der Ressourcen, 4 x 3 Karten), "auktion_detail" (Angebote einer Ressource als Tabelle, immer
+ * aufsteigend nach Preis pro Stueck), "auktion_leer" (keine Treffer / keine Angebote) und "auktion_liste" (Meine Angebote,
+ * Verkaufsprotokoll und Buecher als Kartenraster). Die Seite wechselt von selbst nach dem Inhalt (pageFor).
  */
 public final class AuktionPage implements PageHandler {
 
@@ -46,7 +52,10 @@ public final class AuktionPage implements PageHandler {
         BROWSE, MINE, HISTORY, BOOKS
     }
 
-    private static final String PAGE = "auktion";
+    private static final String OVERVIEW = "auktion";
+    private static final String DETAIL = "auktion_detail";
+    private static final String EMPTY = "auktion_leer";
+    private static final String LIST = "auktion_liste";
     private static final String PREFIX = "§6Auktion §8» §7";
     private static final String UI = "ethicbuilds:ui";
     private static final String BOLD = "ethicbuilds:ui_bold";
@@ -54,14 +63,18 @@ public final class AuktionPage implements PageHandler {
     private static final TextColor HINT = TextColor.fromHexString("#9FB0C4");
     private static final TextColor GOLD = TextColor.fromHexString("#FFD24A");
     private static final TextColor GREEN = TextColor.fromHexString("#7BD88F");
+    private static final TextColor ORANGE = TextColor.fromHexString("#F9A11E");
+    private static final TextColor RED = TextColor.fromHexString("#E05252");
     private static final TextColor DARK = TextColor.fromHexString("#142536");
     private static final TextColor LOCKED = TextColor.fromHexString("#6B7C90");
     private static final String COIN = "icon_muenze_20_255-210-74";
     private static final String BOOK_ICON = "icon_buch_26_249-161-30";
     private static final int PER_PAGE = AuctionBoardApi.PAGE_SIZE;
-    private static final Sort[] SORTS = Sort.values();
-    private static final String[] SORT_NAMES = {"Preis niedrig", "Preis hoch", "Endet bald", "Neueste"};
+    private static final GroupSort[] SORTS = GroupSort.values();
+    private static final String[] SORT_NAMES = {"A bis Z", "Angebote"};
     private static final Category[] CATEGORIES = Category.values();
+    private static final Pattern RESOURCE = Pattern.compile("res_karte_(\\d+)(?:_(.+))?");
+    private static final Pattern ROW = Pattern.compile("ad_zeile_(\\d+)(?:_(.+))?");
 
     // Schluessel in session.data()
     private static final String MODE = "a_mode";
@@ -74,6 +87,11 @@ public final class AuktionPage implements PageHandler {
     private static final String EARNINGS = "a_einnahmen";
     private static final String SEQ = "a_folge";
     private static final String BUSY = "a_beschaeftigt";
+    private static final String KEY = "a_ressource";
+    private static final String KEY_NAME = "a_ressource_name";
+    private static final String KEY_ITEM = "a_ressource_item";
+    private static final String TOTAL = "a_gesamt";
+    private static final String OVERVIEW_PAGE = "a_uebersicht_seite";
 
     private final Plugin plugin;
     private final Prompts prompts;
@@ -85,7 +103,7 @@ public final class AuktionPage implements PageHandler {
 
     @Override
     public Set<String> pages() {
-        return Set.of(PAGE);
+        return Set.of(OVERVIEW, DETAIL, EMPTY, LIST);
     }
 
     // ------------------------------------------------------------ Laden
@@ -94,16 +112,17 @@ public final class AuktionPage implements PageHandler {
     public void load(Player player, Map<String, Object> data, String page) {
         data.put(MODE, Mode.BROWSE);
         data.put(CATEGORY, Category.ALL);
-        data.put(SORT, Sort.PRICE_ASC);
+        data.put(SORT, GroupSort.ALPHABETISCH);
         data.put(QUERY, "");
         data.put(PAGE_NO, 0);
         data.put(BUSY, false);
         data.put(SEQ, 0);
-        data.putAll(fetch(player.getUniqueId(), Mode.BROWSE, Category.ALL, Sort.PRICE_ASC, "", 0));
+        data.remove(KEY);
+        data.putAll(fetch(player.getUniqueId(), Mode.BROWSE, Category.ALL, GroupSort.ALPHABETISCH, "", 0, null));
     }
 
     // Holt die Daten fuer den Zustand (im Hintergrund)
-    private Map<String, Object> fetch(UUID id, Mode mode, Category category, Sort sort, String query, int page) {
+    private Map<String, Object> fetch(UUID id, Mode mode, Category category, GroupSort sort, String query, int page, ResourceKey key) {
         Map<String, Object> fresh = new HashMap<>();
         AuctionBoardApi api = api();
         EconomyApi economy = Bukkit.getServicesManager().load(EconomyApi.class);
@@ -113,16 +132,26 @@ public final class AuktionPage implements PageHandler {
         if (api == null) {
             fresh.put(ALL, List.of());
             fresh.put(PAGES, 1);
+            fresh.put(TOTAL, 0);
             fresh.put(EARNINGS, 0L);
             return fresh;
         }
         fresh.put(EARNINGS, api.earnings(id));
         switch (mode) {
             case BROWSE -> {
-                AuctionBoardApi.Page found = api.browse(id, query, category, sort, page);
-                fresh.put(ALL, new ArrayList<Object>(found.offers()));
-                fresh.put(PAGES, found.pages());
-                fresh.put(PAGE_NO, found.page());
+                if (key == null) {
+                    Page<ResourceGroup> found = api.groups(query, category, sort, page);
+                    fresh.put(ALL, new ArrayList<Object>(found.items()));
+                    fresh.put(PAGES, found.pages());
+                    fresh.put(PAGE_NO, found.page());
+                    fresh.put(TOTAL, found.total());
+                } else {
+                    Page<Offer> found = api.offersFor(id, key, page);
+                    fresh.put(ALL, new ArrayList<Object>(found.items()));
+                    fresh.put(PAGES, found.pages());
+                    fresh.put(PAGE_NO, found.page());
+                    fresh.put(TOTAL, found.total());
+                }
             }
             case MINE -> {
                 List<Object> all = new ArrayList<>(api.pickups(id));
@@ -142,34 +171,52 @@ public final class AuktionPage implements PageHandler {
         fresh.put(PAGE_NO, Math.max(0, Math.min(page, pages - 1)));
     }
 
-    // Laedt neu im Hintergrund und zeichnet danach die Seite; die neueste Anfrage gewinnt
+    // Laedt neu im Hintergrund und zeichnet danach die passende Seite; die neueste Anfrage gewinnt
     private void reload(Board board, Session s) {
         Player player = s.player();
         UUID id = player.getUniqueId();
         Mode mode = mode(s);
         Category category = category(s);
-        Sort sort = sort(s);
+        GroupSort sort = sort(s);
         String query = string(s, QUERY);
         int page = number(s, PAGE_NO);
+        ResourceKey key = key(s);
         int seq = number(s, SEQ) + 1;
         s.data().put(SEQ, seq);
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            Map<String, Object> fresh = fetch(id, mode, category, sort, query, page);
+            Map<String, Object> fresh = fetch(id, mode, category, sort, query, page, key);
             Bukkit.getScheduler().runTask(plugin, () -> {
-                if (board.session(player) == s && PAGE.equals(s.page()) && number(s, SEQ) == seq) {
+                if (board.session(player) == s && pages().contains(s.page()) && number(s, SEQ) == seq) {
                     s.data().putAll(fresh);
                     s.data().put(BUSY, false);
-                    board.refresh(s);
+                    redraw(board, s);
                 }
             });
         });
+    }
+
+    // Zeichnet die Seite, die zum Inhalt passt (die Seite kann dabei wechseln)
+    private void redraw(Board board, Session s) {
+        board.show(s, pageFor(s));
+    }
+
+    // Welche Layout-Seite zeigt den Zustand: Listen, Uebersicht, Detail oder Leerzustand
+    private String pageFor(Session s) {
+        if (mode(s) != Mode.BROWSE) {
+            return LIST;
+        }
+        if (cards(s).isEmpty()) {
+            return EMPTY;
+        }
+        return key(s) != null ? DETAIL : OVERVIEW;
     }
 
     // ------------------------------------------------------------ Texte und Sichtbarkeit
 
     @Override
     public Component content(Session s, Element e) {
-        switch (e.id()) {
+        String id = e.id();
+        switch (id) {
             case "a_sort" -> {
                 return Component.text("Sortieren: " + SORT_NAMES[sort(s).ordinal()]);
             }
@@ -185,20 +232,49 @@ public final class AuktionPage implements PageHandler {
                 // Text steht in draw (passt sich der Breite an)
                 return Component.empty();
             }
+            case "a_schliessen", "al_schliessen" -> {
+                return Component.text("Zurück");
+            }
+            case "ad_anzahl" -> {
+                int total = number(s, TOTAL);
+                return Component.text(total + (total == 1 ? " Angebot" : " Angebote"));
+            }
             default -> {
-                return null;
             }
         }
+        Matcher m = RESOURCE.matcher(id);
+        if (m.matches() && "anzahl".equals(m.group(2))) {
+            int i = Integer.parseInt(m.group(1));
+            if (cards(s).size() > i && cards(s).get(i) instanceof ResourceGroup group) {
+                return Component.text(group.offers() + (group.offers() == 1 ? " Angebot" : " Angebote"));
+            }
+        }
+        return null;
     }
 
     @Override
     public boolean visible(Session s, Element e) {
         String id = e.id();
         Mode mode = mode(s);
+        Matcher res = RESOURCE.matcher(id);
+        if (res.matches()) {
+            // Name und Preiszeile zeichnet draw() selbst
+            String part = res.group(2);
+            return Integer.parseInt(res.group(1)) < cards(s).size() && !"name".equals(part) && !"ab".equals(part);
+        }
+        Matcher row = ROW.matcher(id);
+        if (row.matches()) {
+            // Nur die Zeile selbst (fremde Angebote); eigene Zeilen und alle Zellen zeichnet draw()
+            int i = Integer.parseInt(row.group(1));
+            return row.group(2) == null && i < cards(s).size() && !(cards(s).get(i) instanceof Offer offer && offer.mine());
+        }
+        if (id.equals("ad_name") || id.startsWith("al_treffer_") || id.startsWith("al_angebote_")) {
+            return false;
+        }
         if (id.startsWith("a_angebot_")) {
             return index(id) < cards(s).size();
         }
-        if (id.equals("a_suche") || id.equals("a_sort") || id.startsWith("a_kat_")) {
+        if (id.equals("a_suche") || id.equals("a_sort") || id.equals("a_kat_label") || id.startsWith("a_kat_")) {
             return mode == Mode.BROWSE && !overridden(s, id);
         }
         if (id.equals("a_zurueck")) {
@@ -217,7 +293,7 @@ public final class AuktionPage implements PageHandler {
             int i = index(id);
             return (i == active) != (i == 0);
         }
-        if (id.startsWith("a_kat_") && category(s) != Category.ALL) {
+        if (id.startsWith("a_kat_") && !id.equals("a_kat_label") && category(s) != Category.ALL) {
             int i = index(id);
             return i == 0 || i == category(s).ordinal();
         }
@@ -237,45 +313,37 @@ public final class AuktionPage implements PageHandler {
 
     @Override
     public void draw(Board board, Session s, String page) {
+        String want = pageFor(s);
+        if (!want.equals(page)) {
+            board.show(s, want);
+            return;
+        }
         AuctionBoardApi api = api();
         boolean near = api != null && api.isNearAuctioneer(s.player());
+        Map<String, Element> el = new HashMap<>();
         for (Element e : board.layout().page(page)) {
+            el.put(e.id(), e);
             String id = e.id();
             if (overridden(s, id) && (id.startsWith("a_nav_") || mode(s) == Mode.BROWSE)) {
                 overlayButton(board, s, e);
             }
         }
-        earningsPill(board, s, near);
-        leftText(board, s, near);
-        List<Object> cards = cards(s);
-        for (int i = 0; i < cards.size(); i++) {
-            Element card = element(board, page, "a_angebot_" + i);
-            if (card == null) {
-                continue;
+        earningsPill(board, s, el.get("a_einnahmen"), near);
+        switch (page) {
+            case OVERVIEW -> {
+                leftText(board, s, near);
+                groups(board, s, el);
             }
-            Object entry = cards.get(i);
-            if (entry instanceof Offer offer) {
-                offerCard(board, s, card, i, offer, near);
-            } else if (entry instanceof Pickup pickup) {
-                pickupCard(board, s, card, i, pickup, near);
-            } else if (entry instanceof SaleEntry sale) {
-                saleCard(board, s, card, sale);
-            } else if (entry instanceof BookOption book) {
-                bookCard(board, s, card, i, book);
+            case DETAIL -> {
+                leftText(board, s, near);
+                detail(board, s, el);
+            }
+            case EMPTY -> empty(board, s, el);
+            default -> {
+                leftText(board, s, near);
+                list(board, s, el, near);
             }
         }
-        if (cards.isEmpty()) {
-            board.text(s, 0.88, -0.28, Component.text(emptyText(s)).color(HINT).font(Key.key(UI)), 22);
-        }
-    }
-
-    private String emptyText(Session s) {
-        return switch (mode(s)) {
-            case BROWSE -> string(s, QUERY).isEmpty() ? "Keine Angebote gefunden." : "Nichts gefunden für diese Suche.";
-            case MINE -> "Du hast keine Angebote und nichts zum Abholen.";
-            case HISTORY -> "Noch keine Käufe oder Verkäufe.";
-            case BOOKS -> "Du hast keine Bücher.";
-        };
     }
 
     private void overlayButton(Board board, Session s, Element e) {
@@ -295,8 +363,7 @@ public final class AuktionPage implements PageHandler {
     }
 
     // Einnahmen mit Muenzsymbol; "[Abholen]" nur beim Auktionator mit Einnahmen. Der Text schrumpft, bis er in die Pille passt.
-    private void earningsPill(Board board, Session s, boolean near) {
-        Element e = element(board, PAGE, "a_einnahmen");
+    private void earningsPill(Board board, Session s, Element e, boolean near) {
         if (e == null) {
             return;
         }
@@ -305,24 +372,29 @@ public final class AuktionPage implements PageHandler {
         boolean action = near && earnings > 0;
         String left = "Einnahmen";
         String right = action ? "[Abholen]" : "";
-        double coin = 0.125;
+        // Mit Symbol im Layout (iconBild) steht das Muenzsymbol links in der Pille, sonst zeichnen wir es mit
+        boolean layoutIcon = !e.extra("iconBild", "").isEmpty();
+        double coin = layoutIcon ? 0 : 0.125;
+        double start = layoutIcon ? e.x() - e.width() / 2 + 0.06 + Double.parseDouble(e.extra("iconPx", "24")) / 160.0 + 0.045 : 0;
         double gap = 0.06;
         int px = e.px();
-        double max = e.width() - 0.14;
+        double max = e.width() - (layoutIcon ? start - (e.x() - e.width() / 2) + 0.06 : 0.14);
         double total;
         while (true) {
-            total = board.measure(left, UI, px) + gap + coin + 0.03 + board.measure(number, BOLD, px)
+            total = board.measure(left, UI, px) + gap + coin + (layoutIcon ? 0 : 0.03) + board.measure(number, BOLD, px)
                     + (right.isEmpty() ? 0 : gap + board.measure(right, BOLD, px));
             if (total <= max || px <= 11) {
                 break;
             }
             px--;
         }
-        double x = e.x() - total / 2;
+        double x = layoutIcon ? start : e.x() - total / 2;
         board.line(s, x, e.y(), Component.text(left).color(HINT), left, UI, px, Align.LEFT);
         x += board.measure(left, UI, px) + gap;
-        board.glyph(s, x + coin / 2, e.y(), COIN, null);
-        x += coin + 0.03;
+        if (!layoutIcon) {
+            board.glyph(s, x + coin / 2, e.y(), COIN, null);
+            x += coin + 0.03;
+        }
         board.line(s, x, e.y(), Component.text(number).color(GOLD), number, BOLD, px, Align.LEFT);
         x += board.measure(number, BOLD, px);
         if (!right.isEmpty()) {
@@ -356,9 +428,246 @@ public final class AuktionPage implements PageHandler {
         }
     }
 
-    // ------------------------------------------------------------ Karten
+    // ------------------------------------------------------------ Uebersicht der Ressourcen
 
-    private void offerCard(Board board, Session s, Element card, int i, Offer offer, boolean near) {
+    private void groups(Board board, Session s, Map<String, Element> el) {
+        List<Object> cards = cards(s);
+        for (int i = 0; i < cards.size() && i < AuctionBoardApi.GROUP_PAGE_SIZE; i++) {
+            if (!(cards.get(i) instanceof ResourceGroup group)) {
+                continue;
+            }
+            String base = "res_karte_" + i;
+            Element tile = el.get(base + "_kachel");
+            Element name = el.get(base + "_name");
+            Element from = el.get(base + "_ab");
+            if (tile != null) {
+                board.item(s, tile.x(), tile.y(), tile.width() * 0.82, group.display());
+            }
+            if (name != null) {
+                int px = fitPx(board, group.name(), UI, name.px(), name.width(), 11);
+                String shown = ellipsize(board, group.name(), UI, px, name.width());
+                TextColor color = group.book() && group.bookColor() >= 0 ? TextColor.color(group.bookColor()) : TEXT;
+                board.line(s, name.x() - name.width() / 2, name.y(), Component.text(shown).color(color), shown, UI, px, Align.LEFT);
+            }
+            if (from != null) {
+                fromLine(board, s, from, group.lowestPerPiece());
+            }
+        }
+    }
+
+    // "ab [Muenze] 1.234 pro Stueck", mittig in der Karte; die Schrift schrumpft, bis es passt
+    private void fromLine(Board board, Session s, Element e, long price) {
+        String number = CoinFormat.number(price);
+        double coin = 0.125;
+        double gap = 0.04;
+        int px = e.px();
+        double total;
+        while (true) {
+            total = board.measure("ab", UI, px) + gap + coin + gap + board.measure(number, BOLD, px) + gap + board.measure("pro Stück", UI, px);
+            if (total <= e.width() || px <= 10) {
+                break;
+            }
+            px--;
+        }
+        double x = e.x() - total / 2;
+        board.line(s, x, e.y(), Component.text("ab").color(GOLD), "ab", UI, px, Align.LEFT);
+        x += board.measure("ab", UI, px) + gap;
+        board.glyph(s, x + coin / 2, e.y(), COIN, null);
+        x += coin + gap;
+        board.line(s, x, e.y(), Component.text(number).color(GOLD), number, BOLD, px, Align.LEFT);
+        x += board.measure(number, BOLD, px) + gap;
+        board.line(s, x, e.y(), Component.text("pro Stück").color(HINT), "pro Stück", UI, px, Align.LEFT);
+    }
+
+    // ------------------------------------------------------------ Detail einer Ressource
+
+    private void detail(Board board, Session s, Map<String, Element> el) {
+        Element tile = el.get("ad_kachel");
+        ItemStack shown = s.data().get(KEY_ITEM) instanceof ItemStack stack ? stack : null;
+        List<Object> cards = cards(s);
+        if (shown == null && !cards.isEmpty() && cards.get(0) instanceof Offer first) {
+            shown = first.display();
+        }
+        if (tile != null && shown != null) {
+            board.item(s, tile.x(), tile.y(), tile.width() * 0.8, shown);
+        }
+        Element name = el.get("ad_name");
+        String title = string(s, KEY_NAME);
+        if (name != null) {
+            int px = fitPx(board, title, BOLD, name.px(), name.width(), 16);
+            String text = ellipsize(board, title, BOLD, px, name.width());
+            board.line(s, name.x() - name.width() / 2, name.y(), Component.text(text).color(TEXT), text, BOLD, px, Align.LEFT);
+        }
+        for (int i = 0; i < cards.size() && i < PER_PAGE; i++) {
+            if (cards.get(i) instanceof Offer offer) {
+                row(board, s, el, i, offer);
+            }
+        }
+    }
+
+    // Eine Tabellenzeile: Verkaeufer (oder "Deins"), Menge, Preise, Restzeit und der Aktionsknopf
+    private void row(Board board, Session s, Map<String, Element> el, int i, Offer offer) {
+        String base = "ad_zeile_" + i;
+        Element row = el.get(base);
+        if (row == null) {
+            return;
+        }
+        if (offer.mine()) {
+            // Eigenes Angebot: leicht getoente Zeile; Klick wie auf den Knopf
+            String normal = row.images().get("eigen");
+            if (normal != null) {
+                board.button(s, base, row.x(), row.y(), row.width(), row.height(), "klick", normal, row.images().get("eigen_hover"));
+            }
+            Element deins = el.get(base + "_deins");
+            if (deins != null) {
+                board.glyph(s, deins.x(), deins.y(), deins.images().getOrDefault("normal", ""), null);
+                board.line(s, deins.x(), deins.y(), Component.text("Deins").color(ORANGE), "Deins", UI, deins.px(), Align.CENTER);
+            }
+        } else {
+            Element seller = el.get(base + "_verkaeufer");
+            if (seller != null) {
+                cell(board, s, seller, offer.seller(), TEXT);
+            }
+        }
+        Element amount = el.get(base + "_menge");
+        if (amount != null) {
+            cell(board, s, amount, String.valueOf(offer.amount()), TEXT);
+        }
+        TextColor money = offer.topIsMe() ? GREEN : GOLD;
+        Element each = el.get(base + "_preisStueck");
+        if (each != null) {
+            priceCell(board, s, each, offer.perPiece(), money);
+        }
+        Element total = el.get(base + "_preisGesamt");
+        if (total != null) {
+            priceCell(board, s, total, offer.total(), money);
+        }
+        Element time = el.get(base + "_restzeit");
+        if (time != null) {
+            cell(board, s, time, duration(offer.remainingMillis()), HINT);
+        }
+        Element button = el.get(base + "_knopf");
+        if (button != null) {
+            actionButton(board, s, base, button, offer);
+        }
+    }
+
+    // Aktion der Zeile: Kaufen (Sofortkauf), Bieten, Zurueckziehen; gesperrt bei Hoechstgebot und laufenden eigenen Geboten
+    private void actionButton(Board board, Session s, String base, Element button, Offer offer) {
+        String label;
+        String normal;
+        String hover;
+        TextColor color;
+        if (offer.mine()) {
+            label = offer.hasBid() ? "Läuft" : "Zurückziehen";
+            normal = offer.hasBid() ? "auktion_detail/ad_knopf/gesperrt" : "auktion_detail/ad_knopf/zurueck";
+            hover = offer.hasBid() ? null : "auktion_detail/ad_knopf/zurueck_hover";
+            color = offer.hasBid() ? LOCKED : RED;
+        } else if (offer.topIsMe()) {
+            label = "Höchstbieter";
+            normal = "auktion_detail/ad_knopf/gesperrt";
+            hover = null;
+            color = LOCKED;
+        } else if (offer.buyout() > 0) {
+            label = "Kaufen";
+            normal = button.images().get("haupt");
+            hover = button.images().get("hover");
+            color = DARK;
+        } else {
+            label = "Bieten";
+            normal = "auktion_detail/ad_knopf/bieten";
+            hover = "auktion_detail/ad_knopf/bieten_hover";
+            color = TEXT;
+        }
+        board.button(s, base + "_knopf", button.x(), button.y(), button.width(), button.height(), "klick", normal, hover);
+        int px = fitPx(board, label, UI, button.px(), button.width() - 0.1, 10);
+        board.line(s, button.x(), button.y(), Component.text(label).color(color), label, UI, px, Align.CENTER);
+    }
+
+    // Text mittig in der Spalte, zu lang: kleiner, dann gekuerzt
+    private void cell(Board board, Session s, Element column, String text, TextColor color) {
+        int px = fitPx(board, text, UI, column.px(), column.width() - 0.04, 10);
+        String shown = ellipsize(board, text, UI, px, column.width() - 0.04);
+        board.line(s, column.x(), column.y(), Component.text(shown).color(color), shown, UI, px, Align.CENTER);
+    }
+
+    // Preis mit Muenzsymbol davor, zusammen mittig in der Spalte
+    private void priceCell(Board board, Session s, Element column, long amount, TextColor color) {
+        String number = CoinFormat.number(amount);
+        double coin = 0.125;
+        double gap = 0.04;
+        int px = fitPx(board, number, UI, column.px(), column.width() - 0.04 - coin - gap, 10);
+        double total = coin + gap + board.measure(number, UI, px);
+        double left = column.x() - total / 2;
+        board.glyph(s, left + coin / 2, column.y(), COIN, null);
+        board.line(s, left + coin + gap, column.y(), Component.text(number).color(color), number, UI, px, Align.LEFT);
+    }
+
+    // ------------------------------------------------------------ Leerzustand
+
+    // Genau eine Karte, mittig: "Keine Treffer" (Suche oder Kategorie) oder "Keine Angebote"
+    private void empty(Board board, Session s, Map<String, Element> el) {
+        boolean hit = key(s) == null && (!string(s, QUERY).isBlank() || category(s) != Category.ALL);
+        String prefix = hit ? "al_treffer" : "al_angebote";
+        Element card = el.get("al_treffer_karte");
+        Element text = el.get(prefix + "_text");
+        Element button = el.get(prefix + "_knopf");
+        if (card == null || text == null || button == null) {
+            return;
+        }
+        // Beide Karten teilen sich die Mitte; die breitere Karte des Entwurfs dient fuer beide
+        board.glyph(s, 0, card.y(), card.images().getOrDefault("normal", ""), null);
+        board.glyph(s, 0, text.y() + 0.36, text.extra("iconBild", ""), null);
+        board.line(s, 0, text.y() - 0.02, Component.text(text.text()).color(TEXT), text.text(), BOLD, text.px(), Align.CENTER);
+        String sub = text.extra("untertext", "");
+        if (!hit && key(s) == null) {
+            sub = "Im Auktionshaus liegt gerade nichts.";
+        }
+        double y = text.y() - 0.28;
+        for (String line : board.wrap(sub, UI, 17, 2.8)) {
+            board.line(s, 0, y, Component.text(line).color(HINT), line, UI, 17, Align.CENTER);
+            y -= 0.17;
+        }
+        String normal = button.images().getOrDefault("normal", button.images().get("haupt"));
+        board.button(s, prefix + "_knopf", 0, button.y(), button.width(), button.height(), "klick", normal, button.images().get("hover"));
+        board.line(s, 0, button.y(), Component.text(button.text()).color(hit ? TEXT : DARK), button.text(), UI, button.px(), Align.CENTER);
+    }
+
+    // ------------------------------------------------------------ Listen: Meine Angebote, Protokoll, Buecher
+
+    private void list(Board board, Session s, Map<String, Element> el, boolean near) {
+        List<Object> cards = cards(s);
+        for (int i = 0; i < cards.size(); i++) {
+            Element card = el.get("a_angebot_" + i);
+            if (card == null) {
+                continue;
+            }
+            Object entry = cards.get(i);
+            if (entry instanceof Offer offer) {
+                offerCard(board, s, card, i, offer);
+            } else if (entry instanceof Pickup pickup) {
+                pickupCard(board, s, card, i, pickup, near);
+            } else if (entry instanceof SaleEntry sale) {
+                saleCard(board, s, card, sale);
+            } else if (entry instanceof BookOption book) {
+                bookCard(board, s, card, i, book);
+            }
+        }
+        if (cards.isEmpty()) {
+            board.text(s, 0.88, -0.28, Component.text(emptyText(s)).color(HINT).font(Key.key(UI)), 22);
+        }
+    }
+
+    private String emptyText(Session s) {
+        return switch (mode(s)) {
+            case BROWSE -> "Keine Angebote gefunden.";
+            case MINE -> "Du hast keine Angebote und nichts zum Abholen.";
+            case HISTORY -> "Noch keine Käufe oder Verkäufe.";
+            case BOOKS -> "Du hast keine Bücher.";
+        };
+    }
+
+    private void offerCard(Board board, Session s, Element card, int i, Offer offer) {
         double cx = card.x();
         double cy = card.y();
         tile(board, s, cx, cy, offer.display(), offer.amount());
@@ -503,13 +812,18 @@ public final class AuktionPage implements PageHandler {
     @Override
     public boolean click(Board board, Session s, Element e) {
         String id = e.id();
-        if (!id.startsWith("a_")) {
-            return false;
-        }
         Player player = s.player();
         AuctionBoardApi api = api();
         switch (id) {
             case "a_schliessen" -> board.show(s, "uebersicht");
+            case "al_schliessen" -> {
+                // Leere Ressource: zurueck zur Uebersicht, sonst zum Charakterfenster
+                if (key(s) != null) {
+                    backToOverview(board, s);
+                } else {
+                    board.show(s, "uebersicht");
+                }
+            }
             case "a_nav_0" -> switchMode(board, s, Mode.BROWSE);
             case "a_nav_1" -> switchMode(board, s, Mode.MINE);
             case "a_nav_2" -> switchMode(board, s, Mode.HISTORY);
@@ -521,7 +835,14 @@ public final class AuktionPage implements PageHandler {
             case "a_suche" -> search(board, s);
             case "a_zurueck" -> turn(board, s, -1);
             case "a_weiter" -> turn(board, s, 1);
-            case "a_erstellen" -> create(board, s);
+            case "ad_zurueck" -> backToOverview(board, s);
+            case "al_treffer_knopf" -> {
+                s.data().put(QUERY, "");
+                s.data().put(CATEGORY, Category.ALL);
+                s.data().put(PAGE_NO, 0);
+                reload(board, s);
+            }
+            case "a_erstellen", "al_angebote_knopf" -> create(board, s);
             case "a_einnahmen_klick" -> {
                 if (api != null && !busy(s)) {
                     if (!api.isNearAuctioneer(player)) {
@@ -533,25 +854,57 @@ public final class AuktionPage implements PageHandler {
                 }
             }
             default -> {
+                Matcher res = RESOURCE.matcher(id);
+                Matcher row = ROW.matcher(id);
                 if (id.startsWith("a_kat_") && index(id) >= 0 && index(id) < CATEGORIES.length) {
+                    // Auch aus der Detailansicht: zurueck zur Uebersicht mit dieser Kategorie
                     s.data().put(CATEGORY, CATEGORIES[index(id)]);
+                    s.data().remove(KEY);
                     s.data().put(PAGE_NO, 0);
                     reload(board, s);
-                } else if (index(id) < 0) {
-                    return true;
+                } else if (res.matches() && res.group(2) == null) {
+                    openDetail(board, s, Integer.parseInt(res.group(1)));
+                } else if (row.matches() && (row.group(2) == null || "knopf".equals(row.group(2)))) {
+                    card(board, s, Integer.parseInt(row.group(1)), true);
                 } else if (id.startsWith("a_kaufen_")) {
                     card(board, s, index(id), true);
                 } else if (id.startsWith("a_angebot_")) {
                     card(board, s, index(id), false);
+                } else {
+                    return false;
                 }
             }
         }
         return true;
     }
 
+    // Klick auf eine Ressourcenkarte: Angebote dieser Ressource laden
+    private void openDetail(Board board, Session s, int index) {
+        List<Object> cards = cards(s);
+        if (busy(s) || index >= cards.size() || !(cards.get(index) instanceof ResourceGroup group)) {
+            return;
+        }
+        s.data().put(OVERVIEW_PAGE, number(s, PAGE_NO));
+        s.data().put(KEY, group.key());
+        s.data().put(KEY_NAME, group.name());
+        s.data().put(KEY_ITEM, group.display());
+        s.data().put(PAGE_NO, 0);
+        reload(board, s);
+    }
+
+    // Zurueck zur Uebersicht auf die Seite, von der man kam
+    private void backToOverview(Board board, Session s) {
+        s.data().remove(KEY);
+        s.data().put(PAGE_NO, number(s, OVERVIEW_PAGE));
+        reload(board, s);
+    }
+
     private void switchMode(Board board, Session s, Mode mode) {
         s.data().put(MODE, mode);
         s.data().put(PAGE_NO, 0);
+        if (mode == Mode.BROWSE) {
+            s.data().remove(KEY);
+        }
         reload(board, s);
     }
 
@@ -561,25 +914,27 @@ public final class AuktionPage implements PageHandler {
         if (mode(s) == Mode.BROWSE) {
             reload(board, s);
         } else {
-            board.refresh(s);
+            redraw(board, s);
         }
     }
 
     private void search(Board board, Session s) {
         prompts.ask(s.player(), "Schreibe den §6Suchbegriff §7in den Chat (\"-\" löscht die Suche).", text -> {
+            s.data().put(MODE, Mode.BROWSE);
             s.data().put(QUERY, text.equals("-") ? "" : text);
+            s.data().remove(KEY);
             s.data().put(PAGE_NO, 0);
-            if (board.session(s.player()) == s) {
+            if (board.session(s.player()) == s && pages().contains(s.page())) {
                 reload(board, s);
             }
         });
     }
 
-    // Klick auf Karte (Gebot bzw. Standardaktion) oder auf ihren Knopf (Sofortkauf bzw. Standardaktion)
+    // Klick auf Zeile, Karte (Gebot bzw. Standardaktion) oder Knopf (Sofortkauf bzw. Standardaktion)
     private void card(Board board, Session s, int index, boolean button) {
         List<Object> cards = cards(s);
         AuctionBoardApi api = api();
-        if (api == null || index >= cards.size() || busy(s)) {
+        if (api == null || index < 0 || index >= cards.size() || busy(s)) {
             return;
         }
         Player player = s.player();
@@ -655,12 +1010,12 @@ public final class AuktionPage implements PageHandler {
                     player.sendMessage(PREFIX + "§cNimm den Gegenstand, den du verkaufen willst, in die Hand. Bücher hast du keine.");
                     return;
                 }
-                if (board.session(player) == s && PAGE.equals(s.page())) {
+                if (board.session(player) == s && pages().contains(s.page())) {
                     s.data().put(MODE, Mode.BOOKS);
                     Map<String, Object> fresh = new HashMap<>();
                     put(fresh, new ArrayList<Object>(books), 0);
                     s.data().putAll(fresh);
-                    board.refresh(s);
+                    redraw(board, s);
                 }
             });
         });
@@ -728,15 +1083,6 @@ public final class AuktionPage implements PageHandler {
         return Bukkit.getServicesManager().load(AuctionBoardApi.class);
     }
 
-    private static Element element(Board board, String page, String id) {
-        for (Element e : board.layout().page(page)) {
-            if (e.id().equals(id)) {
-                return e;
-            }
-        }
-        return null;
-    }
-
     // Die Eintraege der aktuellen Seite: beim Stoebern kommt die Seite fertig vom Server, sonst wird die Liste geschnitten
     @SuppressWarnings("unchecked")
     private static List<Object> cards(Session s) {
@@ -759,8 +1105,12 @@ public final class AuktionPage implements PageHandler {
         return s.data().get(CATEGORY) instanceof Category c ? c : Category.ALL;
     }
 
-    private static Sort sort(Session s) {
-        return s.data().get(SORT) instanceof Sort o ? o : Sort.PRICE_ASC;
+    private static GroupSort sort(Session s) {
+        return s.data().get(SORT) instanceof GroupSort o ? o : GroupSort.ALPHABETISCH;
+    }
+
+    private static ResourceKey key(Session s) {
+        return s.data().get(KEY) instanceof ResourceKey k && mode(s) == Mode.BROWSE ? k : null;
     }
 
     private static int index(String id) {

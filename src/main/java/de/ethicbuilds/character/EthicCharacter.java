@@ -4,10 +4,15 @@ import de.ethicbuilds.character.board.Board;
 import de.ethicbuilds.character.board.Layout;
 import de.ethicbuilds.character.hud.Hud;
 import de.ethicbuilds.character.hud.HudLayout;
+import de.ethicbuilds.character.hud.PlotHint;
 import de.ethicbuilds.character.page.CharacterData;
 import de.ethicbuilds.character.page.CharacterPages;
 import de.ethicbuilds.character.page.Prompts;
+import de.ethicbuilds.character.page.plot.PlotInfoPage;
+import de.ethicbuilds.character.page.plot.PlotsPage;
+import de.ethicbuilds.survival.api.PlotApi;
 import de.ethicbuilds.survival.api.BoardApi;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -25,6 +30,8 @@ public final class EthicCharacter extends JavaPlugin implements CommandExecutor 
     private CharacterData data;
     private CharacterPages pages;
     private Prompts prompts;
+    private PlotInfoPage plotInfo;
+    private PlotHint plotHint;
 
     @Override
     public void onEnable() {
@@ -55,6 +62,8 @@ public final class EthicCharacter extends JavaPlugin implements CommandExecutor 
                 getServer().getPluginManager().registerEvents(groupHud, this);
                 groupHud.start();
                 getServer().getPluginManager().registerEvents(new de.ethicbuilds.character.hud.FindToast(this), this);
+                plotHint = new PlotHint(this);
+                getServer().getPluginManager().registerEvents(plotHint, this);
             } catch (Exception e) {
                 getLogger().warning("HUD nicht gestartet: " + e.getMessage());
             }
@@ -90,6 +99,10 @@ public final class EthicCharacter extends JavaPlugin implements CommandExecutor 
             }
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("plotinfo")) {
+            openPlotInfo(player);
+            return true;
+        }
         if (board.isOpen(player)) {
             board.close(player);
             return true;
@@ -98,6 +111,30 @@ public final class EthicCharacter extends JavaPlugin implements CommandExecutor 
             player.sendMessage("§cHier ist kein Platz für die Tafel (oder du spielst mit Bedrock). Stell dich an eine freiere Stelle.");
         }
         return true;
+    }
+
+    // /charakter plotinfo: Info-Tafel des Feldes, auf dem der Spieler steht, sonst des Feldes aus dem letzten Hinweis
+    private void openPlotInfo(Player player) {
+        RegisteredServiceProvider<PlotApi> provider = getServer().getServicesManager().getRegistration(PlotApi.class);
+        if (provider == null) {
+            player.sendMessage("§6Feld §8» §cDie Plotwelt ist hier nicht verfügbar.");
+            return;
+        }
+        PlotApi api = provider.getProvider();
+        PlotApi.PlotView view = api.current(player);
+        if (view == null || view.state() == PlotApi.State.FREI || view.state() == PlotApi.State.SPAWN) {
+            PlotHint.Last hint = plotHint != null ? plotHint.last(player.getUniqueId()) : null;
+            PlotApi.PlotView old = hint != null ? api.at(player.getWorld(), hint.cellX(), hint.cellZ()) : null;
+            view = old != null && (old.state() == PlotApi.State.FREMD || old.state() == PlotApi.State.EIGEN) ? old : null;
+        }
+        if (view == null) {
+            player.sendMessage("§6Feld §8» §cDieses Feld ist nicht beansprucht.");
+            return;
+        }
+        plotInfo.request(player, view.cellX(), view.cellZ());
+        if (!openPage(player, "plot_info")) {
+            player.sendMessage("§cHier ist kein Platz für die Tafel (oder du spielst mit Bedrock). Stell dich an eine freiere Stelle.");
+        }
     }
 
     /** Oeffnet eine Seite der Tafel (Bedrock hat keine Tafel). */
@@ -127,6 +164,10 @@ public final class EthicCharacter extends JavaPlugin implements CommandExecutor 
         pages.register(new de.ethicbuilds.character.page.transfer.TransferPage(this, prompts));
         pages.register(new de.ethicbuilds.character.page.enchant.VerzauberPage(this, data));
         pages.register(new de.ethicbuilds.character.page.auction.AuktionPage(this, prompts));
+        pages.register(new de.ethicbuilds.character.page.trader.HaendlerPage(this));
+        plotInfo = new PlotInfoPage(this);
+        pages.register(new PlotsPage(this, prompts, plotInfo));
+        pages.register(plotInfo);
         try {
             de.ethicbuilds.character.page.wiki.WikiContent wiki = de.ethicbuilds.character.page.wiki.WikiContent.load("/wiki.json");
             pages.register(new de.ethicbuilds.character.page.wiki.WikiPage(this, prompts, board, wiki));

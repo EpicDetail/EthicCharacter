@@ -1,0 +1,526 @@
+{
+  "pille": {
+    "frei": {
+      "oben": {
+        "zeichen": "",
+        "lauf": 141,
+        "zone": 0
+      },
+      "unten": {
+        "zeichen": "",
+        "lauf": 141,
+        "zone": 1
+      }
+    },
+    "besetzt": {
+      "oben": {
+        "zeichen": "",
+        "lauf": 141,
+        "zone": 0
+      },
+      "unten": {
+        "zeichen": "",
+        "lauf": 141,
+        "zone": 1
+      }
+    }
+  },
+  "ring": {
+    "frei": {
+      "zeichen": "",
+      "lauf": 18,
+      "zone": 2
+    },
+    "besetzt": {
+      "zeichen": "",
+      "lauf": 18,
+      "zone": 2
+    },
+    "spawn": {
+      "zeichen": "",
+      "lauf": 18,
+      "zone": 2
+    }
+  },
+  "prestige": {
+    "zeichen": "",
+    "lauf": 53,
+    "zone": 1,
+    "breite": 52
+  },
+  "zeichen": {
+    "0": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "1": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "2": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "3": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "4": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "5": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "6": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "7": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "8": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "9": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "A": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "B": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "C": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "D": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "E": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "F": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "G": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "H": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "I": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "J": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "K": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "L": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "M": {
+      "lauf": 6,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "N": {
+      "lauf": 5,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "O": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "P": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "Q": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "R": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "S": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "T": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "U": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "V": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "W": {
+      "lauf": 6,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "X": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "Y": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "Z": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "a": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "b": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "c": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "d": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "e": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "f": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "g": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "h": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "i": {
+      "lauf": 2,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "j": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "k": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "l": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "m": {
+      "lauf": 6,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "n": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "o": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "p": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "q": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "r": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "s": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "t": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "u": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "v": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "w": {
+      "lauf": 6,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "x": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "y": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "z": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "_": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    ",": {
+      "lauf": 3,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    ".": {
+      "lauf": 2,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "-": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "·": {
+      "lauf": 2,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    ":": {
+      "lauf": 2,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "ä": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "ö": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    },
+    "ü": {
+      "lauf": 4,
+      "z1": "",
+      "frei": "",
+      "besetzt": ""
+    }
+  },
+  "leerzeichen": 3,
+  "schrift": "ethicbuilds:plot",
+  "hinweis": "Bossbar-Titel, feste Breite. lauf = Laufweite in px. Marker (r, g, b = Zone) wird vom Shader auf die oberste Bossbar-Zeile gerueckt. Zeichen: Pixelschrift je Zeile/Farbe (z1 grau, frei tuerkis, besetzt orange), lauf gilt fuer alle.",
+  "titelBreite": 140,
+  "hoehe": 23,
+  "bossbar": {
+    "farbe": "GREEN",
+    "overlay": "NOTCHED_12"
+  },
+  "marker": {
+    "r": 78,
+    "g": 94,
+    "zone": {
+      "oben": 0,
+      "unten": 1,
+      "inhalt": 2
+    }
+  },
+  "lage": {
+    "ringX": 3,
+    "textX": 25,
+    "textRechts": 136,
+    "prestigeX": 84,
+    "prestigeTextX": 88
+  },
+  "abstand": {
+    "plus": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "minus": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  }
+}

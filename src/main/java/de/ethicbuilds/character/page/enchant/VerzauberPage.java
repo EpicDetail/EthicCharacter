@@ -172,8 +172,11 @@ public final class VerzauberPage implements PageHandler {
             board.line(s, right.x() + right.width() / 2 - 0.2, sub.y(), Component.text(more).color(LOCKED), more, FONT, 16, Align.RIGHT);
         }
         Element hint = el.get("v_hinweis");
-        String warning = hint.text();
-        double rightEdge = hint.x() + hint.width() / 2;
+        // Rechts unten sitzt der Schliessen-Knopf, der Hinweis ruckt dafuer nach links und wird kuerzer
+        String warning = "Fehlschlag: eine Stufe weniger, Kosten weg.";
+        double rightEdge = hint.x() + hint.width() / 2 - 0.8;
+        board.button(s, "v_schliessen", 3.12, hint.y(), 0.625, 0.275, "schliessen", "knopf_100x44_normal_k", "knopf_100x44_hover_k");
+        board.line(s, 3.12, hint.y(), Component.text("Schließen").color(TextColor.fromHexString("#E8EEF7")), "Schließen", FONT, 16, Align.CENTER);
         board.line(s, rightEdge, hint.y(), Component.text(warning).color(HINT), warning, FONT, hint.px(), Align.RIGHT);
         String icon = hint.extra("iconBild", "");
         double size = Double.parseDouble(hint.extra("iconPx", "18")) / 160.0;
@@ -294,6 +297,10 @@ public final class VerzauberPage implements PageHandler {
 
     @Override
     public boolean click(Board board, Session s, Element e) {
+        if (e.id().equals("v_schliessen")) {
+            board.close(s.player());
+            return true;
+        }
         Matcher m = ROW.matcher(e.id());
         if (!m.matches() || !"knopf".equals(m.group(3))) {
             return false;

@@ -526,6 +526,59 @@
         "Ein Vote bringt dir 10 Coins. Im Survival gibt es dazu 24 Stunden lang +10 % Loot (bei Monstern und Erzen), +10 % Coins und +10 % Erfahrung.",
         "Du kannst so oft voten, wie die Voting-Seite es erlaubt."
       ]
+    },
+    {
+      "id": "plots",
+      "kategorie": "Coin-System",
+      "titel": "Grundstücke (Plots)",
+      "stichworte": [
+        "plot",
+        "plots",
+        "grundstück",
+        "grundstueck",
+        "feld",
+        "felder",
+        "claim",
+        "beanspruchen",
+        "land",
+        "bauen"
+      ],
+      "text": [
+        "Die ganze Welt ist in Felder von 500 mal 500 Blöcken eingeteilt. Das Feld rund um den Spawn ist geschützt: Dort wird nicht gebaut und nicht gekämpft.",
+        "# Ein Feld beanspruchen",
+        "Stell dich in ein freies Feld und gib /plot claim ein. Das erste Feld ist gratis. Das zweite kostet viele Coins. Ein drittes Feld geht später nur mit einer Organisation.",
+        "An den Grenzen leuchtet eine Linie: Türkis heißt frei, Orange heißt beansprucht. Sie folgt dem Gelände, damit du sie überall siehst.",
+        "# Was ist geschützt?",
+        "In deinem Feld darfst nur du und wer dir vertraut bauen. Mit /plot trust <Spieler> gibst du jemandem Rechte. Abbauen und Setzen ist für alle anderen gesperrt, Explosionen zerstören nichts.",
+        "Kisten, Werkbänke und ähnliches darf aber jeder benutzen. Ein Spieler kann also aus deinen Kisten nehmen. Lagere Wertvolles deshalb besser nicht offen.",
+        "PvP ist überall an, auch in deinem Feld.",
+        "# Nützliche Befehle",
+        "/plot info zeigt, wem ein Feld gehört. /plot list listet deine Felder. /plot home bringt dich zur Mitte deines Feldes. /plot abandon gibt ein Feld wieder frei. In /charakter findest du alles auch unter Plots."
+      ]
+    },
+    {
+      "id": "haendler",
+      "kategorie": "Dailies",
+      "titel": "Der Händler",
+      "stichworte": [
+        "händler",
+        "haendler",
+        "handel",
+        "handelsaufgaben",
+        "aufgaben",
+        "stündlich",
+        "wöchentlich",
+        "material",
+        "abgeben"
+      ],
+      "text": [
+        "Der Händler am Spawn will immer wieder andere Waren: Rohstoffe, gebaute Dinge und Seltenes. Dafür gibt es Coins und Erfahrung.",
+        "# Drei Zeiträume",
+        "Stündlich: einfache Waren, die sich schnell sammeln lassen. Täglich: etwas mehr, auch Gebautes. Wöchentlich: seltene und teure Dinge. Jeder Zeitraum hat drei Aufgaben, die für alle gleich sind.",
+        "Jede Aufgabe kannst du pro Zeitraum einmal erledigen. Wechselt der Zeitraum, gibt es neue Aufgaben: zur vollen Stunde, um 0 Uhr und montags um 0 Uhr.",
+        "# So geht es",
+        "Rechtsklick auf den Händler öffnet sein Fenster. Hast du alles dabei, klickst du auf die Aufgabe. Die Waren werden aus deinem Inventar genommen und die Belohnung kommt sofort. Ein Vote-Bonus erhöht sie noch."
+      ]
     }
   ]
 }
