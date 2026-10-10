@@ -111,9 +111,8 @@ public final class TransferPage implements PageHandler {
         double rowY = top - 1.78;
         for (int i = 0; i < 4; i++) {
             double x = left + 0.2815 + i * 0.593;
-            board.glyph(s, x, rowY, "pille_90x40_31-58-89", null);
+            board.button(s, ids[i], x, rowY, 0.563, 0.25, ids[i], "pille_90x40_31-58-89", "pille_90x40_31-58-89_hover");
             text(board, s, x, rowY, labels[i], BOLD, 17, TEXT, Align.CENTER);
-            board.region(s, ids[i], x, rowY, 0.563, 0.25, ids[i]);
         }
 
         // Guthaben und Hinweise
@@ -153,17 +152,15 @@ public final class TransferPage implements PageHandler {
         // Hauptknopf: nur bedienbar mit Empfaenger, Betrag und genug Guthaben
         double sendY = top - 2.7;
         if (canSend(s)) {
-            board.glyph(s, card.x(), sendY, "knopf_230x48_haupt_t", null);
+            board.button(s, "u_senden", card.x(), sendY, 1.438, 0.3, "u_senden", "knopf_230x48_haupt_t", "knopf_230x48_haupt_hover_t");
             text(board, s, card.x(), sendY, "Überweisen", BOLD, 19, DARK, Align.CENTER);
-            board.region(s, "u_senden", card.x(), sendY, 1.438, 0.3, "u_senden");
         } else {
             board.glyph(s, card.x(), sendY, "pille_230x52_22-42-64", null);
             text(board, s, card.x(), sendY, "Überweisen", UI, 19, LOCKED, Align.CENTER);
         }
         double cancelY = top - 3.25;
-        board.glyph(s, card.x(), cancelY, "knopf_150x44_normal_k", null);
+        board.button(s, "u_abbrechen", card.x(), cancelY, 0.938, 0.275, "u_abbrechen", "knopf_150x44_normal_k", "knopf_150x44_hover_k");
         text(board, s, card.x(), cancelY, "Abbrechen", UI, 17, TEXT, Align.CENTER);
-        board.region(s, "u_abbrechen", card.x(), cancelY, 0.938, 0.275, "u_abbrechen");
     }
 
     // ------------------------------------------------------------ Klicks

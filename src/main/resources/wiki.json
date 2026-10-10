@@ -1,23 +1,63 @@
 {
   "hinweis": "Inhalt des Wikis in der Charakter-Tafel. Kategorien in Layout-Reihenfolge (genau 9). Artikel: id, kategorie (Name wie oben), titel (kurz, max. ca. 22 Zeichen), stichworte (fuer die Suche), text (Absaetze). Absatz mit '# ' vorne = Zwischenueberschrift, '[#RRGGBB] ' vorne = Absatz in dieser Farbe. Waehrung nur 'Coins', Betraege mit Tausenderpunkt.",
   "kategorien": [
-    { "name": "Coin-System", "kurz": "Coins" },
-    { "name": "Level-System", "kurz": "Level" },
-    { "name": "Verzauberungen", "kurz": "Zauber" },
-    { "name": "Auktionshaus", "kurz": "Auktion" },
-    { "name": "Überweisen", "kurz": "Senden" },
-    { "name": "Dailies", "kurz": "Dailies" },
-    { "name": "Gruppen und Loot", "kurz": "Gruppen" },
-    { "name": "Bosskämpfe", "kurz": "Bosse" },
-    { "name": "Voten", "kurz": "Voten" }
+    {
+      "name": "Coin-System",
+      "kurz": "Coins"
+    },
+    {
+      "name": "Level-System",
+      "kurz": "Level"
+    },
+    {
+      "name": "Verzauberungen",
+      "kurz": "Zauber"
+    },
+    {
+      "name": "Auktionshaus",
+      "kurz": "Auktion"
+    },
+    {
+      "name": "Überweisen",
+      "kurz": "Senden"
+    },
+    {
+      "name": "Dailies",
+      "kurz": "Dailies"
+    },
+    {
+      "name": "Gruppen und Loot",
+      "kurz": "Gruppen"
+    },
+    {
+      "name": "Bosskämpfe",
+      "kurz": "Bosse"
+    },
+    {
+      "name": "Voten",
+      "kurz": "Voten"
+    }
   ],
-  "beliebt": ["level-aufstieg", "coins-ausgeben", "verzauberer", "steuer", "gruppen"],
+  "beliebt": [
+    "level-aufstieg",
+    "coins-ausgeben",
+    "verzauberer",
+    "steuer",
+    "gruppen"
+  ],
   "artikel": [
     {
       "id": "coins",
       "kategorie": "Coin-System",
       "titel": "Was sind Coins?",
-      "stichworte": ["coins", "währung", "geld", "münzen", "guthaben", "konto"],
+      "stichworte": [
+        "coins",
+        "währung",
+        "geld",
+        "münzen",
+        "guthaben",
+        "konto"
+      ],
       "text": [
         "Coins sind die Währung auf dem ganzen Server. Du hast nur ein einziges Konto, und es gilt in allen Welten.",
         "Dein Guthaben siehst du oben rechts auf der Tafel.",
@@ -28,11 +68,22 @@
       "id": "coins-verdienen",
       "kategorie": "Coin-System",
       "titel": "Coins verdienen",
-      "stichworte": ["verdienen", "bekommen", "einnehmen", "belohnung", "coins"],
+      "stichworte": [
+        "bekommen",
+        "belohnung",
+        "coins",
+        "einnehmen",
+        "login",
+        "online",
+        "online-zeit",
+        "verdienen"
+      ],
       "text": [
         "So kommst du an Coins:",
-        "Dailies: Jeden Tag warten drei Aufgaben auf dich. Für jede erledigte gibt es 1 Coin (das kann sich später ändern).",
-        "Voten: Ein Vote bringt dir 10 Coins.",
+        "Login: Einmal pro Tag gibt es eine Belohnung, wenn du den Survival-Server betrittst.",
+        "Online-Zeit: Wer aktiv spielt, bekommt nach 30 Minuten, 2, 4 und 8 Stunden am Tag jeweils eine Belohnung. Wer länger als 5 Minuten stehen bleibt, gilt als abwesend, dann läuft die Zeit nicht. Mit /belohnung siehst du deinen Stand.",
+        "Dailies: Jeden Tag warten drei Aufgaben auf dich. Für jede erledigte gibt es Coins.",
+        "Voten: Ein Vote bringt dir 10 Coins. Danach gibt es 24 Stunden lang noch mehr: im Survival +10 % Coins aus Belohnungen.",
         "Verkaufen: Was du im Auktionshaus verkaufst, bringt dir Coins, abzüglich der Steuer.",
         "Von Mitspielern: Andere können dir Coins überweisen."
       ]
@@ -41,7 +92,13 @@
       "id": "coins-ausgeben",
       "kategorie": "Coin-System",
       "titel": "Coins ausgeben",
-      "stichworte": ["ausgeben", "kaufen", "bezahlen", "kosten", "coins"],
+      "stichworte": [
+        "ausgeben",
+        "kaufen",
+        "bezahlen",
+        "kosten",
+        "coins"
+      ],
       "text": [
         "Hier werden deine Coins gebraucht:",
         "Auktionshaus: Hier kaufst du, was andere Spieler anbieten.",
@@ -53,7 +110,13 @@
       "id": "steuer",
       "kategorie": "Coin-System",
       "titel": "Steuer",
-      "stichworte": ["steuer", "abgabe", "staatskasse", "prozent", "gebühr"],
+      "stichworte": [
+        "steuer",
+        "abgabe",
+        "staatskasse",
+        "prozent",
+        "gebühr"
+      ],
       "text": [
         "Bei Verkäufen im Auktionshaus und bei Überweisungen fällt eine Steuer an. Sie geht in die Staatskasse des Servers.",
         "Normalerweise liegt die Steuer bei 5 %. Sie kann sich ändern, aber immer nur zwischen 2 % und 20 %.",
@@ -64,7 +127,15 @@
       "id": "level-aufstieg",
       "kategorie": "Level-System",
       "titel": "Wie level ich?",
-      "stichworte": ["level", "aufsteigen", "erfahrung", "xp", "erfahrungspunkte", "monster", "leveln"],
+      "stichworte": [
+        "level",
+        "aufsteigen",
+        "erfahrung",
+        "xp",
+        "erfahrungspunkte",
+        "monster",
+        "leveln"
+      ],
       "text": [
         "Du startest auf Level 1 und kannst bis Level 99 aufsteigen.",
         "Erfahrung (XP) bekommst du vor allem, wenn du Monster besiegst. Je stärker und seltener das Monster, desto mehr XP gibt es. Monster aus Monsterkäfigen (Spawnern) geben nichts.",
@@ -76,7 +147,13 @@
       "id": "level-bonus",
       "kategorie": "Level-System",
       "titel": "Level-Bonus",
-      "stichworte": ["bonus", "mehr xp", "prozent", "erfahrung", "level"],
+      "stichworte": [
+        "bonus",
+        "mehr xp",
+        "prozent",
+        "erfahrung",
+        "level"
+      ],
       "text": [
         "Je höher dein Level, desto mehr XP bekommst du obendrauf: dein Level geteilt durch 3, in Prozent.",
         "Beispiele: Level 30 gibt +10 %, Level 60 gibt +20 %, Level 99 gibt +33 %.",
@@ -87,7 +164,14 @@
       "id": "level-leben",
       "kategorie": "Level-System",
       "titel": "Leben und Tod",
-      "stichworte": ["leben", "tod", "sterben", "lebenspunkte", "verlieren", "horten"],
+      "stichworte": [
+        "leben",
+        "tod",
+        "sterben",
+        "lebenspunkte",
+        "verlieren",
+        "horten"
+      ],
       "text": [
         "Dein Level sinkt nie, auch wenn du stirbst.",
         "Aber: Beim Tod geht der Fortschritt in deinem aktuellen Level verloren. Nutze deine XP deshalb lieber, statt sie lange zu sammeln.",
@@ -99,7 +183,13 @@
       "id": "level-99",
       "kategorie": "Level-System",
       "titel": "Level 99",
-      "stichworte": ["level 99", "maximum", "höchstes level", "ende", "xp"],
+      "stichworte": [
+        "level 99",
+        "maximum",
+        "höchstes level",
+        "ende",
+        "xp"
+      ],
       "text": [
         "Level 99 ist das Ende der Leiter. Ein Level 100 gibt es nicht.",
         "Deine Leiste füllt sich trotzdem weiter, bis zur Menge eines weiteren Levels.",
@@ -110,7 +200,14 @@
       "id": "verzauberer",
       "kategorie": "Verzauberungen",
       "titel": "Der Verzauberer",
-      "stichworte": ["verzauberer", "verzaubern", "npc", "zaubertisch", "amboss", "enchant"],
+      "stichworte": [
+        "verzauberer",
+        "verzaubern",
+        "npc",
+        "zaubertisch",
+        "amboss",
+        "enchant"
+      ],
       "text": [
         "Verzaubern geht nur beim Verzauberer. Zaubertisch und Amboss haben auf diesem Server keine Funktion.",
         "Beim Verzauberer legst du deinen Gegenstand und ein Verzauberbuch ein. Du siehst vorher, was es kostet und wie hoch die Fehlschlagchance ist."
@@ -120,7 +217,15 @@
       "id": "buecher",
       "kategorie": "Verzauberungen",
       "titel": "Verzauberbücher",
-      "stichworte": ["bücher", "buch", "beute", "truhen", "angeln", "buecher", "finden"],
+      "stichworte": [
+        "bücher",
+        "buch",
+        "beute",
+        "truhen",
+        "angeln",
+        "buecher",
+        "finden"
+      ],
       "text": [
         "Bücher gibt es nie als Gegenstand zum Aufheben. Sie werden direkt deinem Konto gutgeschrieben.",
         "Du findest sie in Truhen, beim Angeln und mit kleiner Chance bei Monstern.",
@@ -132,7 +237,13 @@
       "id": "verzauberung-stufen",
       "kategorie": "Verzauberungen",
       "titel": "Stufen",
-      "stichworte": ["stufen", "stufe", "spielerstufe", "level", "maximum"],
+      "stichworte": [
+        "stufen",
+        "stufe",
+        "spielerstufe",
+        "level",
+        "maximum"
+      ],
       "text": [
         "Verzauberungen haben die Stufen 1 bis 9.",
         "Du darfst sie bis zu deiner Spielerstufe nutzen. Die bekommst du, indem du dein Level durch 10 teilst und abrundest.",
@@ -143,7 +254,15 @@
       "id": "verzauberung-kosten",
       "kategorie": "Verzauberungen",
       "titel": "Kosten und Risiko",
-      "stichworte": ["kosten", "risiko", "fehlschlag", "chance", "xp", "coins", "preis"],
+      "stichworte": [
+        "kosten",
+        "risiko",
+        "fehlschlag",
+        "chance",
+        "xp",
+        "coins",
+        "preis"
+      ],
       "text": [
         "Jede Verzauberung kostet dich drei Dinge:",
         "XP: 15 % von dem, was dein aktuelles Level braucht. Für jede weitere Stufe kommen 7 % dazu. Es wird dir nie ein ganzes Level abgezogen.",
@@ -157,7 +276,19 @@
       "id": "verzauberung-besondere",
       "kategorie": "Verzauberungen",
       "titel": "Besondere Verzauberungen",
-      "stichworte": ["seltenheit", "reparatur", "unendlichkeit", "behutsamkeit", "flamme", "kanalisierung", "mehrfachschuss", "fluch", "wasseraffinität", "episch", "legendär"],
+      "stichworte": [
+        "seltenheit",
+        "reparatur",
+        "unendlichkeit",
+        "behutsamkeit",
+        "flamme",
+        "kanalisierung",
+        "mehrfachschuss",
+        "fluch",
+        "wasseraffinität",
+        "episch",
+        "legendär"
+      ],
       "text": [
         "Manche Verzauberungen haben keine Stufen. Sie haben stattdessen eine Seltenheit und feste Kosten. Je seltener, desto teurer, und desto höher die Fehlschlagchance (10 %, 15 %, 20 % und 25 %).",
         "[#9AA5B4] Gewöhnlich: Fluch der Bindung, Fluch des Verschwindens, Wasseraffinität",
@@ -170,7 +301,17 @@
       "id": "verzauberung-angriff",
       "kategorie": "Verzauberungen",
       "titel": "Eigene: Angriff",
-      "stichworte": ["eigene", "angriffsgeschwindigkeit", "kritisch", "ohnmacht", "vergiftung", "verlangsamen", "stark gegen bosse", "stark gegen monster", "schaden"],
+      "stichworte": [
+        "eigene",
+        "angriffsgeschwindigkeit",
+        "kritisch",
+        "ohnmacht",
+        "vergiftung",
+        "verlangsamen",
+        "stark gegen bosse",
+        "stark gegen monster",
+        "schaden"
+      ],
       "text": [
         "Diese Verzauberungen gibt es nur bei uns. Sie haben die Stufen 1 bis 9 und sitzen auf deiner Rüstung. Die Boni aller vier Teile zählen zusammen.",
         "Angriffsgeschwindigkeit: +4 % je Stufe.",
@@ -186,7 +327,17 @@
       "id": "verzauberung-schutz",
       "kategorie": "Verzauberungen",
       "titel": "Eigene: Schutz",
-      "stichworte": ["eigene", "monsterverteidigung", "bossverteidigung", "magiewiderstand", "vitalität", "schutz", "obergrenze", "deckel", "leben"],
+      "stichworte": [
+        "eigene",
+        "monsterverteidigung",
+        "bossverteidigung",
+        "magiewiderstand",
+        "vitalität",
+        "schutz",
+        "obergrenze",
+        "deckel",
+        "leben"
+      ],
       "text": [
         "Auch diese Verzauberungen haben die Stufen 1 bis 9 und sitzen auf deiner Rüstung.",
         "Monsterverteidigung: 0,75 % weniger Schaden von Monstern je Stufe.",
@@ -201,7 +352,15 @@
       "id": "auktion",
       "kategorie": "Auktionshaus",
       "titel": "Der Auktionator",
-      "stichworte": ["auktion", "auktionator", "auktionshaus", "kaufen", "ansehen", "abholen", "auszahlen"],
+      "stichworte": [
+        "auktion",
+        "auktionator",
+        "auktionshaus",
+        "kaufen",
+        "ansehen",
+        "abholen",
+        "auszahlen"
+      ],
       "text": [
         "Im Auktionshaus handelst du mit anderen Spielern. Du erreichst es über den Auktionator oder über den Knopf Auktionshaus auf der Tafel.",
         "Ansehen und Kaufen geht von überall.",
@@ -212,7 +371,16 @@
       "id": "auktion-verkaufen",
       "kategorie": "Auktionshaus",
       "titel": "Verkaufen und bieten",
-      "stichworte": ["verkaufen", "einstellen", "festpreis", "gebot", "bieten", "versteigern", "laufzeit", "bücher"],
+      "stichworte": [
+        "verkaufen",
+        "einstellen",
+        "festpreis",
+        "gebot",
+        "bieten",
+        "versteigern",
+        "laufzeit",
+        "bücher"
+      ],
       "text": [
         "Beim Einstellen legst du einen Festpreis fest, nimmst Gebote an oder machst beides. Zum Beispiel Sofortkauf für 280 Coins, und trotzdem darf geboten werden.",
         "Ein Angebot läuft 48 Stunden. Ein neues Gebot muss mindestens 5 % über dem letzten liegen.",
@@ -224,7 +392,14 @@
       "id": "ueberweisen",
       "kategorie": "Überweisen",
       "titel": "Coins senden",
-      "stichworte": ["überweisen", "senden", "schicken", "geben", "spieler", "steuer"],
+      "stichworte": [
+        "überweisen",
+        "senden",
+        "schicken",
+        "geben",
+        "spieler",
+        "steuer"
+      ],
       "text": [
         "Auf der Seite Überweisen der Tafel schickst du Coins an andere Spieler.",
         "Bei jeder Überweisung fällt die Steuer an. Normalerweise sind das 5 %, mehr dazu im Artikel Steuer."
@@ -234,7 +409,16 @@
       "id": "dailies",
       "kategorie": "Dailies",
       "titel": "Tägliche Aufgaben",
-      "stichworte": ["dailies", "täglich", "aufgaben", "monsterjäger", "erzsucher", "aufbauer", "reset", "belohnung"],
+      "stichworte": [
+        "dailies",
+        "täglich",
+        "aufgaben",
+        "monsterjäger",
+        "erzsucher",
+        "aufbauer",
+        "reset",
+        "belohnung"
+      ],
       "text": [
         "Jeden Tag warten drei feste Aufgaben auf dich:",
         "Monsterjäger: 25 Monster töten.",
@@ -248,7 +432,15 @@
       "id": "gruppen",
       "kategorie": "Gruppen und Loot",
       "titel": "So entstehen Gruppen",
-      "stichworte": ["gruppe", "gruppen", "party", "team", "zusammen", "30 level", "grenze"],
+      "stichworte": [
+        "gruppe",
+        "gruppen",
+        "party",
+        "team",
+        "zusammen",
+        "30 level",
+        "grenze"
+      ],
       "text": [
         "Gruppen bilden sich von allein: wenn ihr gemeinsam Monster tötet oder länger nah beieinander seid.",
         "Es gibt eine Grenze: Der Stärkste darf höchstens 30 Level vom Zweitstärksten entfernt sein. Level 10 und Level 15 passen also zusammen.",
@@ -260,7 +452,15 @@
       "id": "gruppen-xp",
       "kategorie": "Gruppen und Loot",
       "titel": "Erfahrung teilen",
-      "stichworte": ["xp", "erfahrung", "teilen", "verteilen", "gruppe", "boss", "taktik"],
+      "stichworte": [
+        "xp",
+        "erfahrung",
+        "teilen",
+        "verteilen",
+        "gruppe",
+        "boss",
+        "taktik"
+      ],
       "text": [
         "Die Erfahrung für einen besiegten Gegner wird gleichmäßig auf alle in der Gruppe verteilt. Danach kommt der Level-Bonus jedes Spielers dazu.",
         "Beispiel: Ein Boss gibt 10.000 XP, ihr seid zu fünft. Jeder bekommt 2.000 XP und dazu seinen eigenen Bonus.",
@@ -272,7 +472,14 @@
       "id": "gruppen-loot",
       "kategorie": "Gruppen und Loot",
       "titel": "Beute in der Gruppe",
-      "stichworte": ["loot", "beute", "legendär", "funde", "fund", "gruppe"],
+      "stichworte": [
+        "loot",
+        "beute",
+        "legendär",
+        "funde",
+        "fund",
+        "gruppe"
+      ],
       "text": [
         "Legendäre Funde eines Gruppenmitglieds sehen alle in der Gruppe. So freut ihr euch gemeinsam."
       ]
@@ -281,18 +488,39 @@
       "id": "bosse",
       "kategorie": "Bosskämpfe",
       "titel": "Bosskämpfe",
-      "stichworte": ["boss", "bosse", "bosskampf", "gemeinsam", "namensgebunden", "beute"],
+      "stichworte": [
+        "boss",
+        "bosse",
+        "bosskampf",
+        "gemeinsam",
+        "namensgebunden",
+        "beute"
+      ],
       "text": [
-        "Gegen Bosse könnt ihr zusammen antreten. Je mehr mitkämpfen, desto stärker wird der Boss.",
-        "Wer dabei war, bekommt etwas. Besondere Beute ist an deinen Namen gebunden.",
-        "Die genauen Regeln dazu werden noch eingeführt."
+        "Gegen Bosse könnt ihr zusammen antreten. Je mehr mitkämpfen, desto stärker wird der Boss: Für jeden weiteren Mitstreiter hat er 40 % mehr Leben, bei bis zu 10 Spielern.",
+        "# Wer bekommt etwas?",
+        "Alle, die dem Boss mindestens 5 % seines Lebens als Schaden zugefügt haben. Wer mehr Schaden macht, bekommt einen größeren Anteil.",
+        "# Was gibt es?",
+        "Erfahrung: Der Boss gibt mehr Erfahrung, je mehr kämpfen. Sie wird nach dem Schadensanteil verteilt, danach kommt dein Level-Bonus dazu.",
+        "Beute: Jeder würfelt seine Beute für sich. Je größer dein Anteil, desto besser die Chancen und desto mehr bekommst du. Die Beute ist an deinen Namen gebunden: Andere können sie nicht aufheben und man kann sie nicht im Auktionshaus verkaufen.",
+        "Verzauberbücher: Auch sie gibt es von Bossen, mit besseren Chancen auf seltene Bücher. Sie werden dir direkt gutgeschrieben.",
+        "Tipp: Nehmt Schwächere mit. Die Gruppe darf bis zu 30 Level auseinanderliegen, und alle bekommen ihren Anteil."
       ]
     },
     {
       "id": "voten",
       "kategorie": "Voten",
       "titel": "Voten",
-      "stichworte": ["vote", "voten", "voting", "bonus", "belohnung", "loot", "erfahrung", "coins"],
+      "stichworte": [
+        "vote",
+        "voten",
+        "voting",
+        "bonus",
+        "belohnung",
+        "loot",
+        "erfahrung",
+        "coins"
+      ],
       "text": [
         "Mit /vote bekommst du den Link zur Voting-Seite.",
         "Ein Vote bringt dir 10 Coins. Im Survival gibt es dazu 24 Stunden lang +10 % Loot (bei Monstern und Erzen), +10 % Coins und +10 % Erfahrung.",

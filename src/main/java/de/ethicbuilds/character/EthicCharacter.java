@@ -78,13 +78,15 @@ public final class EthicCharacter extends JavaPlugin implements CommandExecutor 
             board.close(player);
             return true;
         }
-        openPage(player, "uebersicht");
+        if (!openPage(player, "uebersicht")) {
+            player.sendMessage("§cHier ist kein Platz für die Tafel (oder du spielst mit Bedrock). Stell dich an eine freiere Stelle.");
+        }
         return true;
     }
 
     /** Oeffnet eine Seite der Tafel (Bedrock hat keine Tafel). */
     public boolean openPage(Player player, String page) {
-        if (player.getUniqueId().getMostSignificantBits() == 0L || !board.layout().hasPage(page)) {
+        if (player.getUniqueId().getMostSignificantBits() == 0L || !board.layout().hasPage(page) || !board.fits(player, page)) {
             return false;
         }
         if (board.isOpen(player)) {

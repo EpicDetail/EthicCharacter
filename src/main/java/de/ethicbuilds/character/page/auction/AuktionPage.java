@@ -288,9 +288,10 @@ public final class AuktionPage implements PageHandler {
         }
         String glyph = id.startsWith("a_nav_") ? e.images().get(active ? "aktiv" : "normal")
                 : active ? "knopf_260x42_aktiv_t" : "knopf_260x42_normal_t";
-        board.glyph(s, e.x(), e.y(), glyph, null);
+        // Aktiver Knopf ohne Hover, sonst Hover-Bild gleicher Groesse
+        String hover = active ? null : id.startsWith("a_nav_") ? e.images().get("hover") : "knopf_260x42_hover_t";
+        board.button(s, id, e.x(), e.y(), e.width(), e.height(), "klick", glyph, hover);
         board.text(s, e.x(), e.y(), Component.text(e.text()).color(TEXT).font(Key.key(UI)), e.px());
-        board.region(s, id, e.x(), e.y(), e.width(), e.height(), "klick");
     }
 
     // Einnahmen mit Muenzsymbol; "[Abholen]" nur beim Auktionator mit Einnahmen. Der Text schrumpft, bis er in die Pille passt.
@@ -474,10 +475,11 @@ public final class AuktionPage implements PageHandler {
     private void button(Board board, Session s, Element card, int i, String label, boolean enabled) {
         double x = card.x();
         double y = card.y() - 0.50;
-        board.glyph(s, x, y, enabled ? "knopf_140x42_haupt_k" : "knopf_140x42_gesperrt_k", null);
+        // Gesperrt: gleiches Bild ohne Hover, Klick bleibt wie zuvor
+        board.button(s, "a_kaufen_" + i, x, y, 0.875, 0.263, "knopf", enabled ? "knopf_140x42_haupt_k" : "knopf_140x42_gesperrt_k",
+                enabled ? "knopf_140x42_haupt_hover_k" : null);
         int px = fitPx(board, label, UI, 16, 0.8, 11);
         board.text(s, x, y, Component.text(label).color(enabled ? DARK : LOCKED).font(Key.key(UI)), px);
-        board.region(s, "a_kaufen_" + i, x, y, 0.875, 0.263, "knopf");
     }
 
     private static int fitPx(Board board, String text, String font, int px, double max, int min) {
@@ -507,7 +509,7 @@ public final class AuktionPage implements PageHandler {
         Player player = s.player();
         AuctionBoardApi api = api();
         switch (id) {
-            case "a_schliessen" -> board.close(player);
+            case "a_schliessen" -> board.show(s, "uebersicht");
             case "a_nav_0" -> switchMode(board, s, Mode.BROWSE);
             case "a_nav_1" -> switchMode(board, s, Mode.MINE);
             case "a_nav_2" -> switchMode(board, s, Mode.HISTORY);

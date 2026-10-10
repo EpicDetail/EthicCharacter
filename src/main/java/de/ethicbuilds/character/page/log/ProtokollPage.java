@@ -189,10 +189,9 @@ public final class ProtokollPage implements PageHandler {
         int page = page(s);
         int pages = pages(s);
         double pillX = -0.88;
-        board.glyph(s, pillX, FOOTER_Y, "pille_210x52_31-58-89", null);
+        board.button(s, "p_filter", pillX, FOOTER_Y, 1.31, 0.325, "p_filter", "pille_210x52_31-58-89", "pille_210x52_31-58-89_hover");
         String filter = "Quelle: " + filter(s);
         board.line(s, pillX, FOOTER_Y, Component.text(filter).color(TEXT), filter, FONT, 18, Align.CENTER);
-        board.region(s, "p_filter", pillX, FOOTER_Y, 1.31, 0.325, "p_filter");
         button(board, s, 1.40, "Zurück", page > 0, "p_prev");
         String label = "Seite " + (page + 1) + "/" + pages;
         board.line(s, 2.20, FOOTER_Y, Component.text(label).color(HINT), label, FONT, 18, Align.CENTER);
@@ -200,11 +199,12 @@ public final class ProtokollPage implements PageHandler {
     }
 
     private void button(Board board, Session s, double x, String text, boolean enabled, String id) {
-        board.glyph(s, x, FOOTER_Y, "knopf_100x44_normal_k", null);
-        board.line(s, x, FOOTER_Y, Component.text(text).color(enabled ? ORANGE : HINT), text, FONT, 17, Align.CENTER);
         if (enabled) {
-            board.region(s, id, x, FOOTER_Y, 0.625, 0.275, id);
+            board.button(s, id, x, FOOTER_Y, 0.625, 0.275, id, "knopf_100x44_normal_k", "knopf_100x44_hover_k");
+        } else {
+            board.glyph(s, x, FOOTER_Y, "knopf_100x44_normal_k", null);
         }
+        board.line(s, x, FOOTER_Y, Component.text(text).color(enabled ? ORANGE : HINT), text, FONT, 17, Align.CENTER);
     }
 
     // ------------------------------------------------------------ Klicks

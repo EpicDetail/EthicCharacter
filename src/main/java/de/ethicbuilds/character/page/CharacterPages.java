@@ -86,6 +86,10 @@ public final class CharacterPages implements Board.Pages {
 
     @Override
     public Component content(Session s, Element e) {
+        // Im Auktionshaus fuehrt der untere Knopf zurueck zum Charakterfenster
+        if (s.page().equals("auktion") && e.id().equals("a_schliessen")) {
+            return Component.text("Zurück");
+        }
         PageHandler handler = handler(s.page());
         if (handler != null) {
             Component custom = handler.content(s, e);

@@ -258,11 +258,16 @@ public final class VerzauberPage implements PageHandler {
         // Knopf: gesperrt ohne Klick, sonst ein Klickbereich ueber der Grafik
         String buttonGlyph = button.images().get(locked ? "gesperrt" : "haupt");
         if (buttonGlyph != null) {
-            board.glyph(s, button.x(), button.y(), buttonGlyph, null);
+            if (locked) {
+                board.glyph(s, button.x(), button.y(), buttonGlyph, null);
+            } else {
+                board.button(s, button.id(), button.x(), button.y(), button.width(), button.height(), "verzaubern", buttonGlyph,
+                        button.images().get("hover"));
+            }
         }
         String label = locked ? button.extra("gesperrtText", "Gesperrt") : button.text();
         board.line(s, button.x(), button.y(), Component.text(label).color(locked ? LOCKED : BUTTON), label, FONT, button.px(), Align.CENTER);
-        if (!locked) {
+        if (!locked && buttonGlyph == null) {
             board.region(s, button.id(), button.x(), button.y(), button.width(), button.height(), "verzaubern");
         }
     }

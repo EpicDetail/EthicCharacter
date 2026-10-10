@@ -239,10 +239,12 @@ public final class WikiPage implements PageHandler {
             }
             String image = e.images().get(n == category ? "aktiv" : "normal");
             if (image != null) {
-                b.glyph(s, e.x(), e.y(), image, null);
+                // Aktive Kategorie ohne Hover
+                b.button(s, e.id(), e.x(), e.y(), e.width(), e.height(), "kategorie", image, n == category ? null : e.images().get("hover"));
+            } else {
+                b.region(s, e.id(), e.x(), e.y(), e.width(), e.height(), "kategorie");
             }
             Rows.draw(b, s, e.x(), e.y(), e.text(), false, Rows.TEXT, e.px(), Align.CENTER);
-            b.region(s, e.id(), e.x(), e.y(), e.width(), e.height(), "kategorie");
         }
         Element title = element(WIKI, "w_titel");
         String name = sheet.article().title();
@@ -277,9 +279,10 @@ public final class WikiPage implements PageHandler {
             if (ownRow(row)) {
                 String image = row.images().get("normal");
                 if (image != null) {
-                    b.glyph(s, row.x(), row.y(), image, null);
+                    b.button(s, row.id(), row.x(), row.y(), row.width(), row.height(), "treffer", image, row.images().get("hover"));
+                } else {
+                    b.region(s, row.id(), row.x(), row.y(), row.width(), row.height(), "treffer");
                 }
-                b.region(s, row.id(), row.x(), row.y(), row.width(), row.height(), "treffer");
             }
             Element title = element(SEARCH, "ws_zeile_" + n + "_titel");
             Hit hit = hits.get(n);

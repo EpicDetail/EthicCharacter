@@ -41,10 +41,19 @@ public final class Layout {
                           int px, TextColor color, String state, String action, String tag, String visibleFor,
                           Map<String, String> images, List<Slice> slices, String fill, Map<String, String> extra) {
 
+        public Element withState(String newState) {
+            return new Element(id, type, x, y, width, height, text, font, px, color, newState, action, tag, visibleFor, images, slices, fill, extra);
+        }
+
         /** Ein Klickbereich ohne eigene Grafik, den eine Seite zur Laufzeit anlegt. */
         public static Element region(String id, double x, double y, double width, double height, String action) {
+            return region(id, x, y, width, height, action, Map.of());
+        }
+
+        /** Klickbereich mit Bildern je Zustand (normal, hover), die das Brett beim Zielen umschaltet. */
+        public static Element region(String id, double x, double y, double width, double height, String action, Map<String, String> images) {
             return new Element(id, "bereich", x, y, width, height, "", "ethicbuilds:ui", 0, TextColor.fromHexString("#E8EEF7"), "normal",
-                    action, "", "alle", Map.of(), List.of(), "", Map.of());
+                    action, "", "alle", images, List.of(), "", Map.of());
         }
 
         /** Zusatzfeld aus dem Layout (z. B. zeilenhoehePx), sonst der Ersatzwert. */
@@ -112,6 +121,44 @@ public final class Layout {
                 elements.add(element(e.getAsJsonObject()));
             }
             pages.put(page.getKey(), elements);
+        }
+        syncNavigation();
+    }
+
+    // Die Navigation mit Wiki-Eintrag gilt auf allen Seiten mit Navigation; der aktive Eintrag richtet sich nach der Seite
+    private void syncNavigation() {
+        List<Element> reference = new ArrayList<>();
+        for (Element e : pages.getOrDefault("wiki", List.of())) {
+            if (e.id().startsWith("nav_")) {
+                reference.add(e);
+            }
+        }
+        if (reference.isEmpty()) {
+            return;
+        }
+        Map<String, String> labels = Map.of("uebersicht", "Übersicht", "dailies", "Dailies", "ueberweisen", "Überweisen",
+                "protokoll", "Protokoll", "wiki", "Wiki", "wiki_suche", "Wiki");
+        for (Map.Entry<String, List<Element>> page : pages.entrySet()) {
+            String label = labels.get(page.getKey());
+            if (label == null || page.getKey().startsWith("wiki")) {
+                continue;
+            }
+            List<Element> updated = new ArrayList<>();
+            boolean inserted = false;
+            for (Element e : page.getValue()) {
+                if (e.id().startsWith("nav_")) {
+                    if (!inserted) {
+                        for (Element nav : reference) {
+                            String state = nav.state().equals("gesperrt") ? "gesperrt" : nav.text().equals(label) ? "aktiv" : "normal";
+                            updated.add(nav.withState(state));
+                        }
+                        inserted = true;
+                    }
+                } else {
+                    updated.add(e);
+                }
+            }
+            page.setValue(updated);
         }
     }
 

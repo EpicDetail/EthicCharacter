@@ -82,6 +82,7 @@ public final class Board implements Listener {
         private final Map<String, Part> parts = new LinkedHashMap<>();
         private final List<Entity> extras = new ArrayList<>();
         private final Map<String, Object> data = new HashMap<>();
+        private double depth = D_BOARD;
         private String page;
         private Part hover;
         private long ticks;
@@ -167,7 +168,8 @@ public final class Board implements Listener {
     public void open(Player player, String page, Map<String, Object> data) {
         close(player);
         Session s = new Session(player);
-        if (!hasRoom(s, page)) {
+        s.depth = room(s, page);
+        if (s.depth <= 0) {
             player.sendMessage("§cHier ist nicht genug Platz für die Tafel. Stell dich an eine freiere Stelle.");
             return;
         }
@@ -213,19 +215,37 @@ public final class Board implements Listener {
         draw(s, page);
     }
 
-    // Ist vor dem Spieler genug freier Raum (keine festen Bloecke zwischen ihm und der Tafel)?
-    private boolean hasRoom(Session s, String page) {
+    /** Passt die Tafel hier hin (auch dicht vor dem Spieler, sie wird dann naeher gezeichnet und sieht gleich gross aus)? */
+    public boolean fits(Player player, String page) {
+        return room(new Session(player), page) > 0;
+    }
+
+    // Tiefe, in der die Tafel frei steht (keine festen Bloecke zwischen Spieler und Tafel), 0 = kein Platz.
+    // Die Tafel sieht aus jeder Tiefe gleich gross aus, nur in kleinen Raeumen steht sie dichter am Spieler.
+    private double room(Session s, String page) {
         double middle = BOTTOM + layout.height(page) / 2;
-        for (double d = 1.0; d <= D_BOARD; d += 0.5) {
-            for (double r : new double[]{-layout.width(page) / 2 + 0.2, 0, layout.width(page) / 2 - 0.2}) {
-                for (double h : new double[]{0.5, middle, layout.height(page) - 0.15}) {
-                    if (location(s, r * d / D_BOARD, h, d).getBlock().isSolid()) {
-                        return false;
+        for (double depth : new double[]{D_BOARD, 3.2, 2.6, 2.1, 1.7, 1.4}) {
+            boolean free = true;
+            for (double d = 0.8; d <= depth && free; d += 0.4) {
+                double k = d / D_BOARD;
+                for (double r : new double[]{-layout.width(page) / 2 + 0.2, 0, layout.width(page) / 2 - 0.2}) {
+                    for (double h : new double[]{0.5, middle, layout.height(page) - 0.15}) {
+                        if (location(s, r * k, s.eye + (h - s.eye) * k, d).getBlock().isSolid()) {
+                            free = false;
+                        }
                     }
                 }
             }
+            if (free) {
+                return depth;
+            }
         }
-        return true;
+        return 0;
+    }
+
+    // Tiefe einer Ebene in dieser Sitzung (nominal D_*, verschoben um die Tafeltiefe)
+    private static double layer(Session s, double nominal) {
+        return s.depth - (D_BOARD - nominal);
     }
 
     // ------------------------------------------------------------ Zeichnen
@@ -357,7 +377,7 @@ public final class Board implements Listener {
     }
 
     private TextDisplay spawn(Session s, Location at, Component text, double scale, int lineWidth) {
-        float k = (float) (D_TEXT / D_BOARD);
+        float k = (float) (layer(s, D_TEXT) / s.depth);
         TextDisplay display;
         ownSpawn = true;
         try {
@@ -382,7 +402,7 @@ public final class Board implements Listener {
 
     /** Gegenstand als flaches Symbol auf der Tafel, size = Kantenlaenge in Bloecken. */
     public ItemDisplay item(Session s, double x, double y, double size, ItemStack stack) {
-        float k = (float) (D_TEXT / D_BOARD);
+        float k = (float) (layer(s, D_TEXT) / s.depth);
         ItemDisplay display;
         ownSpawn = true;
         try {
@@ -414,6 +434,25 @@ public final class Board implements Listener {
         if (g != null) {
             s.extras.addAll(tiles(s, x, y, D_SHAPE, g, 1, 1, tint));
         }
+    }
+
+    /**
+     * Schaltflaeche mit eigener Grafik und Hover: zeichnet das Bild normal, beim Zielen wechselt es auf hover.
+     * Beide Bilder muessen gleich viele Kacheln haben (gleiche Groesse). Klicks kommen als Element mit dieser Kennung an.
+     */
+    public void button(Session s, String id, double x, double y, double width, double height, String action, String normal, String hover) {
+        Map<String, String> images = new HashMap<>();
+        images.put("normal", normal);
+        if (hover != null) {
+            images.put("hover", hover);
+        }
+        Element e = Element.region(id, x, y, width, height, action, images);
+        Part part = new Part(e);
+        Glyph g = layout.glyph(normal);
+        if (g != null) {
+            part.tiles.addAll(tiles(s, x, y, D_SHAPE, g, 1, 1, null));
+        }
+        s.parts.put(id, part);
     }
 
     public enum Align {
@@ -480,7 +519,7 @@ public final class Board implements Listener {
      * Eine Kachel als Schrift-Glyphe auf einem Text-Display: wird unbeleuchtet gezeichnet, also in exakten Farben.
      */
     private TextDisplay glyph(Session s, double x, double y, double depth, Tile t, double width, double height, TextColor tint) {
-        float k = (float) (depth / D_BOARD);
+        float k = (float) (layer(s, depth) / s.depth);
         float sx = (float) (width / (t.widthPx() * PX)), sy = (float) (height / (t.heightPx() * PX));
         // Der Text wird nach seiner Laufweite zentriert, die Textur beginnt aber links: um den Unterschied schieben
         double shift = t.middle() * PX * sx;
@@ -518,8 +557,9 @@ public final class Board implements Listener {
 
     // ------------------------------------------------------------ Orte
 
-    private Location point(Session s, double x, double y, double depth) {
-        double k = depth / D_BOARD;
+    private Location point(Session s, double x, double y, double nominal) {
+        double depth = layer(s, nominal);
+        double k = depth / s.depth;
         double middle = BOTTOM + layout.height(s.page) / 2;
         return location(s, x * k, s.eye + (middle + y - s.eye) * k, depth);
     }
@@ -579,14 +619,16 @@ public final class Board implements Listener {
         if (denominator <= 1e-4) {
             return null;
         }
-        Vector plane = s.feet.toVector().add(s.forward.clone().multiply(D_BOARD));
+        Vector plane = s.feet.toVector().add(s.forward.clone().multiply(s.depth));
         double t = plane.clone().subtract(eye.toVector()).dot(s.forward) / denominator;
         if (t <= 0) {
             return null;
         }
         Vector hit = eye.toVector().add(direction.multiply(t)).subtract(s.feet.toVector());
-        double r = hit.dot(s.right);
-        double y = hit.getY() - (BOTTOM + layout.height(s.page) / 2);
+        // Auf die Tafelkoordinaten (Ebene in 4 Bloecken Tiefe) umrechnen
+        double scale = D_BOARD / s.depth;
+        double r = hit.dot(s.right) * scale;
+        double y = (hit.getY() - s.eye) * scale + s.eye - (BOTTOM + layout.height(s.page) / 2);
         Part result = null;
         for (Part part : s.parts.values()) {
             Element e = part.element;
@@ -616,7 +658,7 @@ public final class Board implements Listener {
         if (l == null || !l.getWorld().equals(s.feet.getWorld()) || l.distanceSquared(s.feet) > AWAY * AWAY) {
             return true;
         }
-        return l.toVector().subtract(s.feet.toVector()).dot(s.forward) > D_BOARD - 0.4;
+        return l.toVector().subtract(s.feet.toVector()).dot(s.forward) > s.depth - Math.min(0.4, s.depth * 0.1);
     }
 
     // ------------------------------------------------------------ Ereignisse
