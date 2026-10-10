@@ -5,6 +5,7 @@ import de.ethicbuilds.character.board.Board.Session;
 import de.ethicbuilds.character.board.Layout.Element;
 import de.ethicbuilds.economy.format.CoinFormat;
 import de.ethicbuilds.survival.api.AuctionApi;
+import de.ethicbuilds.survival.api.LevelApi;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -38,7 +39,7 @@ public final class CharacterPages implements Board.Pages {
         if (e.text().isEmpty()) {
             return null;
         }
-        boolean max = number(s, "xpNext") == 0;
+        boolean max = number(s, "level") >= LevelApi.MAX_LEVEL;
         switch (e.id()) {
             case "kopf_name" -> {
                 // Name, Punkt und Level in einer Zeile, damit sie dicht beieinander stehen
@@ -104,7 +105,7 @@ public final class CharacterPages implements Board.Pages {
 
     @Override
     public void draw(Board board, Session s, String page) {
-        boolean max = number(s, "xpNext") == 0;
+        boolean max = number(s, "level") >= LevelApi.MAX_LEVEL;
         for (Element e : board.layout().page(page)) {
             if (e.type().equals("linie") && !e.fill().isEmpty()) {
                 board.bar(s, e, progress(s, e.fill()), max && e.id().startsWith("in_level") ? "gold" : "orange");

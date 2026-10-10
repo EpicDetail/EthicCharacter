@@ -124,7 +124,7 @@ public final class Hud implements Listener {
         int level = levels != null ? levels.level(id) : 1;
         long into = levels != null ? levels.xpIntoLevel(id) : 0;
         long next = levels != null ? levels.xpForNextLevel(id) : 0;
-        boolean max = next == 0;
+        boolean max = level >= LevelApi.MAX_LEVEL;
         double progress = max ? 1.0 : (double) into / next;
         Gain gain = gains.get(id);
         long delta = gain != null && System.currentTimeMillis() < gain.until ? gain.sum : 0;
