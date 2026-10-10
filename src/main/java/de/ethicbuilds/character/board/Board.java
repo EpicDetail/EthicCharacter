@@ -383,7 +383,7 @@ public final class Board implements Listener {
     }
 
     private TextDisplay spawn(Session s, Location at, Component text, double scale, int lineWidth) {
-        float k = (float) (layer(s, D_TEXT) / s.depth * sc);
+        float k = (float) (layer(s, D_TEXT) / D_BOARD * sc);
         TextDisplay display;
         ownSpawn = true;
         try {
@@ -408,7 +408,7 @@ public final class Board implements Listener {
 
     /** Gegenstand als flaches Symbol auf der Tafel, size = Kantenlaenge in Bloecken. */
     public ItemDisplay item(Session s, double x, double y, double size, ItemStack stack) {
-        float k = (float) (layer(s, D_TEXT) / s.depth * sc);
+        float k = (float) (layer(s, D_TEXT) / D_BOARD * sc);
         ItemDisplay display;
         ownSpawn = true;
         try {
@@ -525,7 +525,7 @@ public final class Board implements Listener {
      * Eine Kachel als Schrift-Glyphe auf einem Text-Display: wird unbeleuchtet gezeichnet, also in exakten Farben.
      */
     private TextDisplay glyph(Session s, double x, double y, double depth, Tile t, double width, double height, TextColor tint) {
-        float k = (float) (layer(s, depth) / s.depth * sc);
+        float k = (float) (layer(s, depth) / D_BOARD * sc);
         float sx = (float) (width / (t.widthPx() * PX)), sy = (float) (height / (t.heightPx() * PX));
         // Der Text wird nach seiner Laufweite zentriert, die Textur beginnt aber links: um den Unterschied schieben
         double shift = t.middle() * PX * sx;
@@ -565,7 +565,7 @@ public final class Board implements Listener {
 
     private Location point(Session s, double x, double y, double nominal) {
         double depth = layer(s, nominal);
-        double k = depth / s.depth;
+        double k = depth / D_BOARD;
         double middle = BOTTOM + layout.height(s.page) / 2;
         return location(s, x * k * sc, s.eye + (middle + y * sc - s.eye) * k, depth);
     }
