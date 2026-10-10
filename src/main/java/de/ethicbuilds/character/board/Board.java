@@ -13,6 +13,7 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.entity.Player;
@@ -239,7 +240,12 @@ public final class Board implements Listener {
     // Die Tafel sieht aus jeder Tiefe gleich gross aus, nur in kleinen Raeumen steht sie dichter am Spieler.
     private double room(Session s, String page) {
         double middle = BOTTOM + layout.height(page) / 2;
-        for (double depth : new double[]{D_BOARD, 3.2, 2.6, 2.1, 1.7, 1.4}) {
+        // Steht ein NPC oder Spieler vor der Tafel, muss sie davor stehen (nicht in ihm)
+        double limit = nearestAhead(s) - 0.6;
+        for (double depth : new double[]{D_BOARD, 3.2, 2.6, 2.1, 1.7, 1.4, 1.1}) {
+            if (depth > limit) {
+                continue;
+            }
             boolean free = true;
             for (double d = 0.8; d <= depth && free; d += 0.4) {
                 double k = d / D_BOARD;
@@ -256,6 +262,22 @@ public final class Board implements Listener {
             }
         }
         return 0;
+    }
+
+    // Abstand (in Blickrichtung) zum naechsten Lebewesen, das die Tafel durchschneiden wuerde
+    private double nearestAhead(Session s) {
+        double nearest = Double.MAX_VALUE;
+        for (Entity e : s.feet.getWorld().getNearbyEntities(s.feet, 6, 4, 6)) {
+            if (!(e instanceof LivingEntity) || e.equals(s.player)) {
+                continue;
+            }
+            Vector offset = e.getLocation().toVector().subtract(s.feet.toVector());
+            double along = offset.dot(s.forward);
+            if (along > 0.3 && Math.abs(offset.dot(s.right)) < 1.4) {
+                nearest = Math.min(nearest, along);
+            }
+        }
+        return nearest;
     }
 
     // Tiefe einer Ebene in dieser Sitzung (nominal D_*, verschoben um die Tafeltiefe)
