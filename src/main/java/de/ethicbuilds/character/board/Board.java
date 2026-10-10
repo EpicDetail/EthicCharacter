@@ -144,7 +144,7 @@ public final class Board implements Listener {
     private final Pages pages;
     private final TextMetrics metrics = new TextMetrics();
     // Wie gross die Tafel wirkt (1 = volle Groesse laut Layout), config board.scale
-    private final double sc;
+    private volatile double sc;
     private final Map<UUID, Session> sessions = new ConcurrentHashMap<>();
     // Waehrend wir selbst spawnen, darf kein anderes Plugin (z. B. WorldGuard) es verhindern
     private boolean ownSpawn;
@@ -153,7 +153,16 @@ public final class Board implements Listener {
         this.plugin = plugin;
         this.layout = layout;
         this.pages = pages;
-        this.sc = Math.max(0.4, Math.min(1.0, plugin.getConfig().getDouble("board.scale", 0.6)));
+        this.sc = Math.max(0.3, Math.min(1.0, plugin.getConfig().getDouble("board.scale", 0.5)));
+    }
+
+    /** Groesse der Tafel einstellen (0,3 bis 1), gilt fuer die naechsten Tafeln. */
+    public void scale(double value) {
+        this.sc = Math.max(0.3, Math.min(1.0, value));
+    }
+
+    public double scale() {
+        return sc;
     }
 
     public Layout layout() {

@@ -74,6 +74,22 @@ public final class EthicCharacter extends JavaPlugin implements CommandExecutor 
             sender.sendMessage("Nur Spieler haben eine Charakter-Tafel.");
             return true;
         }
+        if (args.length == 2 && args[0].equalsIgnoreCase("scale")) {
+            if (!player.isOp() && !player.hasPermission("group.manager") && !player.hasPermission("group.owner")) {
+                player.sendMessage("§cDafür fehlt dir die Berechtigung.");
+                return true;
+            }
+            try {
+                double value = Double.parseDouble(args[1].replace(',', '.'));
+                board.scale(value);
+                getConfig().set("board.scale", board.scale());
+                saveConfig();
+                player.sendMessage("§6Tafel §8» §7Größe auf §6" + board.scale() + " §7gesetzt. Öffne die Tafel neu.");
+            } catch (NumberFormatException e) {
+                player.sendMessage("§cNutzung: /charakter scale 0.5");
+            }
+            return true;
+        }
         if (board.isOpen(player)) {
             board.close(player);
             return true;
