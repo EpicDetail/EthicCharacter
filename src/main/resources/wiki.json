@@ -561,15 +561,19 @@
       "kategorie": "Dailies",
       "titel": "Der Händler",
       "stichworte": [
-        "händler",
+        "abgeben",
+        "ankauf",
+        "aufgaben",
         "haendler",
         "handel",
         "handelsaufgaben",
-        "aufgaben",
-        "stündlich",
-        "wöchentlich",
+        "händler",
+        "loswerden",
         "material",
-        "abgeben"
+        "muell",
+        "stündlich",
+        "verkaufen",
+        "wöchentlich"
       ],
       "text": [
         "Der Händler am Spawn will immer wieder andere Waren: Rohstoffe, gebaute Dinge und Seltenes. Dafür gibt es Coins und Erfahrung.",
@@ -577,7 +581,95 @@
         "Stündlich: einfache Waren, die sich schnell sammeln lassen. Täglich: etwas mehr, auch Gebautes. Wöchentlich: seltene und teure Dinge. Jeder Zeitraum hat drei Aufgaben, die für alle gleich sind.",
         "Jede Aufgabe kannst du pro Zeitraum einmal erledigen. Wechselt der Zeitraum, gibt es neue Aufgaben: zur vollen Stunde, um 0 Uhr und montags um 0 Uhr.",
         "# So geht es",
-        "Rechtsklick auf den Händler öffnet sein Fenster. Hast du alles dabei, klickst du auf die Aufgabe. Die Waren werden aus deinem Inventar genommen und die Belohnung kommt sofort. Ein Vote-Bonus erhöht sie noch."
+        "Rechtsklick auf den Händler öffnet sein Fenster. Hast du alles dabei, klickst du auf die Aufgabe. Die Waren werden aus deinem Inventar genommen und die Belohnung kommt sofort. Ein Vote-Bonus erhöht sie noch.",
+        "# Alles-Ankauf",
+        "Du hast zu viel Kram im Inventar? Schleich dich zum Händler und klicke ihn mit gedrückter Schleichen-Taste an, oder gib /ankauf in seiner Nähe ein. Alles, was du in das Fenster legst, kauft er dir ab.",
+        "Die Preise sind sehr niedrig: ein Stück Bruchstein bringt nur einen Bruchteil einer Münze. Dafür gibt es kein Limit. Wer viele Stapel loswerden will, bekommt sie bezahlt.",
+        "Nicht gekauft werden Gegenstände mit eigenem Namen, Verzauberte, gefüllte Behälter und Beute, die an deinen Namen gebunden ist. Die bekommst du zurück."
+      ]
+    },
+    {
+      "id": "organisation",
+      "kategorie": "Gruppen und Loot",
+      "titel": "Organisationen",
+      "stichworte": [
+        "organisation",
+        "org",
+        "gilde",
+        "clan",
+        "team",
+        "felder",
+        "konto",
+        "gruenden"
+      ],
+      "text": [
+        "Eine Organisation ist ein Zusammenschluss von Spielern, die gemeinsam Land halten und ausbauen.",
+        "# Gründen und beitreten",
+        "/org create <Name> gründet eine Organisation. Mit /org invite <Spieler> lädst du jemanden ein, der Eingeladene nimmt mit /org accept an. Vor einer Stadt kann jeder wieder austreten (/org leave) und nimmt seine Felder mit.",
+        "# Felder und Konto",
+        "Die Felder aller Mitglieder zählen für die Organisation, und alle Mitglieder dürfen dort bauen. Mit /org deposit <Betrag> zahlst du in das gemeinsame Konto ein. Auszahlen geht nie: Das Geld wird nur für den Kauf neuer Felder und später für den Ausbau der Stadt gebraucht.",
+        "Mit mindestens zwei Mitgliedern kann die Leitung mit /org claim Felder für die Organisation kaufen. Die müssen nicht zusammenhängen. Jedes weitere Feld wird etwas teurer.",
+        "# Staatskasse",
+        "Jeden Tag um 0 Uhr geht ein Teil der Staatskasse an die Organisationen. Wer mehr Mitglieder und später mehr Prestige hat, bekommt mehr davon."
+      ]
+    },
+    {
+      "id": "stadt",
+      "kategorie": "Gruppen und Loot",
+      "titel": "Die Stadt",
+      "stichworte": [
+        "stadt",
+        "rat",
+        "abstimmen",
+        "prestige",
+        "wappen",
+        "stadtgebiet",
+        "buerger",
+        "abspaltung",
+        "rauswurf",
+        "wahl"
+      ],
+      "text": [
+        "Aus einer Organisation mit mindestens drei Mitgliedern kann eine Stadt werden. Das ist ein großer Schritt: Danach gehört alles der Stadt, und niemand hat mehr Sonderrechte, nur weil er gegründet oder gebaut hat.",
+        "# Gründen",
+        "/stadt gruenden <Name> startet eine Abstimmung. Alle Mitglieder müssen zustimmen. Wer nicht will, tritt vorher aus und nimmt seine Felder mit. Danach gibt es keinen Weg zurück.",
+        "# Rat und Abstimmungen",
+        "Bis zu 10 Bürger entscheiden alle gemeinsam. Bei mehr als 10 wählt die Stadt bis zu 5 Ratsmitglieder. Jede Person hat eine Stimme. Beschlüsse werden mit /stadt vorschlag ... gemacht und mit /stadt abstimmen <Nummer> ja oder nein beantwortet. Mit /stadt vorschlaege siehst du, was offen ist.",
+        "Der Rat entscheidet über neue Mitglieder, Rauswurf, Feldkauf, das Stadtgebiet, Krieg, Bündnisse und Abspaltungen.",
+        "# Austritt",
+        "Allein austreten geht nicht mehr. Wer gehen will, muss sich mit anderen abspalten (Zweidrittelmehrheit der Gehenden): Sie nehmen ihre eingebrachten Felder und einen Teil des Kontos mit. Ein Rauswurf geht nur per Beschluss. Der Rausgeworfene bekommt höchstens zwei seiner Felder zurück und 10 % der Kasse, und er darf 30 Tage nicht wieder beitreten.",
+        "# Stadtgebiet und Prestige",
+        "Ein Teil der Felder (etwa 15 %) wird zum Stadtgebiet. Nur dort bauen die Bürger mit dem Geld der Stadt: Jeder gesetzte Block kostet etwas, wertvolle Blöcke mehr. Dafür steigt das Prestige, je wertvoller das Material ist. Gold und Diamanten bringen viel mehr als Massen von Stein. Das Prestige zeigt sich in Sternen neben dem Namen.",
+        "Das Wappen stellt der Rat mit /stadt wappen ein. Die Stadt mit dem höchsten Prestige führt."
+      ]
+    },
+    {
+      "id": "krieg",
+      "kategorie": "Bosskämpfe",
+      "titel": "Krieg zwischen Städten",
+      "stichworte": [
+        "krieg",
+        "angriff",
+        "ueberfall",
+        "kern",
+        "kernblock",
+        "beute",
+        "allianz",
+        "buendnis",
+        "verbuendete",
+        "raid"
+      ],
+      "text": [
+        "Städte können sich den Krieg erklären. Außerhalb des Kriegs sind alle Bauten geschützt. PvP ist aber immer an.",
+        "# Ablauf",
+        "Der Rat beschließt die Kriegserklärung und zahlt dafür einen Einsatz aus dem Stadtkonto. Der Angreifer nennt einen Termin: frühestens 24 Stunden später, immer zwischen 16 und 22 Uhr. Das Kriegsfenster dauert zwei Stunden.",
+        "Nur in diesem Fenster dürfen die Angreifer und ihre Verbündeten auf den Feldern des Verteidigers bauen und abbauen. Alle anderen Spieler bleiben geschützt. Kisten sind sowieso offen.",
+        "# Kernblock",
+        "Jede Stadt hat einen Kernblock. Wird er im Kriegsfenster zerstört, hat der Angreifer gewonnen. Er bekommt 80 % des Stadtkontos des Verlierers, sein Einsatz kommt zurück, und er darf ein Grenzfeld übernehmen. Hält der Verteidiger durch, bekommt er die Hälfte des Einsatzes.",
+        "# Fairness",
+        "Der Angreifer braucht mindestens so viele aktive Spieler wie der Verteidiger. Sonst fällt der Krieg aus. Nach einem Krieg ist 7 Tage Pause. Städte ohne Kernblock und Organisationen ohne Stadt können nicht angegriffen werden.",
+        "# Bündnisse",
+        "Städte können Bündnisse schließen. Verbündete dürfen im Krieg mitkämpfen, haben aber sonst keine Rechte auf das Land oder Geld des anderen. Ein Bündnis kann mit 24 Stunden Frist gekündigt werden. Zusammenschluss zu einer Stadt gibt es nicht."
       ]
     }
   ]
