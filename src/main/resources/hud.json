@@ -1,0 +1,432 @@
+{
+  "schrift": "ethicbuilds:survival_hud",
+  "hinweis": "Aktionstext, Zeile 182 px breit. lauf = Laufweite eines Zeichens in px. abstand: Leerzeichen mit Breite.",
+  "zeileBreite": 182,
+  "plaketten": {
+    "coins": {
+      "zeichen": "",
+      "breite": 62,
+      "lauf": 63
+    },
+    "level": {
+      "zeichen": "",
+      "breite": 22,
+      "lauf": 23
+    },
+    "spur": {
+      "zeichen": "",
+      "breite": 92,
+      "lauf": 93
+    }
+  },
+  "muenze": {
+    "zeichen": "",
+    "breite": 9,
+    "lauf": 10
+  },
+  "fuellung": [
+    {
+      "zeichen": "",
+      "breite": 2,
+      "lauf": 3
+    },
+    {
+      "zeichen": "",
+      "breite": 4,
+      "lauf": 5
+    },
+    {
+      "zeichen": "",
+      "breite": 6,
+      "lauf": 7
+    },
+    {
+      "zeichen": "",
+      "breite": 8,
+      "lauf": 9
+    },
+    {
+      "zeichen": "",
+      "breite": 10,
+      "lauf": 11
+    },
+    {
+      "zeichen": "",
+      "breite": 12,
+      "lauf": 13
+    },
+    {
+      "zeichen": "",
+      "breite": 14,
+      "lauf": 15
+    },
+    {
+      "zeichen": "",
+      "breite": 16,
+      "lauf": 17
+    },
+    {
+      "zeichen": "",
+      "breite": 18,
+      "lauf": 19
+    },
+    {
+      "zeichen": "",
+      "breite": 20,
+      "lauf": 21
+    },
+    {
+      "zeichen": "",
+      "breite": 22,
+      "lauf": 23
+    },
+    {
+      "zeichen": "",
+      "breite": 24,
+      "lauf": 25
+    },
+    {
+      "zeichen": "",
+      "breite": 26,
+      "lauf": 27
+    },
+    {
+      "zeichen": "",
+      "breite": 28,
+      "lauf": 29
+    },
+    {
+      "zeichen": "",
+      "breite": 30,
+      "lauf": 31
+    },
+    {
+      "zeichen": "",
+      "breite": 32,
+      "lauf": 33
+    },
+    {
+      "zeichen": "",
+      "breite": 34,
+      "lauf": 35
+    },
+    {
+      "zeichen": "",
+      "breite": 36,
+      "lauf": 37
+    },
+    {
+      "zeichen": "",
+      "breite": 38,
+      "lauf": 39
+    },
+    {
+      "zeichen": "",
+      "breite": 40,
+      "lauf": 41
+    },
+    {
+      "zeichen": "",
+      "breite": 42,
+      "lauf": 43
+    },
+    {
+      "zeichen": "",
+      "breite": 44,
+      "lauf": 45
+    },
+    {
+      "zeichen": "",
+      "breite": 46,
+      "lauf": 47
+    },
+    {
+      "zeichen": "",
+      "breite": 48,
+      "lauf": 49
+    },
+    {
+      "zeichen": "",
+      "breite": 50,
+      "lauf": 51
+    },
+    {
+      "zeichen": "",
+      "breite": 52,
+      "lauf": 53
+    },
+    {
+      "zeichen": "",
+      "breite": 54,
+      "lauf": 55
+    },
+    {
+      "zeichen": "",
+      "breite": 56,
+      "lauf": 57
+    },
+    {
+      "zeichen": "",
+      "breite": 58,
+      "lauf": 59
+    },
+    {
+      "zeichen": "",
+      "breite": 60,
+      "lauf": 61
+    },
+    {
+      "zeichen": "",
+      "breite": 62,
+      "lauf": 63
+    },
+    {
+      "zeichen": "",
+      "breite": 64,
+      "lauf": 65
+    },
+    {
+      "zeichen": "",
+      "breite": 66,
+      "lauf": 67
+    },
+    {
+      "zeichen": "",
+      "breite": 68,
+      "lauf": 69
+    },
+    {
+      "zeichen": "",
+      "breite": 70,
+      "lauf": 71
+    },
+    {
+      "zeichen": "",
+      "breite": 72,
+      "lauf": 73
+    },
+    {
+      "zeichen": "",
+      "breite": 74,
+      "lauf": 75
+    },
+    {
+      "zeichen": "",
+      "breite": 76,
+      "lauf": 77
+    },
+    {
+      "zeichen": "",
+      "breite": 78,
+      "lauf": 79
+    },
+    {
+      "zeichen": "",
+      "breite": 80,
+      "lauf": 81
+    },
+    {
+      "zeichen": "",
+      "breite": 82,
+      "lauf": 83
+    },
+    {
+      "zeichen": "",
+      "breite": 84,
+      "lauf": 85
+    },
+    {
+      "zeichen": "",
+      "breite": 86,
+      "lauf": 87
+    },
+    {
+      "zeichen": "",
+      "breite": 88,
+      "lauf": 89
+    },
+    {
+      "zeichen": "",
+      "breite": 90,
+      "lauf": 91
+    },
+    {
+      "zeichen": "",
+      "breite": 92,
+      "lauf": 93
+    }
+  ],
+  "ziffern": {
+    "gross": {
+      "0": {
+        "zeichen": "",
+        "breite": 5,
+        "lauf": 6
+      },
+      "1": {
+        "zeichen": "",
+        "breite": 5,
+        "lauf": 5
+      },
+      "2": {
+        "zeichen": "",
+        "breite": 5,
+        "lauf": 6
+      },
+      "3": {
+        "zeichen": "",
+        "breite": 5,
+        "lauf": 6
+      },
+      "4": {
+        "zeichen": "",
+        "breite": 5,
+        "lauf": 6
+      },
+      "5": {
+        "zeichen": "",
+        "breite": 5,
+        "lauf": 6
+      },
+      "6": {
+        "zeichen": "",
+        "breite": 5,
+        "lauf": 6
+      },
+      "7": {
+        "zeichen": "",
+        "breite": 5,
+        "lauf": 6
+      },
+      "8": {
+        "zeichen": "",
+        "breite": 5,
+        "lauf": 6
+      },
+      "9": {
+        "zeichen": "",
+        "breite": 5,
+        "lauf": 6
+      },
+      ".": {
+        "zeichen": "",
+        "breite": 1,
+        "lauf": 2
+      },
+      "+": {
+        "zeichen": "",
+        "breite": 5,
+        "lauf": 6
+      },
+      "-": {
+        "zeichen": "",
+        "breite": 5,
+        "lauf": 6
+      },
+      "K": {
+        "zeichen": "",
+        "breite": 5,
+        "lauf": 6
+      },
+      "M": {
+        "zeichen": "",
+        "breite": 5,
+        "lauf": 6
+      }
+    },
+    "klein": {
+      "0": {
+        "zeichen": "",
+        "breite": 3,
+        "lauf": 4
+      },
+      "1": {
+        "zeichen": "",
+        "breite": 3,
+        "lauf": 4
+      },
+      "2": {
+        "zeichen": "",
+        "breite": 3,
+        "lauf": 4
+      },
+      "3": {
+        "zeichen": "",
+        "breite": 3,
+        "lauf": 4
+      },
+      "4": {
+        "zeichen": "",
+        "breite": 3,
+        "lauf": 4
+      },
+      "5": {
+        "zeichen": "",
+        "breite": 3,
+        "lauf": 4
+      },
+      "6": {
+        "zeichen": "",
+        "breite": 3,
+        "lauf": 4
+      },
+      "7": {
+        "zeichen": "",
+        "breite": 3,
+        "lauf": 4
+      },
+      "8": {
+        "zeichen": "",
+        "breite": 3,
+        "lauf": 4
+      },
+      "9": {
+        "zeichen": "",
+        "breite": 3,
+        "lauf": 4
+      },
+      "+": {
+        "zeichen": "",
+        "breite": 3,
+        "lauf": 4
+      },
+      "-": {
+        "zeichen": "",
+        "breite": 3,
+        "lauf": 4
+      },
+      ".": {
+        "zeichen": "",
+        "breite": 1,
+        "lauf": 2
+      }
+    }
+  },
+  "abstand": {
+    "plus": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "minus": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  "lage": {
+    "coins": 0,
+    "level": 66,
+    "spur": 90
+  }
+}

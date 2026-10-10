@@ -1,0 +1,3 @@
+# HUD ueber der Hotbar (Coins, Level, Leiste). Braucht auf dem Server in EthicLobby hud.survival: true
+hud:
+  enabled: true

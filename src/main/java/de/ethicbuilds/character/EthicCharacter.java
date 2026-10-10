@@ -2,6 +2,8 @@ package de.ethicbuilds.character;
 
 import de.ethicbuilds.character.board.Board;
 import de.ethicbuilds.character.board.Layout;
+import de.ethicbuilds.character.hud.Hud;
+import de.ethicbuilds.character.hud.HudLayout;
 import de.ethicbuilds.character.page.CharacterData;
 import de.ethicbuilds.character.page.CharacterPages;
 import org.bukkit.Bukkit;
@@ -33,6 +35,16 @@ public final class EthicCharacter extends JavaPlugin implements CommandExecutor 
         }
         getServer().getPluginManager().registerEvents(board, this);
         getCommand("charakter").setExecutor(this);
+        saveDefaultConfig();
+        if (getConfig().getBoolean("hud.enabled", true)) {
+            try {
+                Hud hud = new Hud(this, HudLayout.load("/hud.json"));
+                getServer().getPluginManager().registerEvents(hud, this);
+                hud.start();
+            } catch (Exception e) {
+                getLogger().warning("HUD nicht gestartet: " + e.getMessage());
+            }
+        }
     }
 
     @Override
