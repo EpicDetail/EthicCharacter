@@ -1,0 +1,13 @@
+name: EthicCharacter
+version: '0.1.0'
+main: de.ethicbuilds.character.EthicCharacter
+api-version: '1.21'
+authors: [lucas]
+description: Charakter-Tafel mit Level, XP, Coins, Dailies, Ueberweisung und Protokoll
+depend: [EthicEconomy, EthicSurvival, LuckPerms]
+
+commands:
+  charakter:
+    description: Oeffnet die Charakter-Tafel
+    usage: /<command>
+    aliases: [character, tafel]
